@@ -39,23 +39,30 @@ export default function Header({ header }: { header: HeaderType }) {
   }
 
   return (
-    <section className="py-3">
+    <section className="py-4 border-b border-border/50 backdrop-blur-xl bg-background/80 sticky top-0 z-50">
       <div className="container">
         <nav className="hidden justify-between lg:flex">
           <div className="flex items-center gap-6">
             <Link
               href={(header.brand?.url as any) || "/"}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 group"
             >
-              {header.brand?.logo?.src && (
-                <img
-                  src={header.brand.logo.src}
-                  alt={header.brand.logo.alt || header.brand.title}
-                  className="w-8"
-                />
-              )}
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-primary to-accent rounded-lg blur-md opacity-60 group-hover:opacity-100 transition-opacity" />
+                {header.brand?.logo?.src ? (
+                  <img
+                    src={header.brand.logo.src}
+                    alt={header.brand.logo.alt || header.brand.title}
+                    className="w-10 h-10 relative rounded-lg"
+                  />
+                ) : (
+                  <div className="w-10 h-10 relative bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center">
+                    <span className="text-white font-bold text-lg">AI</span>
+                  </div>
+                )}
+              </div>
               {header.brand?.title && (
-                <span className="text-xl text-primary font-bold">
+                <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                   {header.brand?.title || ""}
                 </span>
               )}

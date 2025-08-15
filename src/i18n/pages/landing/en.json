@@ -1,12 +1,12 @@
 {
-  "template": "shipany-template-one",
-  "theme": "light",
+  "template": "ai-universal-generator",
+  "theme": "dark",
   "header": {
     "brand": {
-      "title": "ShipAny",
+      "title": "AI Universal Generator",
       "logo": {
         "src": "/logo.png",
-        "alt": "ShipAny"
+        "alt": "AI Universal Generator"
       },
       "url": "/"
     },
@@ -21,42 +21,25 @@
           "title": "Pricing",
           "url": "/pricing",
           "icon": "RiMoneyDollarCircleLine"
-        },
-        {
-          "title": "Showcase",
-          "url": "/showcase",
-          "icon": "RiApps2Line"
-        },
-        {
-          "title": "Docs",
-          "url": "/docs",
-          "icon": "RiBookOpenLine"
         }
       ]
     },
-    "buttons": [
-      {
-        "title": "Get ShipAny",
-        "url": "https://shipany.ai",
-        "target": "_blank",
-        "variant": "link",
-        "icon": "RiArrowRightUpLine"
-      }
-    ],
+    "buttons": [],
     "show_sign": true,
     "show_theme": true,
     "show_locale": true
   },
   "hero": {
-    "title": "Ship Any AI Startups in hours, not days",
-    "highlight_text": "Ship Any",
-    "description": "ShipAny is a NextJS boilerplate for building AI SaaS startups.<br/>Ship Fast with a variety of templates and components.",
+    "title": "Universal AI Platform",
+    "highlight_text": "Universal AI",
+    "description": "Access all major AI models in one place.<br/>Generate text, images, and videos with cutting-edge AI technology.",
     "announcement": {
-      "label": "2025",
-      "title": "🎉 Happy New Year",
+      "label": "New",
+      "title": "✨ New Era of AI Creation",
       "url": "/pricing"
     },
-    "tip": "🎁 50% off before 2025",
+    "tip": "🚀 Start Creating with AI",
+    "badge": "✨ New Era of AI Image Creation",
     "buttons": [
       {
         "title": "Get Started",
@@ -68,7 +51,7 @@
       {
         "title": "Read Document",
         "icon": "RiBookOpenLine",
-        "url": "https://docs.shipany.ai",
+        "url": "/docs",
         "target": "_blank",
         "variant": "outline"
       }
@@ -77,7 +60,7 @@
     "show_badge": false
   },
   "branding": {
-    "title": "ShipAny is built on the shoulders of giants",
+    "title": "Powered by Industry-Leading Technologies",
     "items": [
       {
         "title": "Next.js",
@@ -118,55 +101,55 @@
   },
   "introduce": {
     "name": "introduce",
-    "title": "What is ShipAny",
+    "title": "What is AI Universal Generator",
     "label": "Introduce",
-    "description": "ShipAny is a NextJS boilerplate for building AI SaaS startups. Built in a variety of templates and components.",
+    "description": "AI Universal Generator is a comprehensive platform that integrates all major AI models for text, image, and video generation.",
     "image": {
       "src": "/imgs/features/1.png"
     },
     "items": [
       {
-        "title": "Ready-to-use Templates",
-        "description": "Choose from dozens of production-ready AI SaaS templates to quickly start your project.",
+        "title": "Universal Model Access",
+        "description": "Access 20+ AI models from OpenAI, DeepSeek, FLUX, DALL-E, and more through a single interface.",
         "icon": "RiNextjsFill"
       },
       {
-        "title": "Infrastructure Setup",
-        "description": "Get instant access to scalable infrastructure with best practices built-in.",
+        "title": "Multi-Modal Generation",
+        "description": "Generate text, images, and videos with cutting-edge AI technology in one unified platform.",
         "icon": "RiDatabase2Line"
       },
       {
-        "title": "Quick Deployment",
-        "description": "Deploy your AI SaaS application to production in hours, not days.",
+        "title": "Instant Integration",
+        "description": "Start generating AI content immediately with pre-configured API integrations and unified billing.",
         "icon": "RiCloudyFill"
       }
     ]
   },
   "benefit": {
     "name": "benefit",
-    "title": "Why Choose ShipAny",
+    "title": "Why Choose AI Universal Generator",
     "label": "Benefits",
-    "description": "Get everything you need to launch your AI startup - from ready-to-use templates to technical support.",
+    "description": "The most comprehensive AI platform that brings all major models together with unified access and billing.",
     "items": [
       {
-        "title": "Complete Framework",
-        "description": "Built on Next.js with authentication, payments, and AI integration - everything works out of the box.",
+        "title": "All-in-One AI Platform",
+        "description": "Integrated with all major AI providers - OpenAI, Anthropic, Google, Meta, and more in a single platform.",
         "icon": "RiNextjsFill",
         "image": {
           "src": "/imgs/features/2.png"
         }
       },
       {
-        "title": "Rich Templates Library",
-        "description": "Choose from various AI SaaS templates to kickstart your project - chatbots, image generation, and more.",
+        "title": "Unified Model Interface",
+        "description": "Switch between different AI models seamlessly without changing code - compare and choose the best for your needs.",
         "icon": "RiClapperboardAiLine",
         "image": {
           "src": "/imgs/features/3.png"
         }
       },
       {
-        "title": "Technical Guidance",
-        "description": "Get dedicated support and join our developer community to ensure your successful launch.",
+        "title": "Enterprise-Ready Infrastructure",
+        "description": "Production-ready with built-in authentication, rate limiting, usage tracking, and automatic billing.",
         "icon": "RiCodeFill",
         "image": {
           "src": "/imgs/features/4.png"
@@ -176,8 +159,8 @@
   },
   "usage": {
     "name": "usage",
-    "title": "How to Launch with ShipAny",
-    "description": "Get your AI SaaS startup running in three simple steps:",
+    "title": "How to Start with AI Universal Generator",
+    "description": "Get your AI platform running in simple steps:",
     "image": {
       "src": "/imgs/features/1.png"
     },
@@ -185,22 +168,22 @@
     "text_align": "center",
     "items": [
       {
-        "title": "Get ShipAny",
-        "description": "Buy ShipAny with a one-time payment. Check your email for the code and documentation.",
+        "title": "Sign Up",
+        "description": "Create your account and get instant access to all AI models with your API keys.",
         "image": {
           "src": "/imgs/features/5.png"
         }
       },
       {
-        "title": "Start Your Project",
-        "description": "Read the documentation and clone the code of ShipAny. Start building your AI SaaS startup.",
+        "title": "Configure Models",
+        "description": "Select and configure the AI models you need. Start with our pre-configured templates.",
         "image": {
           "src": "/imgs/features/6.png"
         }
       },
       {
-        "title": "Customize Your Project",
-        "description": "Modify the template with your data and contents. Specific AI functionality needs.",
+        "title": "Generate Content",
+        "description": "Start generating text, images, and videos with our unified interface.",
         "image": {
           "src": "/imgs/features/7.png"
         }
@@ -216,37 +199,37 @@
   },
   "feature": {
     "name": "feature",
-    "title": "Key Features of ShipAny",
-    "description": "Everything you need to launch your AI SaaS startup quickly and efficiently.",
+    "title": "Key Features of AI Universal Generator",
+    "description": "Everything you need to build powerful AI applications with unified access.",
     "items": [
       {
-        "title": "Next.js Boilerplate",
-        "description": "Production-ready Next.js templates with SEO-friendly structure and i18n support.",
+        "title": "Universal AI Access",
+        "description": "Access 20+ AI models from all major providers through a single unified API.",
         "icon": "RiNextjsFill"
       },
       {
-        "title": "Authentication & Payments",
-        "description": "Integrated Google OAuth, one-tap login, and Stripe payment processing.",
+        "title": "Smart Model Selection",
+        "description": "Automatically choose the best model for your task or manually select from available options.",
         "icon": "RiKey2Fill"
       },
       {
-        "title": "Data Infrastructure",
-        "description": "Built-in Supabase integration for reliable and scalable data storage.",
+        "title": "Real-time Generation",
+        "description": "Stream responses for text generation and track progress for image/video creation.",
         "icon": "RiDatabase2Line"
       },
       {
-        "title": "One-Click Deployment",
-        "description": "Seamless deployment to Vercel or Cloudflare with automated setup.",
+        "title": "Usage Analytics",
+        "description": "Track model usage, costs, and performance across all your AI generations.",
         "icon": "RiCloudy2Fill"
       },
       {
-        "title": "Business Analytics",
-        "description": "Integrated Google Analytics and Search Console for tracking growth.",
+        "title": "Flexible Pricing",
+        "description": "Pay-as-you-go or subscription models with transparent pricing for all AI models.",
         "icon": "RiBarChart2Line"
       },
       {
-        "title": "AI-Ready Infrastructure",
-        "description": "Pre-configured AI integration with built-in credits system and API sales.",
+        "title": "Enterprise Ready",
+        "description": "Built-in authentication, rate limiting, and team collaboration features.",
         "icon": "RiRobot2Line"
       }
     ]
@@ -254,8 +237,8 @@
   "stats": {
     "name": "stats",
     "label": "Stats",
-    "title": "People Love ShipAny",
-    "description": "for it's easy to use and fast to ship.",
+    "title": "Trusted by Developers Worldwide",
+    "description": "Building the future of AI applications.",
     "icon": "FaRegHeart",
     "items": [
       {
@@ -278,22 +261,22 @@
   "testimonial": {
     "name": "testimonial",
     "label": "Testimonial",
-    "title": "What Users Say About ShipAny",
-    "description": "Hear from developers and founders who launched their AI startups with ShipAny.",
+    "title": "What Users Say About AI Universal Generator",
+    "description": "Hear from developers and founders who built amazing AI applications with our universal platform.",
     "icon": "GoThumbsup",
     "items": [
       {
         "title": "David Chen",
-        "label": "Founder of AIWallpaper.shop",
-        "description": "ShipAny saved us months of development time. We launched our AI wallpaper business in just 2 days and got our first paying customer within a week!",
+        "label": "AI Platform Developer",
+        "description": "The universal AI integration is incredible. Having access to all major models in one place saved us months of integration work. We launched our AI app in just days!",
         "image": {
           "src": "/imgs/users/1.png"
         }
       },
       {
         "title": "Rachel Kim",
-        "label": "CTO at HeyBeauty.ai",
-        "description": "The pre-built AI infrastructure is a game-changer. We didn't have to worry about architecture - just focused on our AI beauty tech and went live fast.",
+        "label": "CTO at TechVision",
+        "description": "The seamless integration of GPT-4, DALL-E, and other models is game-changing. We built our multi-modal AI platform without worrying about different APIs.",
         "image": {
           "src": "/imgs/users/2.png"
         }
@@ -301,31 +284,31 @@
       {
         "title": "Marcus Thompson",
         "label": "Solo Developer",
-        "description": "As a solo developer, ShipAny gave me everything I needed - auth, payments, AI integration, and beautiful UI. Launched my SaaS in a weekend!",
+        "description": "As a solo developer, this platform gave me instant access to OpenAI, DeepSeek, and FLUX models. The unified interface made development incredibly fast!",
         "image": {
           "src": "/imgs/users/3.png"
         }
       },
       {
         "title": "Sofia Garcia",
-        "label": "CEO of Melodisco",
-        "description": "The templates are production-ready and highly customizable. We built our AI music platform in hours instead of months. Incredible time-to-market!",
+        "label": "CEO of CreativeAI",
+        "description": "The dark mode UI and modern design perfectly match our AI brand. Supporting 20+ models out of the box accelerated our time-to-market significantly.",
         "image": {
           "src": "/imgs/users/4.png"
         }
       },
       {
         "title": "James Wilson",
-        "label": "Tech Lead at GPTs.works",
-        "description": "ShipAny's infrastructure is rock-solid. We scaled from 0 to 10k users without touching the backend. Best investment for our AI startup.",
+        "label": "Tech Lead at AIFlow",
+        "description": "The universal model support is fantastic. We can switch between providers like OpenRouter and SiliconFlow seamlessly. Best AI infrastructure we've used.",
         "image": {
           "src": "/imgs/users/5.png"
         }
       },
       {
         "title": "Anna Zhang",
-        "label": "Startup Founder",
-        "description": "From idea to launch in 3 days! ShipAny's templates and deployment tools made it possible to test our AI business concept incredibly fast.",
+        "label": "AI Startup Founder",
+        "description": "From idea to launch in 3 days! Having text, image, and video generation APIs ready to use made it possible to validate our AI concept instantly.",
         "image": {
           "src": "/imgs/users/6.png"
         }
@@ -335,49 +318,49 @@
   "faq": {
     "name": "faq",
     "label": "FAQ",
-    "title": "Frequently Asked Questions About ShipAny",
+    "title": "Frequently Asked Questions",
     "description": "Have another question? Contact us on Discord or by email.",
     "items": [
       {
-        "title": "What exactly is ShipAny and how does it work?",
-        "description": "ShipAny is a comprehensive NextJS boilerplate designed specifically for building AI SaaS startups. It provides ready-to-use templates, infrastructure setup, and deployment tools that help you launch your AI business in hours instead of days."
+        "title": "What is AI Universal Generator?",
+        "description": "AI Universal Generator is a comprehensive platform that provides unified access to all major AI models including GPT-4, DALL-E, Midjourney, and more. Generate text, images, and videos through a single interface."
       },
       {
-        "title": "Do I need advanced technical skills to use ShipAny?",
-        "description": "While basic programming knowledge is helpful, ShipAny is designed to be developer-friendly. Our templates and documentation make it easy to get started, even if you're not an expert in AI or cloud infrastructure."
+        "title": "Which AI models are supported?",
+        "description": "We support 20+ models including OpenAI GPT-4, Anthropic Claude, Google Gemini, Meta Llama, DALL-E 3, Midjourney, FLUX, Stable Diffusion, and many more. New models are added regularly."
       },
       {
-        "title": "What types of AI SaaS can I build with ShipAny?",
-        "description": "ShipAny supports a wide range of AI applications, from content generation to data analysis tools. Our templates cover popular use cases like AI chatbots, content generators, image processing apps, and more."
+        "title": "How does pricing work?",
+        "description": "We offer flexible pricing with both pay-as-you-go and subscription options. You only pay for what you use, with transparent pricing for each model. Start with free credits to test the platform."
       },
       {
-        "title": "How long does it typically take to launch with ShipAny?",
-        "description": "With ShipAny, you can have a working prototype in hours and a production-ready application in hours. Our one-click deployment and pre-configured infrastructure significantly reduce the traditional months-long development cycle."
+        "title": "Can I use my own API keys?",
+        "description": "Yes! You can bring your own API keys for any supported provider. This gives you full control over your usage and billing while still benefiting from our unified interface."
       },
       {
-        "title": "What's included in the ShipAny infrastructure?",
-        "description": "ShipAny provides a complete infrastructure stack including authentication, database setup, API integration, payment processing, and scalable cloud deployment. Everything is pre-configured following industry best practices."
+        "title": "Is there an API for developers?",
+        "description": "Absolutely! We provide a comprehensive REST API and SDKs for popular programming languages. Integrate AI generation capabilities into your applications with just a few lines of code."
       },
       {
-        "title": "Can I customize the templates to match my brand?",
-        "description": "Absolutely! All ShipAny templates are fully customizable. You can modify the design, features, and functionality to match your brand identity and specific business requirements while maintaining the robust underlying infrastructure."
+        "title": "What about data privacy and security?",
+        "description": "We take security seriously. All data is encrypted in transit and at rest. We don't store your prompts or generated content unless you explicitly save them. Full compliance with GDPR and SOC 2."
       }
     ]
   },
   "cta": {
     "name": "cta",
-    "title": "Ship your first AI SaaS Startup",
-    "description": "Start from here, ship with ShipAny.",
+    "title": "Start Building with AI Today",
+    "description": "Join thousands of developers using our platform.",
     "buttons": [
       {
-        "title": "Get ShipAny",
-        "url": "https://shipany.ai",
+        "title": "Get Started",
+        "url": "/pricing",
         "target": "_blank",
         "icon": "GoArrowUpRight"
       },
       {
         "title": "Read Document",
-        "url": "https://docs.shipany.ai",
+        "url": "/docs",
         "target": "_blank",
         "variant": "outline"
       }
@@ -386,73 +369,73 @@
   "footer": {
     "name": "footer",
     "brand": {
-      "title": "ShipAny",
-      "description": "ShipAny is a NextJS boilerplate for building AI SaaS startups. Ship Fast with a variety of templates and components.",
+      "title": "AI Universal Generator",
+      "description": "The most comprehensive AI platform that unifies access to all major language, image, and video models. Build powerful AI applications with a single integration.",
       "logo": {
         "src": "/logo.png",
-        "alt": "ShipAny"
+        "alt": "AI Universal Generator"
       },
       "url": "/"
     },
-    "copyright": "© 2025 • ShipAny All rights reserved.",
+    "copyright": "© 2025 • AI Universal Generator. Powered by cutting-edge AI technology.",
     "nav": {
       "items": [
         {
-          "title": "About",
+          "title": "Platform",
           "children": [
             {
-              "title": "Features",
+              "title": "AI Models",
               "url": "/#feature",
-              "target": "_self"
-            },
-            {
-              "title": "Showcases",
-              "url": "/#showcase",
               "target": "_self"
             },
             {
               "title": "Pricing",
               "url": "/#pricing",
               "target": "_self"
+            },
+            {
+              "title": "API Access",
+              "url": "/#api",
+              "target": "_self"
             }
           ]
         },
         {
-          "title": "Resources",
+          "title": "AI Models",
           "children": [
             {
-              "title": "Documents",
-              "url": "https://docs.shipany.ai",
-              "target": "_blank"
+              "title": "Text Generation",
+              "url": "/#text-models",
+              "target": "_self"
             },
             {
-              "title": "Components",
-              "url": "https://shipany.ai/components",
-              "target": "_blank"
+              "title": "Image Generation",
+              "url": "/#image-models",
+              "target": "_self"
             },
             {
-              "title": "Templates",
-              "url": "https://shipany.ai/templates",
-              "target": "_blank"
+              "title": "Video Generation",
+              "url": "/#video-models",
+              "target": "_self"
             }
           ]
         },
         {
-          "title": "Friends",
+          "title": "Providers",
           "children": [
             {
-              "title": "ThinkAny",
-              "url": "https://thinkany.ai",
+              "title": "OpenAI",
+              "url": "https://openai.com",
               "target": "_blank"
             },
             {
-              "title": "HeyBeauty",
-              "url": "https://heybeauty.ai",
+              "title": "Anthropic",
+              "url": "https://anthropic.com",
               "target": "_blank"
             },
             {
-              "title": "Pagen",
-              "url": "https://pagen.so",
+              "title": "Google AI",
+              "url": "https://ai.google",
               "target": "_blank"
             }
           ]
@@ -464,25 +447,25 @@
         {
           "title": "X",
           "icon": "RiTwitterXFill",
-          "url": "https://x.com/shipanyai",
+          "url": "https://x.com/aiuniversalgen",
           "target": "_blank"
         },
         {
           "title": "Github",
           "icon": "RiGithubFill",
-          "url": "https://github.com/shipanyai",
+          "url": "https://github.com/ai-universal-generator",
           "target": "_blank"
         },
         {
           "title": "Discord",
           "icon": "RiDiscordFill",
-          "url": "https://discord.gg/HQNnrzjZQS",
+          "url": "https://discord.gg/ai-universal",
           "target": "_blank"
         },
         {
           "title": "Email",
           "icon": "RiMailLine",
-          "url": "mailto:support@shipany.ai",
+          "url": "mailto:support@aiuniversal.dev",
           "target": "_self"
         }
       ]

@@ -36,7 +36,7 @@ export default async function RootLayout({
           ))}
         <link rel="alternate" hrefLang="x-default" href={webUrl} />
       </head>
-      <body className={cn("min-h-screen overflow-x-hidden")}>{children}</body>
+      <body className={cn("min-h-screen overflow-x-hidden dark")}>{children}</body>
     </html>
   );
 }

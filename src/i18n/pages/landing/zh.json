@@ -1,12 +1,12 @@
 {
-  "template": "shipany-template-one",
-  "theme": "light",
+  "template": "ai-universal-generator",
+  "theme": "dark",
   "header": {
     "brand": {
-      "title": "ShipAny",
+      "title": "AI 通用生成器",
       "logo": {
         "src": "/logo.png",
-        "alt": "ShipAny"
+        "alt": "AI 通用生成器"
       },
       "url": "/"
     },
@@ -21,42 +21,25 @@
           "title": "定价",
           "url": "/pricing",
           "icon": "RiMoneyDollarCircleLine"
-        },
-        {
-          "title": "案例展示",
-          "url": "/showcase",
-          "icon": "RiApps2Line"
-        },
-        {
-          "title": "文档",
-          "url": "/docs",
-          "icon": "RiBookOpenLine"
         }
       ]
     },
-    "buttons": [
-      {
-        "title": "获取 ShipAny",
-        "url": "https://shipany.ai",
-        "target": "_blank",
-        "variant": "link",
-        "icon": "RiArrowRightUpLine"
-      }
-    ],
+    "buttons": [],
     "show_sign": true,
     "show_theme": true,
     "show_locale": true
   },
   "hero": {
-    "title": "几小时内快速构建 AI 创业项目，而不是几天",
-    "highlight_text": "快速构建",
-    "description": "ShipAny 是一个用于构建 AI SaaS 创业项目的 NextJS 模板。<br/>通过丰富的模板和组件快速启动。",
+    "title": "通用 AI 平台",
+    "highlight_text": "通用 AI",
+    "description": "在一个平台上访问所有主流 AI 模型。<br/>使用尖端 AI 技术生成文本、图像和视频。",
     "announcement": {
-      "label": "2025",
-      "title": "🎉 新年快乐",
+      "label": "全新",
+      "title": "✨ AI 创作新纪元",
       "url": "/pricing"
     },
-    "tip": "🎁 2025年前五折优惠",
+    "tip": "🚀 开始 AI 创作",
+    "badge": "✨ AI 图像创作新纪元",
     "buttons": [
       {
         "title": "立即开始",
@@ -68,7 +51,7 @@
       {
         "title": "阅读文档",
         "icon": "RiBookOpenLine",
-        "url": "https://docs.shipany.ai",
+        "url": "/docs",
         "target": "_blank",
         "variant": "outline"
       }
@@ -77,7 +60,7 @@
     "show_badge": false
   },
   "branding": {
-    "title": "ShipAny 建立在巨人的肩膀上",
+    "title": "由行业领先技术驱动",
     "items": [
       {
         "title": "Next.js",
@@ -118,9 +101,9 @@
   },
   "introduce": {
     "name": "introduce",
-    "title": "什么是 ShipAny",
+    "title": "什么是 AI 通用生成器",
     "label": "介绍",
-    "description": "ShipAny 是一个用于构建 AI SaaS 创业项目的 NextJS 模板，内置多种模板和组件。",
+    "description": "AI 通用生成器是一个全面的平台，集成了所有主流的文本、图像和视频生成 AI 模型。",
     "image": {
       "src": "/imgs/features/1.png"
     },
@@ -144,7 +127,7 @@
   },
   "benefit": {
     "name": "benefit",
-    "title": "为什么选择 ShipAny",
+    "title": "为什么选择 AI 通用生成器",
     "label": "优势",
     "description": "获取启动 AI 创业所需的一切 - 从即用型模板到技术支持。",
     "items": [
@@ -176,7 +159,7 @@
   },
   "usage": {
     "name": "usage",
-    "title": "如何使用 ShipAny 启动项目",
+    "title": "如何开始使用 AI 通用生成器",
     "description": "通过三个简单步骤启动您的 AI SaaS 创业项目：",
     "image": {
       "src": "/imgs/features/1.png"
@@ -185,15 +168,15 @@
     "text_align": "center",
     "items": [
       {
-        "title": "获取 ShipAny",
-        "description": "一次性付款购买 ShipAny。查收邮件获取代码和文档。",
+        "title": "注册账号",
+        "description": "创建您的账号并立即获得所有 AI 模型的访问权限和 API 密钥。",
         "image": {
           "src": "/imgs/features/5.png"
         }
       },
       {
         "title": "开始您的项目",
-        "description": "阅读文档并克隆 ShipAny 代码。开始构建您的 AI SaaS 创业项目。",
+        "description": "选择和配置您需要的 AI 模型。从我们的预配置模板开始。",
         "image": {
           "src": "/imgs/features/6.png"
         }
@@ -216,7 +199,7 @@
   },
   "feature": {
     "name": "feature",
-    "title": "ShipAny 核心功能",
+    "title": "AI 通用生成器核心功能",
     "description": "快速高效启动 AI SaaS 创业所需的一切。",
     "items": [
       {
@@ -254,7 +237,7 @@
   "stats": {
     "name": "stats",
     "label": "统计",
-    "title": "用户喜爱 ShipAny",
+    "title": "全球开发者信赖的选择",
     "description": "因为它易于使用且快速发布。",
     "icon": "FaRegHeart",
     "items": [
@@ -278,22 +261,22 @@
   "testimonial": {
     "name": "testimonial",
     "label": "用户评价",
-    "title": "用户如何评价 ShipAny",
-    "description": "听听使用 ShipAny 启动 AI 创业项目的开发者和创始人怎么说。",
+    "title": "用户如何评价 AI 通用生成器",
+    "description": "听听使用我们通用平台构建惊人 AI 应用的开发者和创始人怎么说。",
     "icon": "GoThumbsup",
     "items": [
       {
         "title": "陈大卫",
-        "label": "AIWallpaper.shop 创始人",
-        "description": "ShipAny 为我们节省了数月的开发时间。我们仅用 2 天就启动了 AI 壁纸业务，一周内就获得了第一个付费客户！",
+        "label": "AI 平台开发者",
+        "description": "通用 AI 集成太棒了。在一个地方访问所有主流模型为我们节省了数月的集成工作。我们仅用几天就启动了 AI 应用！",
         "image": {
           "src": "/imgs/users/1.png"
         }
       },
       {
         "title": "金瑞秋",
-        "label": "HeyBeauty.ai 技术总监",
-        "description": "预构建的 AI 基础设施是一个游戏规则改变者。我们无需担心架构 - 只需专注于 AI 美容技术并快速上线。",
+        "label": "TechVision 技术总监",
+        "description": "GPT-4、DALL-E 和其他模型的无缝集成是革命性的。我们无需担心不同的 API 就构建了多模态 AI 平台。",
         "image": {
           "src": "/imgs/users/2.png"
         }
@@ -301,7 +284,7 @@
       {
         "title": "马库斯",
         "label": "独立开发者",
-        "description": "作为独立开发者，ShipAny 给了我所需的一切 - 身份验证、支付、AI 集成和漂亮的 UI。一个周末就启动了我的 SaaS！",
+        "description": "作为独立开发者，这个平台让我立即访问 OpenAI、DeepSeek 和 FLUX 模型。统一的界面让开发速度飞快！",
         "image": {
           "src": "/imgs/users/3.png"
         }
@@ -317,7 +300,7 @@
       {
         "title": "詹姆斯",
         "label": "GPTs.works 技术主管",
-        "description": "ShipAny 的基础设施非常稳固。我们从 0 扩展到 1 万用户都没碰后端。这是我们 AI 创业最好的投资。",
+        "description": "通用模型支持太棒了。我们可以在 OpenRouter 和 SiliconFlow 等提供商之间无缝切换。这是我们使用过的最好的 AI 基础设施。",
         "image": {
           "src": "/imgs/users/5.png"
         }
@@ -325,7 +308,7 @@
       {
         "title": "张安娜",
         "label": "创业者",
-        "description": "从想法到上线只用了 3 天！ShipAny 的模板和部署工具让我们能够以令人难以置信的速度测试 AI 业务概念。",
+        "description": "从想法到上线只用了 3 天！有了文本、图像和视频生成 API，我们可以立即验证我们的 AI 概念。",
         "image": {
           "src": "/imgs/users/6.png"
         }
@@ -335,49 +318,49 @@
   "faq": {
     "name": "faq",
     "label": "常见问题",
-    "title": "关于 ShipAny 的常见问题",
+    "title": "常见问题",
     "description": "还有其他问题？通过 Discord 或电子邮件联系我们。",
     "items": [
       {
-        "title": "ShipAny 究竟是什么，它是如何工作的？",
-        "description": "ShipAny 是一个专门为构建 AI SaaS 创业项目设计的综合性 NextJS 模板。它提供即用型模板、基础设施设置和部署工具，帮助您在几小时内而不是几天内启动 AI 业务。"
+        "title": "什么是 AI 通用生成器？",
+        "description": "AI 通用生成器是一个综合平台，提供对所有主流 AI 模型的统一访问，包括 GPT-4、DALL-E、Midjourney 等。通过单一界面生成文本、图像和视频。"
       },
       {
-        "title": "使用 ShipAny 需要高级技术技能吗？",
-        "description": "虽然基本的编程知识会有帮助，但 ShipAny 设计得非常开发者友好。我们的模板和文档使您即使不是 AI 或云基础设施专家也能轻松入门。"
+        "title": "支持哪些 AI 模型？",
+        "description": "我们支持 20+ 模型，包括 OpenAI GPT-4、Anthropic Claude、Google Gemini、Meta Llama、DALL-E 3、Midjourney、FLUX、Stable Diffusion 等。定期添加新模型。"
       },
       {
-        "title": "我可以用 ShipAny 构建什么类型的 AI SaaS？",
-        "description": "ShipAny 支持广泛的 AI 应用，从内容生成到数据分析工具。我们的模板涵盖流行用例，如 AI 聊天机器人、内容生成器、图像处理应用等。"
+        "title": "价格如何计算？",
+        "description": "我们提供灵活的定价，包括按需付费和订阅选项。您只需为使用的内容付费，每个模型都有透明的定价。从免费积分开始测试平台。"
       },
       {
-        "title": "使用 ShipAny 通常需要多长时间才能启动？",
-        "description": "使用 ShipAny，您可以在几小时内完成工作原型，并在几小时内完成生产就绪的应用。我们的一键部署和预配置基础设施显著缩短了传统的数月开发周期。"
+        "title": "可以使用自己的 API 密钥吗？",
+        "description": "当然可以！您可以带来任何支持的提供商的自己的 API 密钥。这让您可以完全控制使用量和计费，同时仍然受益于我们的统一界面。"
       },
       {
-        "title": "ShipAny 的基础设施包括什么？",
-        "description": "ShipAny 提供完整的基础设施栈，包括身份验证、数据库设置、API 集成、支付处理和可扩展的云部署。一切都按照行业最佳实践预先配置。"
+        "title": "是否提供开发者 API？",
+        "description": "当然！我们提供全面的 REST API 和流行编程语言的 SDK。只需几行代码就可以将 AI 生成功能集成到您的应用中。"
       },
       {
         "title": "我可以自定义模板以匹配我的品牌吗？",
-        "description": "当然可以！所有 ShipAny 模板都完全可定制。您可以修改设计、功能和功能性以匹配您的品牌标识和特定业务需求，同时保持强大的底层基础设施。"
+        "description": "我们非常重视安全。所有数据在传输和存储时都进行加密。除非您明确保存，否则我们不会存储您的提示或生成的内容。完全符合 GDPR 和 SOC 2。"
       }
     ]
   },
   "cta": {
     "name": "cta",
     "title": "启动您的第一个 AI SaaS 创业项目",
-    "description": "从这里开始，使用 ShipAny 启动。",
+    "description": "加入数千名使用我们平台的开发者。",
     "buttons": [
       {
-        "title": "获取 ShipAny",
-        "url": "https://shipany.ai",
+        "title": "开始使用",
+        "url": "/pricing",
         "target": "_blank",
         "icon": "GoArrowUpRight"
       },
       {
         "title": "阅读文档",
-        "url": "https://docs.shipany.ai",
+        "url": "/docs",
         "target": "_blank",
         "variant": "outline"
       }
@@ -386,73 +369,73 @@
   "footer": {
     "name": "footer",
     "brand": {
-      "title": "ShipAny",
-      "description": "ShipAny 是一个用于构建 AI SaaS 创业项目的 NextJS 模板。通过丰富的模板和组件快速启动。",
+      "title": "AI 通用生成器",
+      "description": "最全面的 AI 平台，统一访问所有主流语言、图像和视频模型。通过单一集成构建强大的 AI 应用。",
       "logo": {
         "src": "/logo.png",
-        "alt": "ShipAny"
+        "alt": "AI 通用生成器"
       },
       "url": "/"
     },
-    "copyright": "© 2025 • ShipAny 保留所有权利。",
+    "copyright": "© 2025 • AI 通用生成器。由尖端 AI 技术驱动。",
     "nav": {
       "items": [
         {
-          "title": "关于",
+          "title": "平台",
           "children": [
             {
-              "title": "功能特点",
+              "title": "AI 模型",
               "url": "/#feature",
-              "target": "_self"
-            },
-            {
-              "title": "案例展示",
-              "url": "/#showcase",
               "target": "_self"
             },
             {
               "title": "定价",
               "url": "/#pricing",
               "target": "_self"
+            },
+            {
+              "title": "API 访问",
+              "url": "/#api",
+              "target": "_self"
             }
           ]
         },
         {
-          "title": "资源",
+          "title": "AI 模型",
           "children": [
             {
-              "title": "文档",
-              "url": "https://docs.shipany.ai",
-              "target": "_blank"
+              "title": "文本生成",
+              "url": "/#text-models",
+              "target": "_self"
             },
             {
-              "title": "组件",
-              "url": "https://shipany.ai/components",
-              "target": "_blank"
+              "title": "图像生成",
+              "url": "/#image-models",
+              "target": "_self"
             },
             {
-              "title": "模板",
-              "url": "https://shipany.ai/templates",
-              "target": "_blank"
+              "title": "视频生成",
+              "url": "/#video-models",
+              "target": "_self"
             }
           ]
         },
         {
-          "title": "友情链接",
+          "title": "提供商",
           "children": [
             {
-              "title": "ThinkAny",
-              "url": "https://thinkany.ai",
+              "title": "OpenAI",
+              "url": "https://openai.com",
               "target": "_blank"
             },
             {
-              "title": "HeyBeauty",
-              "url": "https://heybeauty.ai",
+              "title": "Anthropic",
+              "url": "https://anthropic.com",
               "target": "_blank"
             },
             {
-              "title": "Pagen",
-              "url": "https://pagen.so",
+              "title": "Google AI",
+              "url": "https://ai.google",
               "target": "_blank"
             }
           ]
@@ -464,25 +447,25 @@
         {
           "title": "X",
           "icon": "RiTwitterXFill",
-          "url": "https://x.com/shipanyai",
+          "url": "https://x.com/aiuniversalgen",
           "target": "_blank"
         },
         {
           "title": "Github",
           "icon": "RiGithubFill",
-          "url": "https://github.com/shipanyai",
+          "url": "https://github.com/ai-universal-generator",
           "target": "_blank"
         },
         {
           "title": "Discord",
           "icon": "RiDiscordFill",
-          "url": "https://discord.gg/HQNnrzjZQS",
+          "url": "https://discord.gg/ai-universal",
           "target": "_blank"
         },
         {
           "title": "邮箱",
           "icon": "RiMailLine",
-          "url": "mailto:support@shipany.ai",
+          "url": "mailto:support@aiuniversal.dev",
           "target": "_self"
         }
       ]
