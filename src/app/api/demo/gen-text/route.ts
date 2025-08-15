@@ -18,6 +18,44 @@ export async function POST(req: Request) {
       return respErr("invalid params");
     }
 
+    // Demo mode: Check if we're using demo API keys
+    const isDemoMode = 
+      process.env.OPENAI_API_KEY?.includes("demo") ||
+      process.env.DEEPSEEK_API_KEY?.includes("demo") ||
+      !process.env.OPENAI_API_KEY;
+
+    // In demo mode, return mock responses
+    if (isDemoMode) {
+      const demoResponses = {
+        openai: {
+          text: `This is a demo response from ${model}.\n\nIn a production environment with real API keys, this would generate actual AI content based on your prompt: "${prompt}"\n\nThe AI Universal Generator platform supports:\n• Text generation with GPT-4, Claude, and other models\n• Image creation with DALL-E, Midjourney, and FLUX\n• Video generation with cutting-edge AI models\n\nTo see real AI generation, please configure your API keys in the environment variables.`,
+          reasoning: null
+        },
+        deepseek: {
+          text: `[DeepSeek ${model} Demo Response]\n\nYour prompt: "${prompt}"\n\nThis is a demonstration of the DeepSeek integration. With actual API credentials, you would receive intelligent responses powered by DeepSeek's advanced language models, including reasoning capabilities for complex problem-solving.`,
+          reasoning: "In production mode, DeepSeek R1 would provide detailed reasoning steps here, showing the thought process behind the generated response."
+        },
+        openrouter: {
+          text: `[OpenRouter ${model} Demo]\n\nProcessing prompt: "${prompt}"\n\nOpenRouter provides access to multiple AI models through a unified API. This demo shows how the platform would integrate with various providers to generate high-quality content tailored to your needs.`,
+          reasoning: model.includes("r1") ? "DeepSeek R1 via OpenRouter would display reasoning here." : null
+        },
+        siliconflow: {
+          text: `[SiliconFlow ${model} Demo]\n\nInput: "${prompt}"\n\nSiliconFlow enables fast and efficient AI model inference. In production, this would generate sophisticated responses using state-of-the-art language models with optimized performance.`,
+          reasoning: model.includes("R1") ? "Advanced reasoning capabilities would be shown here for R1 models." : null
+        }
+      };
+
+      const response = demoResponses[provider as keyof typeof demoResponses] || demoResponses.openai;
+      
+      // Simulate processing delay
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      return respData({
+        text: response.text,
+        reasoning: response.reasoning,
+      });
+    }
+
     let textModel: LanguageModelV1;
 
     switch (provider) {

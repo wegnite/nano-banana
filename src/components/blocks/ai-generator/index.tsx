@@ -82,10 +82,11 @@ export default function AIGenerator({ hero }: AIGeneratorProps) {
       return;
     }
 
-    if (!session) {
-      toast.error("Please sign in to generate content");
-      return;
-    }
+    // Remove authentication requirement for demo
+    // if (!session) {
+    //   toast.error("Please sign in to generate content");
+    //   return;
+    // }
 
     setIsGenerating(true);
     setResult(null);
@@ -128,7 +129,33 @@ export default function AIGenerator({ hero }: AIGeneratorProps) {
         throw new Error(data.error || "Generation failed");
       }
 
-      setResult(data.data);
+      console.log("API Response:", data); // Debug log
+      
+      // Handle different response formats
+      if (activeTab === "text") {
+        // Text generation returns {data: {text, reasoning}}
+        setResult(data.data);
+      } else if (activeTab === "image") {
+        // Image generation returns {data: [array of images]}
+        // For demo, we'll use the first image or create a mock if upload failed
+        const images = data.data;
+        if (images && images.length > 0) {
+          const firstImage = images[0];
+          setResult({
+            image_url: firstImage.url || `/api/placeholder/512/512`, // Fallback to placeholder
+            provider: firstImage.provider,
+            filename: firstImage.filename
+          });
+        } else {
+          // If no image URL (upload might have failed), create a placeholder
+          setResult({
+            image_url: `/api/placeholder/512/512`,
+            provider: selectedProvider,
+            filename: "demo_image.png"
+          });
+        }
+      }
+      
       toast.success("Content generated successfully!");
     } catch (error: any) {
       console.error("Generation error:", error);
@@ -290,28 +317,54 @@ export default function AIGenerator({ hero }: AIGeneratorProps) {
               {/* Result Display */}
               {result && (
                 <Card className="p-6 bg-background/50 border-border/50 mt-6">
-                  <h3 className="text-lg font-semibold mb-4">Generated Result</h3>
+                  <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                    Generated Result
+                    {result.provider && (
+                      <Badge variant="secondary" className="text-xs">
+                        {result.provider}
+                      </Badge>
+                    )}
+                  </h3>
                   {activeTab === "text" ? (
                     <div className="prose prose-invert max-w-none">
                       {result.reasoning && (
                         <details className="mb-4">
-                          <summary className="cursor-pointer text-muted-foreground">
+                          <summary className="cursor-pointer text-muted-foreground hover:text-foreground transition-colors">
                             View reasoning process
                           </summary>
-                          <pre className="mt-2 p-4 bg-muted/20 rounded-lg text-sm whitespace-pre-wrap">
+                          <pre className="mt-2 p-4 bg-muted/20 rounded-lg text-sm whitespace-pre-wrap overflow-x-auto">
                             {result.reasoning}
                           </pre>
                         </details>
                       )}
-                      <div className="whitespace-pre-wrap">{result.text}</div>
+                      <div className="whitespace-pre-wrap text-foreground/90">
+                        {result.text || "No text generated"}
+                      </div>
                     </div>
                   ) : activeTab === "image" ? (
                     <div className="space-y-4">
-                      <img
-                        src={result.image_url}
-                        alt="Generated image"
-                        className="w-full rounded-lg shadow-lg"
-                      />
+                      {result.image_url ? (
+                        <>
+                          <img
+                            src={result.image_url}
+                            alt="Generated image"
+                            className="w-full rounded-lg shadow-lg"
+                            onError={(e) => {
+                              // Fallback to placeholder if image fails to load
+                              e.currentTarget.src = `/api/placeholder/512/512`;
+                            }}
+                          />
+                          {result.filename && (
+                            <p className="text-sm text-muted-foreground">
+                              Filename: {result.filename}
+                            </p>
+                          )}
+                        </>
+                      ) : (
+                        <div className="flex items-center justify-center h-64 bg-muted/20 rounded-lg">
+                          <p className="text-muted-foreground">No image generated</p>
+                        </div>
+                      )}
                     </div>
                   ) : null}
                 </Card>

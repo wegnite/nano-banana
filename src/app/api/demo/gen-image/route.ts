@@ -15,6 +15,29 @@ export async function POST(req: Request) {
       return respErr("invalid params");
     }
 
+    // Demo mode: Check if we're using demo API keys
+    const isDemoMode = 
+      process.env.OPENAI_API_KEY?.includes("demo") ||
+      process.env.REPLICATE_API_TOKEN?.includes("demo") ||
+      !process.env.OPENAI_API_KEY;
+
+    // In demo mode, return mock response with placeholder
+    if (isDemoMode) {
+      // Simulate processing delay
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Return a mock response that will trigger placeholder display
+      return respData([
+        {
+          provider: provider,
+          model: model,
+          filename: `demo_${provider}_${Date.now()}.png`,
+          prompt: prompt,
+          // No URL provided in demo mode - will use placeholder
+        }
+      ]);
+    }
+
     let imageModel: ImageModelV1;
     let providerOptions: Record<string, Record<string, JSONValue>> = {};
 
