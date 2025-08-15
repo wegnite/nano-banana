@@ -1,8 +1,113 @@
 {
+  // GitLens 配置
+  "gitlens.currentLine.enabled": true,
+  "gitlens.currentLine.format": "${author} • ${agoOrDate} • ${message}",
+  "gitlens.currentLine.scrollable": true,
+  "gitlens.codeLens.enabled": true,
+  "gitlens.codeLens.authors.enabled": true,
+  "gitlens.codeLens.recentChange.enabled": true,
+  "gitlens.hovers.enabled": true,
+  "gitlens.hovers.currentLine.over": "line",
+  "gitlens.hovers.annotations.enabled": true,
+  "gitlens.blame.format": "${author|10} ${date|25} ${message|50}",
+  "gitlens.blame.heatmap.enabled": true,
+  "gitlens.blame.avatars": true,
+  "gitlens.statusBar.enabled": true,
+  "gitlens.statusBar.format": "${author} • ${date} • ${message}",
+  "gitlens.fileHistory.enabled": true,
+  "gitlens.defaultDateFormat": "YYYY-MM-DD HH:mm",
+  "gitlens.defaultDateShortFormat": "MM-DD HH:mm",
+  "gitlens.defaultTimeFormat": "HH:mm",
+  "gitlens.heatmap.toggleMode": "file",
+  "gitlens.changes.toggleMode": "file",
+  
+  // 源代码管理（SCM）高级配置 - 按文件夹组织变更
+  "scm.defaultViewMode": "tree",
+  "scm.alwaysShowRepositories": true,
+  "scm.countBadge": "focused",
+  "scm.diffDecorations": "all",
+  "scm.diffDecorationsGutterAction": "diff",
+  "scm.diffDecorationsGutterVisibility": "always",
+  "scm.diffDecorationsGutterWidth": 3,
+  "scm.diffDecorationsIgnoreTrimWhitespace": "false",
+  
+  // Git 配置 - 增强变更显示
+  "git.decorations.enabled": true,
+  "git.showInlineOpenFileAction": true,
+  "git.showPushSuccessNotification": true,
+  "git.autoStash": true,
+  "git.inputValidation": true,
+  "git.inputValidationLength": 200,
+  "git.inputValidationSubjectLength": 50,
+  "git.openDiffOnClick": true,
+  
+  // 文件资源管理器配置 - 显示 Git 状态
+  "explorer.decorations.badges": true,
+  "explorer.decorations.colors": true,
+  "explorer.sortOrder": "type",
+  
+  // GitLens 文件树视图
+  "gitlens.views.repositories.files.layout": "tree",
+  "gitlens.views.repositories.files.compact": false,
+  "gitlens.views.repositories.showBranchComparison": "working",
+  "gitlens.views.fileHistory.enabled": true,
+  "gitlens.views.lineHistory.enabled": true,
+  
+  // 工作区配置
+  "workbench.scm.defaultViewSortKey": "path",
+  "workbench.view.alwaysShowHeaderActions": true,
+  
+  // Git History 配置
+  "gitHistory.showEditorTitleMenuBarIcons": true,
+  "gitHistory.sideBySide": true,
+  
+  // Git Blame 配置
+  "git-blame.statusBarMessageFormat": "Blame ${author.name} (${time.ago})",
+  "git-blame.inlineMessageEnabled": true,
+  "git-blame.inlineMessageFormat": "${author.name} (${time.ago})",
+  
+  // 代码审查助手配置
+  "gitlens.currentLine.pullRequests.enabled": true,
+  "gitlens.views.commits.showBranchComparison": "working",
+  "gitlens.views.repositories.includeWorkingTree": true,
+  "gitlens.views.showRelativeDateMarkers": true,
+  
+  // 文件对比配置
+  "diffEditor.renderSideBySide": true,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "diffEditor.renderIndicators": true,
+  "diffEditor.codeLens": true,
+  
+  // 自动保存和格式化（可选）
+  "files.autoSave": "onFocusChange",
+  "editor.formatOnSave": false,
+  "editor.formatOnPaste": false,
+  
+  // Prettier 格式化配置（保留原有配置）
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  
+  // i18n Ally 国际化配置（保留原有配置）
   "i18n-ally.localesPaths": ["src/i18n/messages"],
-  "i18n-ally.keystyle": "nested"
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.enabledFrameworks": ["react", "next-intl"],
+  "i18n-ally.sourceLanguage": "en",
+  "i18n-ally.displayLanguage": "zh"
 }
