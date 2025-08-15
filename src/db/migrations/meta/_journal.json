@@ -8,6 +8,13 @@
       "when": 1750685769393,
       "tag": "0000_wealthy_squirrel_girl",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1755266808568,
+      "tag": "0001_crazy_princess_powerful",
+      "breakpoints": true
     }
   ]
 }

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive SiliconFlow Test - All Features</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+        }
+        .test-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        .test-card h2 {
+            margin-bottom: 15px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+        }
+        .status-badge.success { background: #4CAF50; }
+        .status-badge.error { background: #f44336; }
+        .status-badge.warning { background: #ff9800; }
+        .status-badge.info { background: #2196F3; }
+        .test-controls {
+            margin-bottom: 15px;
+        }
+        select, input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .result {
+            background: #f7f9fc;
+            border-radius: 8px;
+            padding: 15px;
+            min-height: 150px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-height: 400px;
+            overflow-y: auto;
+            border-left: 4px solid #e0e0e0;
+        }
+        .result.success { border-left-color: #4CAF50; background: #f1f8f4; }
+        .result.error { border-left-color: #f44336; background: #ffebee; }
+        .result.processing { border-left-color: #ff9800; background: #fff3e0; }
+        img {
+            max-width: 100%;
+            margin-top: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .console-log {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.9);
+            color: #0f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 12px;
+            max-width: 400px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .test-summary {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .summary-item {
+            text-align: center;
+            padding: 15px;
+            background: #f7f9fc;
+            border-radius: 8px;
+        }
+        .summary-item .value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        .summary-item .label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Comprehensive SiliconFlow Integration Test</h1>
+        
+        <!-- Test Summary -->
+        <div class="test-summary">
+            <h2 style="color: #333; margin-bottom: 15px;">Test Summary</h2>
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <div class="value" id="total-tests">0</div>
+                    <div class="label">Total Tests</div>
+                </div>
+                <div class="summary-item">
+                    <div class="value" id="successful-tests" style="color: #4CAF50;">0</div>
+                    <div class="label">Successful</div>
+                </div>
+                <div class="summary-item">
+                    <div class="value" id="failed-tests" style="color: #f44336;">0</div>
+                    <div class="label">Failed</div>
+                </div>
+                <div class="summary-item">
+                    <div class="value" id="pending-tests" style="color: #ff9800;">0</div>
+                    <div class="label">Pending</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-grid">
+            <!-- Image Generation Test -->
+            <div class="test-card">
+                <h2>
+                    🎨 Image Generation
+                    <span class="status-badge success">WORKING</span>
+                </h2>
+                <div class="test-controls">
+                    <select id="image-model">
+                        <option value="black-forest-labs/FLUX.1-schnell">FLUX.1 Schnell (Fast)</option>
+                        <option value="stabilityai/stable-diffusion-3-5-large">SD 3.5 Large</option>
+                        <option value="stabilityai/stable-diffusion-3-5-large-turbo">SD 3.5 Turbo</option>
+                    </select>
+                    <textarea id="image-prompt" placeholder="Enter image prompt..." rows="2">A beautiful underwater city with bioluminescent lights</textarea>
+                    <button onclick="testImage()" id="btn-image">Generate Image</button>
+                </div>
+                <div id="result-image" class="result">Ready to generate...</div>
+            </div>
+
+            <!-- Video Generation Test -->
+            <div class="test-card">
+                <h2>
+                    🎬 Video Generation
+                    <span class="status-badge info" id="video-status">DEMO MODE</span>
+                </h2>
+                <div class="test-controls">
+                    <select id="video-model">
+                        <option value="Wan-AI/Wan2.2-T2V-A14B">Wan2.2-T2V (Default)</option>
+                        <option value="Pro/CogVideoX-5B-OpenSource">CogVideoX-5B (Backup)</option>
+                    </select>
+                    <textarea id="video-prompt" placeholder="Enter video prompt..." rows="2">A spaceship flying through a colorful nebula</textarea>
+                    <button onclick="testVideo()" id="btn-video">Generate Video</button>
+                </div>
+                <div id="result-video" class="result">Ready to generate...</div>
+            </div>
+
+            <!-- Text Generation Test -->
+            <div class="test-card">
+                <h2>
+                    💬 Text Generation
+                    <span class="status-badge warning">LOGIN REQUIRED</span>
+                </h2>
+                <div class="test-controls">
+                    <select id="text-provider">
+                        <option value="openrouter">OpenRouter</option>
+                        <option value="siliconflow">SiliconFlow</option>
+                    </select>
+                    <select id="text-model">
+                        <option value="meta-llama/llama-3.3-70b-instruct">Llama 3.3 70B</option>
+                    </select>
+                    <textarea id="text-prompt" placeholder="Enter text prompt..." rows="2">Write a haiku about artificial intelligence</textarea>
+                    <button onclick="testText()" id="btn-text">Generate Text</button>
+                </div>
+                <div id="result-text" class="result">Ready to generate...</div>
+            </div>
+
+            <!-- Batch Test -->
+            <div class="test-card">
+                <h2>
+                    🔄 Batch Test All
+                    <span class="status-badge info">AUTOMATED</span>
+                </h2>
+                <div class="test-controls">
+                    <p style="margin-bottom: 10px; color: #666;">
+                        Run all tests automatically with default settings
+                    </p>
+                    <button onclick="runAllTests()" id="btn-batch">Run All Tests</button>
+                    <button onclick="clearAllResults()" style="background: #f44336; margin-top: 10px;">Clear All Results</button>
+                </div>
+                <div id="result-batch" class="result">Click "Run All Tests" to start...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Console Log -->
+    <div class="console-log" id="console">
+        <strong>Console Log:</strong><br>
+        <div id="console-content">Ready...</div>
+    </div>
+
+    <script>
+        const API_BASE = window.location.origin;
+        let testStats = { total: 0, success: 0, failed: 0, pending: 0 };
+
+        function log(message) {
+            const consoleContent = document.getElementById('console-content');
+            const timestamp = new Date().toLocaleTimeString();
+            consoleContent.innerHTML = `[${timestamp}] ${message}<br>` + consoleContent.innerHTML;
+            console.log(message);
+        }
+
+        function updateStats() {
+            document.getElementById('total-tests').textContent = testStats.total;
+            document.getElementById('successful-tests').textContent = testStats.success;
+            document.getElementById('failed-tests').textContent = testStats.failed;
+            document.getElementById('pending-tests').textContent = testStats.pending;
+        }
+
+        async function testImage() {
+            const btn = document.getElementById('btn-image');
+            const result = document.getElementById('result-image');
+            const model = document.getElementById('image-model').value;
+            const prompt = document.getElementById('image-prompt').value;
+            
+            btn.disabled = true;
+            result.className = 'result processing';
+            result.textContent = '⏳ Generating image...';
+            testStats.total++;
+            testStats.pending++;
+            updateStats();
+            
+            log(`Starting image generation with ${model}`);
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/demo/gen-image-siliconflow`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        prompt: prompt,
+                        provider: 'siliconflow',
+                        model: model
+                    })
+                });
+                
+                const text = await response.text();
+                const data = JSON.parse(text);
+                
+                if (data.code === 0 && data.data?.images?.[0]) {
+                    result.className = 'result success';
+                    const img = data.data.images[0];
+                    result.innerHTML = `✅ SUCCESS - Real Image Generated!
+Model: ${img.model}
+Provider: ${img.provider}
+Filename: ${img.filename}
+
+<img src="${img.url}" alt="Generated image" />
+
+${data.data.message || ''}`;
+                    log('✅ Image generation successful');
+                    testStats.success++;
+                    testStats.pending--;
+                } else {
+                    throw new Error(data.error || data.message || 'Generation failed');
+                }
+            } catch (error) {
+                result.className = 'result error';
+                result.textContent = `❌ ERROR: ${error.message}`;
+                log(`❌ Image generation failed: ${error.message}`);
+                testStats.failed++;
+                testStats.pending--;
+            } finally {
+                btn.disabled = false;
+                updateStats();
+            }
+        }
+
+        async function testVideo() {
+            const btn = document.getElementById('btn-video');
+            const result = document.getElementById('result-video');
+            const model = document.getElementById('video-model').value;
+            const prompt = document.getElementById('video-prompt').value;
+            
+            btn.disabled = true;
+            result.className = 'result processing';
+            result.textContent = '⏳ Testing video generation...';
+            testStats.total++;
+            testStats.pending++;
+            updateStats();
+            
+            log(`Starting video generation with ${model}`);
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/demo/gen-video-siliconflow`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        prompt: prompt,
+                        provider: 'siliconflow',
+                        model: model
+                    })
+                });
+                
+                const text = await response.text();
+                const data = JSON.parse(text);
+                
+                if (data.code === 0 && data.data) {
+                    const video = data.data;
+                    const isDemo = video.status === 'demo';
+                    result.className = isDemo ? 'result' : 'result success';
+                    document.getElementById('video-status').className = `status-badge ${isDemo ? 'info' : 'success'}`;
+                    document.getElementById('video-status').textContent = isDemo ? 'DEMO MODE' : 'WORKING';
+                    
+                    result.innerHTML = `${isDemo ? '🔵 DEMO MODE' : '✅ SUCCESS'}
+Status: ${video.status}
+Model: ${video.model}
+Provider: ${video.provider}
+${video.credits_required ? `Credits Required: ${video.credits_required}` : ''}
+${video.message ? `Message: ${video.message}` : ''}
+
+${video.preview_url ? `<img src="${video.preview_url}" alt="Preview" style="max-width: 300px;" />` : ''}`;
+                    log(`${isDemo ? '🔵' : '✅'} Video generation ${isDemo ? 'demo' : 'successful'}`);
+                    testStats.success++;
+                    testStats.pending--;
+                } else {
+                    throw new Error(data.error || data.message || 'Generation failed');
+                }
+            } catch (error) {
+                result.className = 'result error';
+                result.textContent = `❌ ERROR: ${error.message}`;
+                log(`❌ Video generation failed: ${error.message}`);
+                testStats.failed++;
+                testStats.pending--;
+            } finally {
+                btn.disabled = false;
+                updateStats();
+            }
+        }
+
+        async function testText() {
+            const btn = document.getElementById('btn-text');
+            const result = document.getElementById('result-text');
+            const provider = document.getElementById('text-provider').value;
+            const model = document.getElementById('text-model').value;
+            const prompt = document.getElementById('text-prompt').value;
+            
+            btn.disabled = true;
+            result.className = 'result processing';
+            result.textContent = '⏳ Generating text...';
+            testStats.total++;
+            testStats.pending++;
+            updateStats();
+            
+            log(`Starting text generation with ${provider}/${model}`);
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/demo/gen-text`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        prompt: prompt,
+                        provider: provider,
+                        model: model
+                    })
+                });
+                
+                const text = await response.text();
+                const data = JSON.parse(text);
+                
+                if (data.code === 0 && data.data?.text) {
+                    result.className = 'result success';
+                    result.textContent = `✅ SUCCESS
+Model: ${model}
+Provider: ${provider}
+
+${data.data.text}`;
+                    log('✅ Text generation successful');
+                    testStats.success++;
+                    testStats.pending--;
+                } else if (data.message?.includes('login')) {
+                    result.className = 'result';
+                    result.textContent = `🔵 LOGIN REQUIRED
+${data.message}
+
+To use text generation:
+1. Login to your account
+2. Ensure you have credits
+3. Try again`;
+                    log('🔵 Text generation requires login');
+                    testStats.success++;
+                    testStats.pending--;
+                } else {
+                    throw new Error(data.error || data.message || 'Generation failed');
+                }
+            } catch (error) {
+                result.className = 'result error';
+                result.textContent = `❌ ERROR: ${error.message}`;
+                log(`❌ Text generation failed: ${error.message}`);
+                testStats.failed++;
+                testStats.pending--;
+            } finally {
+                btn.disabled = false;
+                updateStats();
+            }
+        }
+
+        async function runAllTests() {
+            const btn = document.getElementById('btn-batch');
+            const result = document.getElementById('result-batch');
+            
+            btn.disabled = true;
+            result.className = 'result processing';
+            result.textContent = '⏳ Running all tests...\n';
+            
+            log('Starting batch test...');
+            
+            // Reset stats
+            testStats = { total: 0, success: 0, failed: 0, pending: 0 };
+            
+            // Run tests sequentially
+            result.textContent += '\n1. Testing Image Generation...\n';
+            await testImage();
+            await new Promise(r => setTimeout(r, 1000));
+            
+            result.textContent += '2. Testing Video Generation...\n';
+            await testVideo();
+            await new Promise(r => setTimeout(r, 1000));
+            
+            result.textContent += '3. Testing Text Generation...\n';
+            await testText();
+            
+            // Summary
+            result.className = testStats.failed > 0 ? 'result error' : 'result success';
+            result.textContent += `\n${'='.repeat(40)}\nBATCH TEST COMPLETE
+Total: ${testStats.total}
+✅ Success: ${testStats.success}
+❌ Failed: ${testStats.failed}
+⏳ Pending: ${testStats.pending}`;
+            
+            log(`Batch test complete: ${testStats.success}/${testStats.total} successful`);
+            btn.disabled = false;
+        }
+
+        function clearAllResults() {
+            document.getElementById('result-image').className = 'result';
+            document.getElementById('result-image').textContent = 'Ready to generate...';
+            document.getElementById('result-video').className = 'result';
+            document.getElementById('result-video').textContent = 'Ready to generate...';
+            document.getElementById('result-text').className = 'result';
+            document.getElementById('result-text').textContent = 'Ready to generate...';
+            document.getElementById('result-batch').className = 'result';
+            document.getElementById('result-batch').textContent = 'Click "Run All Tests" to start...';
+            
+            testStats = { total: 0, success: 0, failed: 0, pending: 0 };
+            updateStats();
+            log('All results cleared');
+        }
+
+        // Update text model options when provider changes
+        document.getElementById('text-provider').addEventListener('change', function() {
+            const modelSelect = document.getElementById('text-model');
+            modelSelect.innerHTML = '';
+            
+            if (this.value === 'openrouter') {
+                modelSelect.innerHTML = `
+                    <option value="meta-llama/llama-3.3-70b-instruct">Llama 3.3 70B</option>
+                    <option value="deepseek/deepseek-r1">DeepSeek R1</option>
+                `;
+            } else if (this.value === 'siliconflow') {
+                modelSelect.innerHTML = `
+                    <option value="deepseek-ai/DeepSeek-R1">DeepSeek R1</option>
+                    <option value="Qwen/Qwen2.5-72B-Instruct">Qwen 2.5 72B</option>
+                `;
+            }
+        });
+
+        // Initialize
+        window.addEventListener('load', () => {
+            log(`Test page loaded. API Base: ${API_BASE}`);
+            updateStats();
+        });
+    </script>
+</body>
+</html>

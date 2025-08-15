@@ -80,6 +80,46 @@
       "submit": "Submit"
     }
   },
+  "ai_generator": {
+    "tabs": {
+      "text": "Text",
+      "image": "Image",
+      "video": "Video"
+    },
+    "prompt": {
+      "label": "Describe what you want to generate...",
+      "placeholder_text": "Write a compelling story about...",
+      "placeholder_image": "A beautiful landscape with...",
+      "placeholder_video": "A cinematic scene showing..."
+    },
+    "model_selection": {
+      "provider_label": "AI Provider",
+      "model_label": "Model"
+    },
+    "generate_button": {
+      "text": "Generate Text",
+      "image": "Generate Image",
+      "video": "Generate Video",
+      "generating": "Generating..."
+    },
+    "result": {
+      "title": "Generated Result",
+      "reasoning": "View reasoning process",
+      "no_text": "No text generated",
+      "no_image": "No image generated",
+      "filename": "Filename"
+    },
+    "credits": "Credits",
+    "errors": {
+      "empty_prompt": "Please enter a prompt",
+      "sign_in_required": "Please sign in to generate content",
+      "generation_failed": "Failed to generate content",
+      "video_coming_soon": "Video generation coming soon!"
+    },
+    "success": {
+      "generated": "Content generated successfully!"
+    }
+  },
   "blog": {
     "title": "Blog",
     "description": "News, resources, and updates about ShipAny",

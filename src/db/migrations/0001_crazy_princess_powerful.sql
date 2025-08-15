@@ -1,0 +1,60 @@
+CREATE TABLE "subscription_plans" (
+	"id" integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "subscription_plans_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START WITH 1 CACHE 1),
+	"plan_id" varchar(50) NOT NULL,
+	"plan_name" varchar(100) NOT NULL,
+	"description" varchar(500),
+	"monthly_price" integer NOT NULL,
+	"yearly_price" integer NOT NULL,
+	"currency" varchar(10) DEFAULT 'USD' NOT NULL,
+	"monthly_generation_limit" integer,
+	"daily_generation_limit" integer,
+	"priority_queue" boolean DEFAULT false NOT NULL,
+	"generation_speed" varchar(20) DEFAULT 'normal' NOT NULL,
+	"support_level" varchar(20) DEFAULT 'basic' NOT NULL,
+	"api_access" boolean DEFAULT false NOT NULL,
+	"custom_models" boolean DEFAULT false NOT NULL,
+	"is_active" boolean DEFAULT true NOT NULL,
+	"is_featured" boolean DEFAULT false NOT NULL,
+	"display_order" integer DEFAULT 0 NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now(),
+	"updated_at" timestamp with time zone DEFAULT now(),
+	CONSTRAINT "subscription_plans_plan_id_unique" UNIQUE("plan_id")
+);
+--> statement-breakpoint
+CREATE TABLE "subscription_usage" (
+	"id" integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "subscription_usage_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START WITH 1 CACHE 1),
+	"user_uuid" varchar(255) NOT NULL,
+	"subscription_id" integer NOT NULL,
+	"usage_type" varchar(50) NOT NULL,
+	"model_used" varchar(100),
+	"prompt" varchar(1000),
+	"result_id" varchar(255),
+	"credits_consumed" integer DEFAULT 0 NOT NULL,
+	"count" integer DEFAULT 1 NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now()
+);
+--> statement-breakpoint
+CREATE TABLE "subscriptions" (
+	"id" integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "subscriptions_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START WITH 1 CACHE 1),
+	"user_uuid" varchar(255) NOT NULL,
+	"user_email" varchar(255) NOT NULL,
+	"plan_id" varchar(50) NOT NULL,
+	"plan_name" varchar(100) NOT NULL,
+	"status" varchar(50) NOT NULL,
+	"interval" varchar(20) NOT NULL,
+	"price" integer NOT NULL,
+	"currency" varchar(10) DEFAULT 'USD' NOT NULL,
+	"started_at" timestamp with time zone NOT NULL,
+	"current_period_start" timestamp with time zone NOT NULL,
+	"current_period_end" timestamp with time zone NOT NULL,
+	"cancelled_at" timestamp with time zone,
+	"stripe_subscription_id" varchar(255),
+	"stripe_customer_id" varchar(255),
+	"last_payment_at" timestamp with time zone,
+	"next_payment_at" timestamp with time zone,
+	"monthly_limit" integer,
+	"used_this_month" integer DEFAULT 0 NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now(),
+	"updated_at" timestamp with time zone DEFAULT now(),
+	CONSTRAINT "subscriptions_user_uuid_unique" UNIQUE("user_uuid")
+);

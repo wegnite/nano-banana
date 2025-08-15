@@ -1,5 +1,12 @@
 import { Config, Response, baseUrl, getToken } from "./client";
 
+/**
+ * Kling 图片生成 API 客户端
+ * 
+ * 负责与 Kling AI 图片生成服务进行通信
+ * 提供创建任务、查询任务状态等功能
+ * 使用 Bearer Token 进行身份验证
+ */
 class Client {
   private token: string;
 

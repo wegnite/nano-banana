@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Generator Test Page</title>
+    <style>
+        body { 
+            font-family: system-ui, -apple-system, sans-serif; 
+            max-width: 800px; 
+            margin: 50px auto; 
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 { 
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+        .form-group { 
+            margin-bottom: 20px; 
+        }
+        label { 
+            display: block; 
+            margin-bottom: 5px; 
+            font-weight: bold;
+            color: #555;
+        }
+        select, textarea, button { 
+            width: 100%; 
+            padding: 10px; 
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        textarea { 
+            min-height: 100px; 
+            resize: vertical;
+        }
+        button { 
+            background: #007bff; 
+            color: white; 
+            border: none; 
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        button:hover { 
+            background: #0056b3; 
+        }
+        button:disabled { 
+            background: #ccc; 
+            cursor: not-allowed;
+        }
+        .result { 
+            margin-top: 20px; 
+            padding: 20px; 
+            background: #f8f9fa; 
+            border-radius: 5px;
+            border: 1px solid #dee2e6;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .error { 
+            background: #f8d7da; 
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+        .success { 
+            background: #d4edda; 
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border-color: #bee5eb;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .provider-info {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .provider-card {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .provider-card.working {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+        .provider-card.error {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 AI Generator Test Page</h1>
+        
+        <div class="info">
+            <strong>Quick Test:</strong> Use this page to test your AI text generation API.
+            <br>✅ OpenRouter is working
+            <br>❌ OpenAI needs account credits
+        </div>
+
+        <div class="provider-info">
+            <div class="provider-card working">
+                <strong>OpenRouter</strong><br>
+                ✅ Working
+            </div>
+            <div class="provider-card error">
+                <strong>OpenAI</strong><br>
+                ❌ Quota Exceeded
+            </div>
+        </div>
+
+        <form id="testForm">
+            <div class="form-group">
+                <label for="provider">Provider:</label>
+                <select id="provider" name="provider">
+                    <option value="openrouter">OpenRouter (Working ✅)</option>
+                    <option value="openai">OpenAI (Quota Exceeded ❌)</option>
+                    <option value="deepseek">DeepSeek</option>
+                    <option value="siliconflow">SiliconFlow</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="model">Model:</label>
+                <select id="model" name="model">
+                    <option value="meta-llama/llama-3.3-70b-instruct">Llama 3.3 70B</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="prompt">Prompt:</label>
+                <textarea id="prompt" name="prompt" placeholder="Enter your prompt here...">Write a haiku about JavaScript</textarea>
+            </div>
+
+            <button type="submit" id="submitBtn">Generate Text</button>
+        </form>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const providers = {
+            openrouter: [
+                { value: "meta-llama/llama-3.3-70b-instruct", text: "Llama 3.3 70B" },
+                { value: "deepseek/deepseek-r1", text: "DeepSeek R1" }
+            ],
+            openai: [
+                { value: "gpt-4o", text: "GPT-4o" },
+                { value: "gpt-4o-mini", text: "GPT-4o Mini" },
+                { value: "gpt-3.5-turbo", text: "GPT-3.5 Turbo" }
+            ],
+            deepseek: [
+                { value: "deepseek-chat", text: "DeepSeek Chat" },
+                { value: "deepseek-r1", text: "DeepSeek R1" }
+            ],
+            siliconflow: [
+                { value: "deepseek-ai/DeepSeek-R1", text: "DeepSeek R1" },
+                { value: "Qwen/Qwen2.5-72B-Instruct", text: "Qwen 2.5 72B" }
+            ]
+        };
+
+        const providerSelect = document.getElementById('provider');
+        const modelSelect = document.getElementById('model');
+        
+        providerSelect.addEventListener('change', () => {
+            const provider = providerSelect.value;
+            const models = providers[provider] || [];
+            
+            modelSelect.innerHTML = '';
+            models.forEach(model => {
+                const option = document.createElement('option');
+                option.value = model.value;
+                option.textContent = model.text;
+                modelSelect.appendChild(option);
+            });
+        });
+
+        document.getElementById('testForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const resultDiv = document.getElementById('result');
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Generating...';
+            resultDiv.innerHTML = '';
+            
+            const formData = {
+                provider: document.getElementById('provider').value,
+                model: document.getElementById('model').value,
+                prompt: document.getElementById('prompt').value
+            };
+            
+            try {
+                const response = await fetch('http://localhost:3001/api/demo/gen-text', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const data = await response.json();
+                console.log('Response:', data);
+                
+                if (response.ok && data.code === 0) {
+                    resultDiv.className = 'result success';
+                    resultDiv.innerHTML = `<strong>✅ Success!</strong>\n\n${data.data?.text || 'No text generated'}`;
+                    
+                    if (data.data?.reasoning) {
+                        resultDiv.innerHTML += `\n\n<strong>Reasoning:</strong>\n${data.data.reasoning}`;
+                    }
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.innerHTML = `<strong>❌ Error:</strong>\n${data.error || data.message || 'Unknown error'}`;
+                }
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = `<strong>❌ Network Error:</strong>\n${error.message}`;
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Generate Text';
+            }
+        });
+    </script>
+</body>
+</html>

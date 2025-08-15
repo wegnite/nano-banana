@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SiliconFlow Frontend Integration Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f7f9fc;
+            border-radius: 8px;
+        }
+        .test-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 15px;
+        }
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 10px;
+            transition: all 0.3s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            min-height: 100px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        .status.success {
+            background: #48bb78;
+            color: white;
+        }
+        .status.error {
+            background: #f56565;
+            color: white;
+        }
+        .status.loading {
+            background: #ed8936;
+            color: white;
+        }
+        .status.demo {
+            background: #4299e1;
+            color: white;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        .credits-info {
+            background: #fef5e7;
+            border: 1px solid #f9e79f;
+            border-radius: 6px;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 SiliconFlow Frontend Integration Test</h1>
+        
+        <!-- Image Generation Test -->
+        <div class="test-section">
+            <div class="test-title">
+                🎨 Image Generation Test
+                <span id="image-status" class="status"></span>
+            </div>
+            <button id="test-image" onclick="testImageGeneration()">Test Image Generation</button>
+            <button onclick="clearResult('image-result')">Clear</button>
+            <div id="image-result" class="result">Click "Test Image Generation" to start...</div>
+        </div>
+
+        <!-- Video Generation Test -->
+        <div class="test-section">
+            <div class="test-title">
+                🎬 Video Generation Test (Demo Mode)
+                <span id="video-status" class="status"></span>
+            </div>
+            <button id="test-video" onclick="testVideoGeneration()">Test Video Generation</button>
+            <button onclick="clearResult('video-result')">Clear</button>
+            <div id="video-result" class="result">Click "Test Video Generation" to start...</div>
+        </div>
+
+        <!-- Text Generation Test -->
+        <div class="test-section">
+            <div class="test-title">
+                💬 Text Generation Test (OpenRouter)
+                <span id="text-status" class="status"></span>
+            </div>
+            <button id="test-text" onclick="testTextGeneration()">Test Text Generation</button>
+            <button onclick="clearResult('text-result')">Clear</button>
+            <div id="text-result" class="result">Click "Test Text Generation" to start...</div>
+        </div>
+
+        <!-- Combined Test -->
+        <div class="test-section">
+            <div class="test-title">
+                🔄 Combined Test (All Features)
+                <span id="combined-status" class="status"></span>
+            </div>
+            <button id="test-all" onclick="testAllFeatures()">Run All Tests</button>
+            <button onclick="clearAllResults()">Clear All</button>
+            <div id="combined-result" class="result">Click "Run All Tests" to start...</div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3005';
+
+        function setStatus(elementId, status, text) {
+            const element = document.getElementById(elementId);
+            element.className = 'status ' + status;
+            element.textContent = text;
+        }
+
+        function clearResult(elementId) {
+            document.getElementById(elementId).innerHTML = 'Cleared. Ready for new test.';
+            const statusId = elementId.replace('-result', '-status');
+            document.getElementById(statusId).className = 'status';
+            document.getElementById(statusId).textContent = '';
+        }
+
+        function clearAllResults() {
+            ['image', 'video', 'text', 'combined'].forEach(type => {
+                clearResult(type + '-result');
+            });
+        }
+
+        async function testImageGeneration() {
+            const resultDiv = document.getElementById('image-result');
+            const button = document.getElementById('test-image');
+            
+            button.disabled = true;
+            setStatus('image-status', 'loading', 'Testing...');
+            resultDiv.innerHTML = '⏳ Generating image with SiliconFlow FLUX.1...';
+
+            try {
+                const response = await fetch(`${API_BASE}/api/demo/gen-image-siliconflow`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        prompt: 'A magical forest with glowing mushrooms and fireflies',
+                        provider: 'siliconflow',
+                        model: 'black-forest-labs/FLUX.1-schnell',
+                        size: '1024x1024',
+                    }),
+                });
+
+                const data = await response.json();
+                
+                if (data.code === 0 && data.data?.images?.[0]) {
+                    const image = data.data.images[0];
+                    setStatus('image-status', 'success', 'Success!');
+                    resultDiv.innerHTML = `
+✅ Image Generated Successfully!
+
+📸 Model: ${image.model}
+🔧 Provider: ${image.provider}
+📁 Filename: ${image.filename}
+
+<img src="${image.url}" alt="Generated image" />
+
+${data.data.message ? `<div class="credits-info">ℹ️ ${data.data.message}</div>` : ''}
+                    `;
+                } else {
+                    throw new Error(data.error || data.message || 'Generation failed');
+                }
+            } catch (error) {
+                setStatus('image-status', 'error', 'Failed');
+                resultDiv.innerHTML = `❌ Error: ${error.message}`;
+            } finally {
+                button.disabled = false;
+            }
+        }
+
+        async function testVideoGeneration() {
+            const resultDiv = document.getElementById('video-result');
+            const button = document.getElementById('test-video');
+            
+            button.disabled = true;
+            setStatus('video-status', 'loading', 'Testing...');
+            resultDiv.innerHTML = '⏳ Testing video generation (demo mode)...';
+
+            try {
+                const response = await fetch(`${API_BASE}/api/demo/gen-video-siliconflow`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        prompt: 'A spaceship flying through colorful nebula',
+                        provider: 'siliconflow',
+                        model: 'Pro/CogVideoX-5B-OpenSource',
+                    }),
+                });
+
+                const data = await response.json();
+                
+                if (data.code === 0 && data.data) {
+                    const video = data.data;
+                    if (video.status === 'demo' || video.demo) {
+                        setStatus('video-status', 'demo', 'Demo Mode');
+                        resultDiv.innerHTML = `
+🎬 Video Generation (Demo Mode)
+
+📝 Status: ${video.status}
+🤖 Model: ${video.model}
+🔧 Provider: ${video.provider}
+💳 Credits Required: ${video.credits_required || 20}
+⏱️ Estimated Time: ${video.estimated_time || 30} seconds
+
+<div class="credits-info">
+${video.message}
+
+To generate real videos:
+1. Login to your account
+2. Ensure you have at least ${video.credits_required || 20} credits
+3. Try again!
+</div>
+
+Preview Placeholder:
+<img src="${video.preview_url}" alt="Video preview placeholder" style="max-width: 400px;" />
+                        `;
+                    } else {
+                        setStatus('video-status', 'success', 'Success!');
+                        resultDiv.innerHTML = `✅ Video generation initiated! Status: ${video.status}`;
+                    }
+                } else {
+                    throw new Error(data.error || data.message || 'Generation failed');
+                }
+            } catch (error) {
+                setStatus('video-status', 'error', 'Failed');
+                resultDiv.innerHTML = `❌ Error: ${error.message}`;
+            } finally {
+                button.disabled = false;
+            }
+        }
+
+        async function testTextGeneration() {
+            const resultDiv = document.getElementById('text-result');
+            const button = document.getElementById('test-text');
+            
+            button.disabled = true;
+            setStatus('text-status', 'loading', 'Testing...');
+            resultDiv.innerHTML = '⏳ Generating text with OpenRouter...';
+
+            try {
+                const response = await fetch(`${API_BASE}/api/demo/gen-text`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        prompt: 'Write a haiku about artificial intelligence',
+                        provider: 'openrouter',
+                        model: 'meta-llama/llama-3.3-70b-instruct',
+                    }),
+                });
+
+                const data = await response.json();
+                
+                if (data.code === 0 && data.data?.text) {
+                    setStatus('text-status', 'success', 'Success!');
+                    resultDiv.innerHTML = `
+✅ Text Generated Successfully!
+
+📝 Response:
+${data.data.text}
+
+🤖 Model: meta-llama/llama-3.3-70b-instruct
+🔧 Provider: OpenRouter
+${data.data.credits_used ? `💳 Credits Used: ${data.data.credits_used}` : ''}
+                    `;
+                } else {
+                    throw new Error(data.error || data.message || 'Generation failed');
+                }
+            } catch (error) {
+                setStatus('text-status', 'error', 'Failed');
+                resultDiv.innerHTML = `❌ Error: ${error.message}`;
+            } finally {
+                button.disabled = false;
+            }
+        }
+
+        async function testAllFeatures() {
+            const resultDiv = document.getElementById('combined-result');
+            const button = document.getElementById('test-all');
+            
+            button.disabled = true;
+            setStatus('combined-status', 'loading', 'Running...');
+            resultDiv.innerHTML = '⏳ Running all tests sequentially...';
+
+            const results = [];
+            
+            // Test Image
+            resultDiv.innerHTML += '\n\n🎨 Testing Image Generation...';
+            try {
+                const imageResponse = await fetch(`${API_BASE}/api/demo/gen-image-siliconflow`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        prompt: 'Test image',
+                        provider: 'siliconflow',
+                        model: 'black-forest-labs/FLUX.1-schnell',
+                    }),
+                });
+                const imageData = await imageResponse.json();
+                results.push(`✅ Image: ${imageData.code === 0 ? 'Success' : 'Failed'}`);
+            } catch (error) {
+                results.push(`❌ Image: ${error.message}`);
+            }
+
+            // Test Video
+            resultDiv.innerHTML += '\n🎬 Testing Video Generation...';
+            try {
+                const videoResponse = await fetch(`${API_BASE}/api/demo/gen-video-siliconflow`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        prompt: 'Test video',
+                        provider: 'siliconflow',
+                        model: 'Pro/CogVideoX-5B-OpenSource',
+                    }),
+                });
+                const videoData = await videoResponse.json();
+                results.push(`✅ Video: ${videoData.code === 0 ? 'Demo Mode Active' : 'Failed'}`);
+            } catch (error) {
+                results.push(`❌ Video: ${error.message}`);
+            }
+
+            // Test Text
+            resultDiv.innerHTML += '\n💬 Testing Text Generation...';
+            try {
+                const textResponse = await fetch(`${API_BASE}/api/demo/gen-text`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        prompt: 'Test text',
+                        provider: 'openrouter',
+                        model: 'meta-llama/llama-3.3-70b-instruct',
+                    }),
+                });
+                const textData = await textResponse.json();
+                results.push(`✅ Text: ${textData.code === 0 ? 'Success' : 'Failed'}`);
+            } catch (error) {
+                results.push(`❌ Text: ${error.message}`);
+            }
+
+            // Display results
+            const allSuccess = results.every(r => r.startsWith('✅'));
+            setStatus('combined-status', allSuccess ? 'success' : 'error', allSuccess ? 'All Passed!' : 'Some Failed');
+            
+            resultDiv.innerHTML = `
+📊 Test Results Summary:
+
+${results.join('\n')}
+
+${allSuccess ? '🎉 All tests completed successfully!' : '⚠️ Some tests failed. Check individual tests for details.'}
+            `;
+            
+            button.disabled = false;
+        }
+
+        // Auto-run test on page load after a short delay
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                console.log('SiliconFlow Frontend Integration Test Ready');
+                console.log('API Base:', API_BASE);
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

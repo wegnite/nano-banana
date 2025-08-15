@@ -14,6 +14,13 @@ interface KlingImageModelConfig {
   fetch?: FetchFunction;
 }
 
+/**
+ * Kling 图片生成模型实现
+ * 
+ * 集成 Kling AI 的图片生成能力，实现 ImageModelV1 接口
+ * 处理图片生成请求，包括任务创建、状态轮询和结果获取
+ * 支持多种图片尺寸、宽高比等参数配置
+ */
 export class KlingImageModel implements ImageModelV1 {
   readonly specificationVersion = "v1";
 

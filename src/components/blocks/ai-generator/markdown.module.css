@@ -1,0 +1,78 @@
+/* Markdown 渲染器样式 */
+
+.markdown-content {
+  @apply text-foreground;
+}
+
+/* 优化代码块的滚动条样式 */
+.markdown-content pre::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+.markdown-content pre::-webkit-scrollbar-track {
+  @apply bg-muted/20 rounded;
+}
+
+.markdown-content pre::-webkit-scrollbar-thumb {
+  @apply bg-muted-foreground/30 rounded hover:bg-muted-foreground/50;
+}
+
+/* 优化表格样式 */
+.markdown-content table {
+  @apply min-w-full;
+}
+
+/* 优化列表嵌套样式 */
+.markdown-content ul ul,
+.markdown-content ol ol,
+.markdown-content ul ol,
+.markdown-content ol ul {
+  @apply ml-4 mt-2;
+}
+
+/* 优化代码块内的语法高亮 */
+.markdown-content .hljs {
+  @apply bg-transparent !important;
+}
+
+/* 任务列表样式 */
+.markdown-content input[type="checkbox"] {
+  @apply mr-2 align-middle;
+}
+
+/* 优化链接悬停效果 */
+.markdown-content a {
+  @apply transition-colors duration-200;
+}
+
+/* 优化引用块样式 */
+.markdown-content blockquote {
+  @apply relative;
+}
+
+.markdown-content blockquote::before {
+  content: '"';
+  @apply absolute -left-2 -top-2 text-4xl text-primary/30 font-serif;
+}
+
+/* 添加平滑滚动 */
+.markdown-content {
+  scroll-behavior: smooth;
+}
+
+/* 响应式图片 */
+.markdown-content img {
+  @apply max-w-full h-auto rounded-lg shadow-lg my-4;
+}
+
+/* 优化小屏幕上的代码块 */
+@media (max-width: 640px) {
+  .markdown-content pre {
+    @apply text-xs;
+  }
+  
+  .markdown-content table {
+    @apply text-sm;
+  }
+}

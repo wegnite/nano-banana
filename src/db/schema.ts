@@ -128,3 +128,103 @@ export const feedbacks = pgTable("feedbacks", {
   content: text(),
   rating: integer(),
 });
+
+// Subscriptions table - 用户订阅信息
+export const subscriptions = pgTable("subscriptions", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  
+  // 用户标识
+  user_uuid: varchar({ length: 255 }).notNull().unique(),
+  user_email: varchar({ length: 255 }).notNull(),
+  
+  // 订阅计划
+  plan_id: varchar({ length: 50 }).notNull(), // basic, pro, enterprise
+  plan_name: varchar({ length: 100 }).notNull(),
+  
+  // 订阅状态
+  status: varchar({ length: 50 }).notNull(), // active, cancelled, expired, paused
+  
+  // 计费信息
+  interval: varchar({ length: 20 }).notNull(), // monthly, yearly
+  price: integer().notNull(), // 价格（分）
+  currency: varchar({ length: 10 }).notNull().default("USD"),
+  
+  // 时间相关
+  started_at: timestamp({ withTimezone: true }).notNull(),
+  current_period_start: timestamp({ withTimezone: true }).notNull(),
+  current_period_end: timestamp({ withTimezone: true }).notNull(),
+  cancelled_at: timestamp({ withTimezone: true }),
+  
+  // 支付相关
+  stripe_subscription_id: varchar({ length: 255 }),
+  stripe_customer_id: varchar({ length: 255 }),
+  last_payment_at: timestamp({ withTimezone: true }),
+  next_payment_at: timestamp({ withTimezone: true }),
+  
+  // 使用限制
+  monthly_limit: integer(), // 每月使用限制，null 表示无限
+  used_this_month: integer().notNull().default(0), // 本月已使用次数
+  
+  // 元数据
+  created_at: timestamp({ withTimezone: true }).defaultNow(),
+  updated_at: timestamp({ withTimezone: true }).defaultNow(),
+});
+
+// Subscription Plans table - 订阅计划定义
+export const subscription_plans = pgTable("subscription_plans", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  
+  plan_id: varchar({ length: 50 }).notNull().unique(),
+  plan_name: varchar({ length: 100 }).notNull(),
+  description: varchar({ length: 500 }),
+  
+  // 价格设置
+  monthly_price: integer().notNull(), // 月付价格（分）
+  yearly_price: integer().notNull(), // 年付价格（分）
+  currency: varchar({ length: 10 }).notNull().default("USD"),
+  
+  // 使用限制
+  monthly_generation_limit: integer(), // null = 无限
+  daily_generation_limit: integer(), // null = 无限
+  
+  // 优先级和速度
+  priority_queue: boolean().notNull().default(false), // 优先队列
+  generation_speed: varchar({ length: 20 }).notNull().default("normal"), // slow, normal, fast
+  
+  // 其他特权
+  support_level: varchar({ length: 20 }).notNull().default("basic"), // basic, priority, dedicated
+  api_access: boolean().notNull().default(false),
+  custom_models: boolean().notNull().default(false),
+  
+  // 状态
+  is_active: boolean().notNull().default(true),
+  is_featured: boolean().notNull().default(false),
+  
+  // 排序
+  display_order: integer().notNull().default(0),
+  
+  created_at: timestamp({ withTimezone: true }).defaultNow(),
+  updated_at: timestamp({ withTimezone: true }).defaultNow(),
+});
+
+// Subscription Usage table - 订阅使用记录
+export const subscription_usage = pgTable("subscription_usage", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  
+  user_uuid: varchar({ length: 255 }).notNull(),
+  subscription_id: integer().notNull(),
+  
+  // 使用类型
+  usage_type: varchar({ length: 50 }).notNull(), // text_generation, image_generation, video_generation
+  model_used: varchar({ length: 100 }),
+  
+  // 使用详情
+  prompt: varchar({ length: 1000 }),
+  result_id: varchar({ length: 255 }),
+  
+  // 计数
+  credits_consumed: integer().notNull().default(0), // 如果混合计费，记录消耗的积分
+  count: integer().notNull().default(1), // 使用次数
+  
+  created_at: timestamp({ withTimezone: true }).defaultNow(),
+});

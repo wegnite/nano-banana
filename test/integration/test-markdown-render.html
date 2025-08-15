@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown Rendering Test</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #0a0a0a;
+            color: #e5e5e5;
+        }
+        .test-container {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .test-title {
+            color: #a78bfa;
+            margin-bottom: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .raw-content {
+            background: #262626;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 12px;
+            color: #94a3b8;
+        }
+        button {
+            background: linear-gradient(to right, #8b5cf6, #ec4899);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background: #1f1f1f;
+            border-radius: 6px;
+            border: 1px solid #404040;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="color: #f3f4f6; text-align: center;">🎨 Markdown Rendering Test Suite</h1>
+    
+    <div class="test-container">
+        <div class="test-title">Test 1: Your AI Response Example</div>
+        <div class="raw-content">要快速生成图片，可以根据需求选择以下方法，从简单到专业依次推荐：
+
+### 一、AI生成图片（最快）
+**推荐工具**：
+1. **MidJourney**（Discord平台）
+   - 步骤：注册Discord → 加入MidJourney服务器 → 输入`/imagine [描述词]` → 生成图片（约1分钟）
+   - 特点：艺术风格强，适合创意设计
+2. **DALL-E 3**（ChatGPT内或官网）
+   - 步骤：访问 [DALL-E](https://labs.openai.com/) → 输入自然语言描述 → 直接生成
+   - 优势：理解中文更精准，支持细节修改
+
+### 二、在线设计工具（无需安装）
+**推荐平台**：
+1. **Canva**（https://www.canva.com/）
+   - 操作：选择模板 → 拖拽修改文字/图片 → 导出（支持手机APP）
+   - 优势：10万+模板库，适合社交媒体配图</div>
+        <button onclick="testMarkdown(1)">Test This Content</button>
+        <div id="result1" class="result" style="display:none;"></div>
+    </div>
+
+    <div class="test-container">
+        <div class="test-title">Test 2: Code Block Example</div>
+        <div class="raw-content">## 代码示例
+
+这里是一个 Python 快速生成图片的例子：
+
+```python
+from PIL import Image, ImageDraw, ImageFont
+import numpy as np
+
+def create_gradient_image(width=800, height=600):
+    """创建渐变背景图片"""
+    # 创建渐变数组
+    gradient = np.linspace(0, 255, width)
+    gradient = np.tile(gradient, (height, 1))
+    
+    # 转换为图片
+    img = Image.fromarray(gradient.astype('uint8'))
+    img = img.convert('RGB')
+    
+    # 添加文字
+    draw = ImageDraw.Draw(img)
+    draw.text((50, 50), "AI Generated", fill='white')
+    
+    return img
+
+# 使用示例
+img = create_gradient_image()
+img.save('output.png')
+```
+
+这段代码展示了如何使用 Python 和 PIL 库快速创建一个带文字的渐变图片。</div>
+        <button onclick="testMarkdown(2)">Test This Content</button>
+        <div id="result2" class="result" style="display:none;"></div>
+    </div>
+
+    <div class="test-container">
+        <div class="test-title">Test 3: Table Example</div>
+        <div class="raw-content">## AI 图片生成工具对比
+
+| 工具名称 | 速度 | 质量 | 价格 | 适用场景 |
+|---------|------|------|------|----------|
+| **MidJourney** | ⚡⚡⚡ | ⭐⭐⭐⭐⭐ | $10/月起 | 艺术创作、概念设计 |
+| **DALL-E 3** | ⚡⚡⚡⚡ | ⭐⭐⭐⭐ | $15/月 | 快速原型、商业插图 |
+| **Stable Diffusion** | ⚡⚡ | ⭐⭐⭐⭐ | 免费 | 本地部署、批量生成 |
+| **Canva AI** | ⚡⚡⚡⚡⚡ | ⭐⭐⭐ | $12.99/月 | 社交媒体、营销素材 |
+
+> 💡 **提示**：选择工具时，考虑您的具体需求：
+> - 追求艺术性 → MidJourney
+> - 需要快速 → DALL-E 3 或 Canva
+> - 预算有限 → Stable Diffusion</div>
+        <button onclick="testMarkdown(3)">Test This Content</button>
+        <div id="result3" class="result" style="display:none;"></div>
+    </div>
+
+    <script>
+        // Simulated test function
+        function testMarkdown(testId) {
+            const resultDiv = document.getElementById('result' + testId);
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `
+                <div style="color: #10b981; margin-bottom: 10px;">✅ Markdown would be rendered here with:</div>
+                <ul style="color: #e5e5e5; line-height: 1.8;">
+                    <li>Proper heading hierarchy</li>
+                    <li>Syntax highlighted code blocks</li>
+                    <li>Formatted tables with borders</li>
+                    <li>Styled lists and blockquotes</li>
+                    <li>Clickable links</li>
+                    <li>Copy buttons for code blocks</li>
+                </ul>
+                <div style="margin-top: 15px; padding: 10px; background: #1e293b; border-radius: 4px;">
+                    <strong style="color: #f59e0b;">Note:</strong> This is a static test page. 
+                    Visit <a href="http://localhost:3005" style="color: #60a5fa;">http://localhost:3005</a> 
+                    to see the actual rendered Markdown in your AI Generator.
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

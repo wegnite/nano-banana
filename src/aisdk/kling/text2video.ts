@@ -1,5 +1,12 @@
 import { Config, Response, baseUrl, getToken } from "./client";
 
+/**
+ * Kling 文本转视频 API 客户端
+ * 
+ * 负责与 Kling AI 视频生成服务进行通信
+ * 提供文本描述生成视频的功能，支持多种参数配置
+ * 使用 Bearer Token 进行身份验证
+ */
 class Client {
   private token: string;
 

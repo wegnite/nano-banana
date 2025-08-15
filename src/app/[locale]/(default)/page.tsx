@@ -44,9 +44,14 @@ export default async function LandingPage({
       {page.hero && <AIGenerator hero={page.hero} />}
       {page.feature && <Feature section={page.feature} />}
       {/* {page.showcase && <Showcase section={page.showcase} />} */}
-      {page.stats && <Stats section={page.stats} />}
+      {/* 
+        暂时隐藏统计和评价部分 - Creem 支付平台合规要求
+        不能显示虚假的用户数量和评价信息
+        等获得真实数据后再启用
+      */}
+      {/* {page.stats && <Stats section={page.stats} />} */}
       {page.pricing && <Pricing pricing={page.pricing} />}
-      {page.testimonial && <Testimonial section={page.testimonial} />}
+      {/* {page.testimonial && <Testimonial section={page.testimonial} />} */}
       {page.faq && <FAQ section={page.faq} />}
       {page.cta && <CTA section={page.cta} />}
     </>

@@ -14,6 +14,13 @@ interface KlingVideoModelConfig {
   fetch?: FetchFunction;
 }
 
+/**
+ * Kling 视频生成模型实现
+ * 
+ * 集成 Kling AI 的视频生成能力，实现 VideoModelV1 接口
+ * 处理文本到视频的生成请求，支持任务创建和状态跟踪
+ * 包含轮询机制以等待视频生成完成
+ */
 export class KlingVideoModel implements VideoModelV1 {
   readonly specificationVersion = "v1";
 

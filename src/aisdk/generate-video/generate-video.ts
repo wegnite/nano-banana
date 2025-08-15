@@ -62,6 +62,12 @@ export async function generateVideo({
   return new DefaultGenerateVideoResult({ videos, warnings });
 }
 
+/**
+ * 默认的视频生成结果实现类
+ * 
+ * 封装视频生成操作的结果，包含生成的视频列表和警告信息
+ * 实现 GenerateVideoResult 接口，提供对生成结果的访问
+ */
 class DefaultGenerateVideoResult implements GenerateVideoResult {
   readonly videos: Array<GeneratedVideo>;
   readonly warnings: Array<VideoGenerationWarning>;
@@ -79,6 +85,12 @@ class DefaultGenerateVideoResult implements GenerateVideoResult {
   }
 }
 
+/**
+ * 默认的生成视频实现类
+ * 
+ * 处理视频数据的存储和格式转换，支持 base64 和 Uint8Array 两种格式
+ * 使用懒加载策略，仅在需要时进行格式转换以优化性能
+ */
 class DefaultGeneratedVideo implements GeneratedVideo {
   private base64Data: string | undefined;
   private uint8ArrayData: Uint8Array | undefined;

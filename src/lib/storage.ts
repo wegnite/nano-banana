@@ -9,6 +9,13 @@ export function newStorage(config?: StorageConfig) {
   return new Storage(config);
 }
 
+/**
+ * 云存储服务管理类
+ * 
+ * 提供文件上传和下载功能，支持与 AWS S3 兼容的存储服务
+ * 使用 AWS4 签名进行身份验证，支持 Cloudflare R2 等服务
+ * 处理文件的上传、下载以及从 URL 下载并上传的组合操作
+ */
 export class Storage {
   private endpoint: string;
   private accessKeyId: string;

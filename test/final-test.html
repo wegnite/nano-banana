@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final SiliconFlow Integration Test</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1a1a2e;
+            color: #eee;
+        }
+        h1 {
+            text-align: center;
+            color: #4ECDC4;
+        }
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .test-card {
+            background: #16213e;
+            border-radius: 12px;
+            padding: 20px;
+            border: 2px solid #0f3460;
+        }
+        .test-card h2 {
+            margin-top: 0;
+            color: #e94560;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .result {
+            background: #0f3460;
+            padding: 15px;
+            border-radius: 8px;
+            min-height: 100px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 13px;
+            overflow-x: auto;
+        }
+        .success { border-left: 4px solid #4CAF50; }
+        .error { border-left: 4px solid #f44336; }
+        .demo { border-left: 4px solid #2196F3; }
+        img {
+            max-width: 100%;
+            margin-top: 10px;
+            border-radius: 8px;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .status-badge.working { background: #4CAF50; }
+        .status-badge.demo { background: #2196F3; }
+        .status-badge.error { background: #f44336; }
+    </style>
+</head>
+<body>
+    <h1>🚀 SiliconFlow Integration - Final Test</h1>
+    
+    <div class="test-grid">
+        <!-- Image Generation Test -->
+        <div class="test-card">
+            <h2>🎨 Image Generation <span class="status-badge working">WORKING</span></h2>
+            <button onclick="testImage()" id="btn-image">Generate Image</button>
+            <div id="result-image" class="result">Ready to test...</div>
+        </div>
+
+        <!-- Video Generation Test -->
+        <div class="test-card">
+            <h2>🎬 Video Generation <span class="status-badge demo">DEMO MODE</span></h2>
+            <button onclick="testVideo()" id="btn-video">Generate Video</button>
+            <div id="result-video" class="result">Ready to test...</div>
+        </div>
+
+        <!-- Text Generation Test -->
+        <div class="test-card">
+            <h2>💬 Text Generation <span class="status-badge demo">LOGIN REQUIRED</span></h2>
+            <button onclick="testText()" id="btn-text">Generate Text</button>
+            <div id="result-text" class="result">Ready to test...</div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = window.location.origin;
+
+        async function testImage() {
+            const btn = document.getElementById('btn-image');
+            const result = document.getElementById('result-image');
+            
+            btn.disabled = true;
+            result.className = 'result';
+            result.textContent = '⏳ Generating image...';
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/demo/gen-image-siliconflow`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        prompt: 'A futuristic city with flying cars at sunset',
+                        provider: 'siliconflow',
+                        model: 'black-forest-labs/FLUX.1-schnell'
+                    })
+                });
+                
+                const text = await response.text();
+                console.log('Image response:', text);
+                
+                const data = JSON.parse(text);
+                
+                if (data.code === 0 && data.data?.images?.[0]) {
+                    result.className = 'result success';
+                    const img = data.data.images[0];
+                    result.innerHTML = `✅ SUCCESS - Real Image Generated!
+Model: ${img.model}
+Provider: ${img.provider}
+
+<img src="${img.url}" alt="Generated image" />
+
+${data.data.message || ''}`;
+                } else {
+                    throw new Error(data.error || data.message || 'Generation failed');
+                }
+            } catch (error) {
+                result.className = 'result error';
+                result.textContent = `❌ ERROR: ${error.message}`;
+                console.error(error);
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        async function testVideo() {
+            const btn = document.getElementById('btn-video');
+            const result = document.getElementById('result-video');
+            
+            btn.disabled = true;
+            result.className = 'result';
+            result.textContent = '⏳ Testing video generation...';
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/demo/gen-video-siliconflow`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        prompt: 'A robot dancing in a neon-lit city',
+                        provider: 'siliconflow',
+                        model: 'Pro/CogVideoX-5B-OpenSource'
+                    })
+                });
+                
+                const text = await response.text();
+                console.log('Video response:', text);
+                
+                const data = JSON.parse(text);
+                
+                if (data.code === 0 && data.data) {
+                    const video = data.data;
+                    result.className = video.status === 'demo' ? 'result demo' : 'result success';
+                    result.innerHTML = `${video.status === 'demo' ? '🔵 DEMO MODE' : '✅ SUCCESS'}
+Status: ${video.status}
+Model: ${video.model}
+Provider: ${video.provider}
+Credits Required: ${video.credits_required || 20}
+Message: ${video.message}
+
+${video.preview_url ? `<img src="${video.preview_url}" alt="Preview" style="max-width: 300px;" />` : ''}`;
+                } else {
+                    throw new Error(data.error || data.message || 'Generation failed');
+                }
+            } catch (error) {
+                result.className = 'result error';
+                result.textContent = `❌ ERROR: ${error.message}`;
+                console.error(error);
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        async function testText() {
+            const btn = document.getElementById('btn-text');
+            const result = document.getElementById('result-text');
+            
+            btn.disabled = true;
+            result.className = 'result';
+            result.textContent = '⏳ Generating text...';
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/demo/gen-text`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        prompt: 'Write a haiku about coding',
+                        provider: 'openrouter',
+                        model: 'meta-llama/llama-3.3-70b-instruct'
+                    })
+                });
+                
+                const text = await response.text();
+                console.log('Text response:', text);
+                
+                const data = JSON.parse(text);
+                
+                if (data.code === 0 && data.data?.text) {
+                    result.className = 'result success';
+                    result.textContent = `✅ SUCCESS
+Model: meta-llama/llama-3.3-70b-instruct
+Provider: OpenRouter
+
+${data.data.text}`;
+                } else if (data.message?.includes('login')) {
+                    result.className = 'result demo';
+                    result.textContent = `🔵 LOGIN REQUIRED
+${data.message}
+
+To use text generation:
+1. Login to your account
+2. Ensure you have credits
+3. Try again`;
+                } else {
+                    throw new Error(data.error || data.message || 'Generation failed');
+                }
+            } catch (error) {
+                result.className = 'result error';
+                result.textContent = `❌ ERROR: ${error.message}`;
+                console.error(error);
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        // Show API base on load
+        window.addEventListener('load', () => {
+            console.log('API Base:', API_BASE);
+            console.log('Ready for testing!');
+        });
+    </script>
+</body>
+</html>

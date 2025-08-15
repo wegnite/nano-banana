@@ -40,6 +40,48 @@ cp .env.example .env.development
 
 - Set your i18n messages in `src/i18n/messages`
 
+## Development Guidelines
+
+### File Organization Rules
+
+#### Test Files
+**IMPORTANT: All test files MUST be placed in the `test/` directory**
+
+```
+test/
+├── api/           # API endpoint tests
+├── integration/   # Integration tests
+├── e2e/          # End-to-end tests
+└── unit/         # Unit tests
+```
+
+**Never place test files in the root directory!**
+
+### Project Structure
+
+- `/src` - Source code
+- `/public` - Static files
+- `/test` - ALL test files go here
+- `/docs` - Documentation
+
+### Documentation Naming Convention
+
+**IMPORTANT: All documentation files MUST use Chinese naming**
+
+```
+docs/
+├── 完整项目指南.md        # Complete project guide
+├── 会员权益体系设计.md    # Membership benefits system design
+├── 项目分析与提示词指南.md  # Project analysis and prompts guide
+└── 产品需求文档.md        # Product requirements document
+```
+
+**文档命名规范：**
+- 所有文档文件必须使用中文命名
+- 文件名应清晰描述文档内容
+- 避免使用英文缩写（如 PRD、API 等）
+- 使用 .md 作为 Markdown 文件扩展名
+
 ## Deploy
 
 - Deploy to Vercel

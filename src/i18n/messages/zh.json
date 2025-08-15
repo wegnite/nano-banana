@@ -80,6 +80,46 @@
       "submit": "提交"
     }
   },
+  "ai_generator": {
+    "tabs": {
+      "text": "文本",
+      "image": "图像",
+      "video": "视频"
+    },
+    "prompt": {
+      "label": "描述您想要生成的内容...",
+      "placeholder_text": "写一个引人入胜的故事关于...",
+      "placeholder_image": "一个美丽的风景画，包含...",
+      "placeholder_video": "一个电影场景展示..."
+    },
+    "model_selection": {
+      "provider_label": "AI 提供商",
+      "model_label": "模型"
+    },
+    "generate_button": {
+      "text": "生成文本",
+      "image": "生成图像",
+      "video": "生成视频",
+      "generating": "生成中..."
+    },
+    "result": {
+      "title": "生成结果",
+      "reasoning": "查看推理过程",
+      "no_text": "未生成文本",
+      "no_image": "未生成图像",
+      "filename": "文件名"
+    },
+    "credits": "额度",
+    "errors": {
+      "empty_prompt": "请输入提示词",
+      "sign_in_required": "请登录后生成内容",
+      "generation_failed": "生成内容失败",
+      "video_coming_soon": "视频生成功能即将推出！"
+    },
+    "success": {
+      "generated": "内容生成成功！"
+    }
+  },
   "blog": {
     "title": "博客",
     "description": "关于 ShipAny 的新闻、资源和更新",
