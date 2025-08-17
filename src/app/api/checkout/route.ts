@@ -10,6 +10,14 @@ import { getSnowId } from "@/lib/hash";
 import { getPricingPage } from "@/services/page";
 import { PricingItem } from "@/types/blocks/pricing";
 import { orders } from "@/db/schema";
+import { headers, cookies } from "next/headers";
+import { 
+  getOrCreateAttributionCookie,
+  getOrderAttributionForStorage,
+  parseUserAgent,
+  parseIPLocation,
+  getAttributionFromRequest
+} from "@/services/attribution";
 
 export async function POST(req: Request) {
   try {
@@ -126,6 +134,33 @@ export async function POST(req: Request) {
 
     expired_at = newDate.toISOString();
 
+    // Get order attribution data from current session
+    let orderAttributionData = {};
+    try {
+      // Get attribution from request
+      const attributionData = await getAttributionFromRequest(req, req.url);
+      
+      // Get attribution cookie for source tracking
+      const attributionCookie = await getOrCreateAttributionCookie();
+      
+      // Combine current session data with cookie data for order attribution
+      const currentAttribution = {
+        ...attributionData,
+        source: attributionCookie.last.source || attributionData.source,
+        medium: attributionCookie.last.medium || attributionData.medium,
+        campaign: attributionCookie.last.campaign || attributionData.campaign,
+        sessionId: attributionCookie.visitor.sessionId,
+      };
+      
+      // Get order attribution fields
+      orderAttributionData = getOrderAttributionForStorage(currentAttribution);
+      
+      console.log("Order attribution data:", orderAttributionData);
+    } catch (attrError) {
+      // Log error but don't fail order creation
+      console.error("Failed to get order attribution:", attrError);
+    }
+
     const order = {
       order_no: order_no,
       created_at: new Date(created_at),
@@ -140,6 +175,7 @@ export async function POST(req: Request) {
       product_id: product_id,
       product_name: product_name,
       valid_months: valid_months,
+      ...orderAttributionData, // Add attribution data to order
     };
     await insertOrder(order as typeof orders.$inferInsert);
 

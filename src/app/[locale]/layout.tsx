@@ -8,6 +8,7 @@ import { Metadata } from "next";
 import { NextAuthSessionProvider } from "@/auth/session";
 import { NextIntlClientProvider } from "next-intl";
 import { ThemeProvider } from "@/providers/theme";
+import AttributionTracker from "@/components/attribution/tracker";
 
 export async function generateMetadata({
   params,
@@ -45,7 +46,10 @@ export default async function LocaleLayout({
     <NextIntlClientProvider messages={messages}>
       <NextAuthSessionProvider>
         <AppContextProvider>
-          <ThemeProvider>{children}</ThemeProvider>
+          <ThemeProvider>
+            <AttributionTracker />
+            {children}
+          </ThemeProvider>
         </AppContextProvider>
       </NextAuthSessionProvider>
     </NextIntlClientProvider>

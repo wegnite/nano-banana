@@ -6,8 +6,8 @@
  */
 
 import { db } from "@/db";
-import { subscriptions, subscription_plans, subscription_usage } from "@/db/schema";
-import { eq, and, gte, lte, sql } from "drizzle-orm";
+import { subscriptions, subscription_usage } from "@/db/schema";
+import { eq, and, lte, sql } from "drizzle-orm";
 
 /**
  * 订阅计划类型
@@ -145,7 +145,8 @@ export const DEFAULT_PLANS = {
  */
 export async function getUserSubscription(userUuid: string) {
   try {
-    const [subscription] = await db
+    // 获取数据库实例（db是一个函数，需要调用）
+    const [subscription] = await db()
       .select()
       .from(subscriptions)
       .where(
@@ -158,7 +159,7 @@ export async function getUserSubscription(userUuid: string) {
 
     return subscription || null;
   } catch (error) {
-    console.error("Get user subscription failed:", error);
+    console.error("获取用户订阅失败:", error);
     return null;
   }
 }
@@ -174,8 +175,8 @@ export async function hasActiveSubscription(userUuid: string): Promise<boolean> 
   // 检查订阅是否过期
   const now = new Date();
   if (subscription.current_period_end && subscription.current_period_end < now) {
-    // 更新订阅状态为过期
-    await db
+    // 更新订阅状态为过期（db是函数，需要调用）
+    await db()
       .update(subscriptions)
       .set({ status: SubscriptionStatus.EXPIRED })
       .where(eq(subscriptions.id, subscription.id));
@@ -197,14 +198,9 @@ export async function getUserSubscriptionPlan(userUuid: string) {
     return DEFAULT_PLANS[SubscriptionPlan.FREE];
   }
   
-  // 获取计划详情
-  const [plan] = await db
-    .select()
-    .from(subscription_plans)
-    .where(eq(subscription_plans.plan_id, subscription.plan_id))
-    .limit(1);
-  
-  return plan || DEFAULT_PLANS[subscription.plan_id as SubscriptionPlan] || DEFAULT_PLANS[SubscriptionPlan.FREE];
+  // 直接从 DEFAULT_PLANS 获取计划详情
+  // 因为数据库中的 subscription_plans 表结构不包含所有字段
+  return DEFAULT_PLANS[subscription.plan_id as SubscriptionPlan] || DEFAULT_PLANS[SubscriptionPlan.FREE];
 }
 
 /**
@@ -220,33 +216,36 @@ export async function canUseFeature(
   
   // 检查是否有活跃订阅
   if (!subscription && plan.plan_id !== SubscriptionPlan.FREE) {
-    return { allowed: false, reason: "No active subscription" };
+    return { allowed: false, reason: "没有活跃订阅" };
   }
   
   // 检查月度限制
-  if (plan.monthly_generation_limit !== null) {
+  if (plan.monthly_generation_limit !== null && plan.monthly_generation_limit !== undefined) {
     const usedThisMonth = subscription?.used_this_month || 0;
     if (usedThisMonth >= plan.monthly_generation_limit) {
       return { 
         allowed: false, 
-        reason: `Monthly limit reached (${plan.monthly_generation_limit} generations)` 
+        reason: `已达到月度限制 (${plan.monthly_generation_limit} 次)` 
       };
     }
   }
   
   // 检查模型权限
   if (model) {
-    let allowedModels: any[] = [];
+    let allowedModels: string[] = [];
+    
+    // 确保 plan 是 DEFAULT_PLANS 中的对象
+    const defaultPlan = plan as typeof DEFAULT_PLANS[SubscriptionPlan.FREE];
     
     switch (feature) {
       case "text":
-        allowedModels = plan.allowed_text_models || [];
+        allowedModels = defaultPlan.allowed_text_models || [];
         break;
       case "image":
-        allowedModels = plan.allowed_image_models || [];
+        allowedModels = defaultPlan.allowed_image_models || [];
         break;
       case "video":
-        allowedModels = plan.allowed_video_models || [];
+        allowedModels = defaultPlan.allowed_video_models || [];
         break;
     }
     
@@ -254,7 +253,7 @@ export async function canUseFeature(
     if (!allowedModels.includes("*") && !allowedModels.includes(model)) {
       return { 
         allowed: false, 
-        reason: `Model ${model} not available in your plan` 
+        reason: `模型 ${model} 在您的计划中不可用` 
       };
     }
   }
@@ -276,8 +275,8 @@ export async function recordSubscriptionUsage(
     
     if (!subscription) return;
     
-    // 记录使用
-    await db.insert(subscription_usage).values({
+    // 记录使用（db是函数，需要调用）
+    await db().insert(subscription_usage).values({
       user_uuid: userUuid,
       subscription_id: subscription.id,
       usage_type: usageType,
@@ -286,8 +285,8 @@ export async function recordSubscriptionUsage(
       count: 1,
     });
     
-    // 更新本月使用次数
-    await db
+    // 更新本月使用次数（db是函数，需要调用）
+    await db()
       .update(subscriptions)
       .set({ 
         used_this_month: sql`${subscriptions.used_this_month} + 1`,
@@ -296,7 +295,7 @@ export async function recordSubscriptionUsage(
       .where(eq(subscriptions.id, subscription.id));
     
   } catch (error) {
-    console.error("Record subscription usage failed:", error);
+    console.error("记录订阅使用失败:", error);
   }
 }
 
@@ -323,7 +322,8 @@ export async function createSubscription(
       periodEnd.setFullYear(periodEnd.getFullYear() + 1);
     }
     
-    const [subscription] = await db
+    // 创建新订阅记录（db是函数，需要调用）
+    const [subscription] = await db()
       .insert(subscriptions)
       .values({
         user_uuid: userUuid,
@@ -341,7 +341,7 @@ export async function createSubscription(
         stripe_customer_id: stripeCustomerId,
         last_payment_at: now,
         next_payment_at: periodEnd,
-        features: plan.features,
+        // features 字段不存在于 subscriptions 表中，移除
         monthly_limit: plan.monthly_generation_limit,
         used_this_month: 0,
       })
@@ -349,7 +349,7 @@ export async function createSubscription(
     
     return subscription;
   } catch (error) {
-    console.error("Create subscription failed:", error);
+    console.error("创建订阅失败:", error);
     throw error;
   }
 }
@@ -362,11 +362,11 @@ export async function cancelSubscription(userUuid: string) {
     const subscription = await getUserSubscription(userUuid);
     
     if (!subscription) {
-      throw new Error("No active subscription found");
+      throw new Error("没有找到活跃订阅");
     }
     
-    // 更新订阅状态
-    await db
+    // 更新订阅状态（db是函数，需要调用）
+    await db()
       .update(subscriptions)
       .set({
         status: SubscriptionStatus.CANCELLED,
@@ -377,7 +377,7 @@ export async function cancelSubscription(userUuid: string) {
     
     return true;
   } catch (error) {
-    console.error("Cancel subscription failed:", error);
+    console.error("取消订阅失败:", error);
     throw error;
   }
 }
@@ -389,8 +389,8 @@ export async function resetMonthlyUsage() {
   try {
     const now = new Date();
     
-    // 重置所有活跃订阅的月度使用量
-    await db
+    // 重置所有活跃订阅的月度使用量（db是函数，需要调用）
+    await db()
       .update(subscriptions)
       .set({
         used_this_month: 0,
@@ -403,8 +403,8 @@ export async function resetMonthlyUsage() {
         )
       );
     
-    console.log("Monthly usage reset completed");
+    console.log("月度使用量重置完成");
   } catch (error) {
-    console.error("Reset monthly usage failed:", error);
+    console.error("重置月度使用量失败:", error);
   }
 }

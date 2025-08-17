@@ -8,6 +8,7 @@
  * - 用户信息获取
  * - API Key 认证
  * - 积分管理
+ * - 用户归因追踪
  * 
  * @module services/user
  */
@@ -19,17 +20,23 @@ import { User } from "@/types/user";
 import { auth } from "@/auth";
 import { getIsoTimestr, getOneYearLaterTimestr } from "@/lib/time";
 import { getUserUuidByApiKey } from "@/models/apikey";
-import { headers } from "next/headers";
+import { headers, cookies } from "next/headers";
 import { increaseCredits } from "./credit";
 import { users } from "@/db/schema";
 import { getUuid } from "@/lib/hash";
+import { 
+  getOrCreateAttributionCookie, 
+  getAttributionForStorage,
+  parseUserAgent,
+  parseIPLocation 
+} from "./attribution";
 
 /**
  * 保存用户到数据库
  * 
  * 业务逻辑：
  * 1. 检查用户是否已存在（通过邮箱）
- * 2. 不存在：创建新用户并赠送初始积分
+ * 2. 不存在：创建新用户并赠送初始积分，记录归因信息
  * 3. 已存在：返回现有用户信息
  * 
  * @param {User} user - 用户对象
@@ -38,6 +45,11 @@ import { getUuid } from "@/lib/hash";
  * 新用户奖励：
  * - 赠送积分数量：CreditsAmount.NewUserGet
  * - 积分有效期：1年
+ * 
+ * 归因追踪：
+ * - 记录用户首次来源（UTM参数、Referrer等）
+ * - 记录设备信息（UA、操作系统、浏览器等）
+ * - 记录地理位置（基于IP）
  * 
  * @throws {Error} 当邮箱无效或保存失败时抛出异常
  */
@@ -55,13 +67,58 @@ export async function saveUser(user: User) {
         user.uuid = getUuid();
       }
 
-      console.log("user to be inserted:", user);
+      // Get attribution data from cookie for new users
+      try {
+        const attributionCookie = await getOrCreateAttributionCookie();
+        const attributionData = getAttributionForStorage(attributionCookie);
+        
+        // Get additional device and location info from headers
+        const headersList = await headers();
+        const userAgent = headersList.get('user-agent') || '';
+        const ip = headersList.get('x-forwarded-for')?.split(',')[0] || 
+                   headersList.get('x-real-ip') || '';
+        const language = headersList.get('accept-language')?.split(',')[0] || '';
+        
+        // Parse device info from UA if not already in attribution
+        if (userAgent && !attributionData.first_user_agent) {
+          const deviceInfo = parseUserAgent(userAgent);
+          attributionData.first_user_agent = userAgent;
+          attributionData.first_device_type = deviceInfo.deviceType;
+          attributionData.first_os = deviceInfo.os;
+          attributionData.first_browser = deviceInfo.browser;
+        }
+        
+        // Parse IP location if not already in attribution
+        if (ip && !attributionData.first_ip_address) {
+          const locationInfo = await parseIPLocation(ip);
+          attributionData.first_ip_address = ip;
+          attributionData.first_country = locationInfo.country;
+          attributionData.first_region = locationInfo.region;
+          attributionData.first_city = locationInfo.city;
+        }
+        
+        // Add language if not set
+        if (language && !attributionData.first_language) {
+          attributionData.first_language = language;
+        }
+        
+        // Merge attribution data with user data
+        user = {
+          ...user,
+          ...attributionData,
+        };
+        
+        console.log("user with attribution to be inserted:", user);
+      } catch (attrError) {
+        // Log attribution error but don't fail user creation
+        console.error("Failed to get attribution data:", attrError);
+      }
 
       const dbUser = await insertUser(user as typeof users.$inferInsert);
 
       // increase credits for new user, expire in one year
       await increaseCredits({
-        user_uuid: user.uuid,
+        user_uuid: user.uuid!,  // user.uuid已在上面确保存在
         trans_type: CreditsTransType.NewUser,
         credits: CreditsAmount.NewUserGet,
         expired_at: getOneYearLaterTimestr(),

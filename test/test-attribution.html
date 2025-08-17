@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>归因系统测试</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 { color: #333; }
+        .test-section {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .test-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .test-link {
+            display: block;
+            padding: 15px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            transition: background 0.3s;
+        }
+        .test-link:hover {
+            background: #0056b3;
+        }
+        .result-box {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        .status { margin: 10px 0; }
+        .status.success { color: #28a745; }
+        .status.error { color: #dc3545; }
+        button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #218838; }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .info-label { font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>🎯 归因系统测试面板</h1>
+
+    <div class="test-section">
+        <h2>1. 测试不同来源的访问链接</h2>
+        <div class="test-links">
+            <a href="http://localhost:3000/zh?utm_source=google&utm_medium=cpc&utm_campaign=summer2025" 
+               target="_blank" class="test-link">
+                Google广告来源
+            </a>
+            <a href="http://localhost:3000/zh?utm_source=facebook&utm_medium=social&utm_campaign=promo" 
+               target="_blank" class="test-link">
+                Facebook社交来源
+            </a>
+            <a href="http://localhost:3000/zh?utm_source=email&utm_medium=newsletter&utm_campaign=weekly" 
+               target="_blank" class="test-link">
+                邮件营销来源
+            </a>
+            <a href="http://localhost:3000/zh?ref=partner123&f=blog" 
+               target="_blank" class="test-link">
+                合作伙伴引荐
+            </a>
+            <a href="http://localhost:3000/zh?utm_source=baidu&utm_medium=organic&utm_term=ai工具" 
+               target="_blank" class="test-link">
+                百度搜索来源
+            </a>
+            <a href="http://localhost:3000/zh" 
+               target="_blank" class="test-link">
+                直接访问（无参数）
+            </a>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>2. 当前归因信息</h2>
+        <button onclick="fetchAttributionData()">获取当前归因数据</button>
+        <button onclick="clearCookies()">清除Cookie</button>
+        <div id="current-attribution" class="result-box">点击按钮获取数据...</div>
+    </div>
+
+    <div class="test-section">
+        <h2>3. Cookie信息</h2>
+        <button onclick="showCookies()">查看所有Cookie</button>
+        <div id="cookie-info" class="result-box">点击按钮查看...</div>
+    </div>
+
+    <div class="test-section">
+        <h2>4. 设备信息</h2>
+        <div class="info-grid">
+            <div class="info-label">User Agent:</div>
+            <div id="user-agent"></div>
+            <div class="info-label">屏幕分辨率:</div>
+            <div id="screen-size"></div>
+            <div class="info-label">视口大小:</div>
+            <div id="viewport-size"></div>
+            <div class="info-label">语言:</div>
+            <div id="language"></div>
+            <div class="info-label">时区:</div>
+            <div id="timezone"></div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>5. 测试流程</h2>
+        <ol>
+            <li>点击上方不同来源的链接访问网站</li>
+            <li>返回此页面，点击"获取当前归因数据"查看记录</li>
+            <li>清除Cookie后再次访问，测试新访客记录</li>
+            <li>登录后访问，测试用户归因保存</li>
+            <li>创建订单，测试订单归因保存</li>
+        </ol>
+    </div>
+
+    <script>
+        // 显示设备信息
+        document.getElementById('user-agent').textContent = navigator.userAgent;
+        document.getElementById('screen-size').textContent = `${screen.width} x ${screen.height}`;
+        document.getElementById('viewport-size').textContent = `${window.innerWidth} x ${window.innerHeight}`;
+        document.getElementById('language').textContent = navigator.language;
+        document.getElementById('timezone').textContent = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+        // 获取归因数据
+        async function fetchAttributionData() {
+            try {
+                const response = await fetch('http://localhost:3000/api/attribution/track', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                const data = await response.json();
+                document.getElementById('current-attribution').textContent = 
+                    JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('current-attribution').textContent = 
+                    '错误: ' + error.message;
+            }
+        }
+
+        // 显示Cookie
+        function showCookies() {
+            const cookies = document.cookie.split(';').map(c => c.trim());
+            const attributionCookie = cookies.find(c => c.includes('user_attribution'));
+            
+            let output = '所有Cookie:\n' + cookies.join('\n') + '\n\n';
+            
+            if (attributionCookie) {
+                try {
+                    const value = decodeURIComponent(attributionCookie.split('=')[1]);
+                    const parsed = JSON.parse(value);
+                    output += '归因Cookie解析:\n' + JSON.stringify(parsed, null, 2);
+                } catch (e) {
+                    output += '归因Cookie: ' + attributionCookie;
+                }
+            } else {
+                output += '未找到归因Cookie';
+            }
+            
+            document.getElementById('cookie-info').textContent = output;
+        }
+
+        // 清除Cookie
+        function clearCookies() {
+            document.cookie.split(";").forEach(function(c) { 
+                document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); 
+            });
+            alert('Cookie已清除，请刷新页面');
+        }
+
+        // 页面加载时自动获取数据
+        window.onload = function() {
+            fetchAttributionData();
+            showCookies();
+        };
+    </script>
+</body>
+</html>

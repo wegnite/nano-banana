@@ -29,7 +29,8 @@ export async function GET(req: Request) {
       return respErr("Please login first");
     }
 
-    const userUuid = await getUserUuid(session.user.email);
+    // getUserUuid 不需要参数，它会自动从 session 获取用户信息
+    const userUuid = await getUserUuid();
     if (!userUuid) {
       return respErr("User not found");
     }
@@ -67,7 +68,8 @@ export async function POST(req: Request) {
       return respErr("Please login first");
     }
 
-    const userUuid = await getUserUuid(session.user.email);
+    // getUserUuid 不需要参数，它会自动从 session 获取用户信息
+    const userUuid = await getUserUuid();
     if (!userUuid) {
       return respErr("User not found");
     }
@@ -124,7 +126,8 @@ export async function DELETE(req: Request) {
       return respErr("Please login first");
     }
 
-    const userUuid = await getUserUuid(session.user.email);
+    // getUserUuid 不需要参数，它会自动从 session 获取用户信息
+    const userUuid = await getUserUuid();
     if (!userUuid) {
       return respErr("User not found");
     }

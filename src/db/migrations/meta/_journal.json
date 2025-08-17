@@ -15,6 +15,13 @@
       "when": 1755266808568,
       "tag": "0001_crazy_princess_powerful",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1755401482168,
+      "tag": "0002_sturdy_la_nuit",
+      "breakpoints": true
     }
   ]
 }
