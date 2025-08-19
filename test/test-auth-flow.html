@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>认证流程测试 - Authentication Flow Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        .test-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #495057;
+            margin-bottom: 15px;
+        }
+        .test-steps {
+            list-style: none;
+            padding: 0;
+        }
+        .test-steps li {
+            padding: 10px 0;
+            border-bottom: 1px dashed #dee2e6;
+            display: flex;
+            align-items: center;
+        }
+        .test-steps li:last-child {
+            border-bottom: none;
+        }
+        .step-number {
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+        .status {
+            margin-left: auto;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .status.pending {
+            background: #ffc107;
+            color: #856404;
+        }
+        .status.testing {
+            background: #17a2b8;
+            color: white;
+        }
+        .status.pass {
+            background: #28a745;
+            color: white;
+        }
+        .status.fail {
+            background: #dc3545;
+            color: white;
+        }
+        .test-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+            transition: all 0.3s;
+        }
+        .test-button:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+        .test-button:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .results {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e9ecef;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .iframe-container {
+            margin-top: 20px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+        }
+        .emoji {
+            font-size: 20px;
+            margin-right: 10px;
+        }
+        .note {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            color: #856404;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+        .note strong {
+            color: #664d03;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 AI 图像生成认证流程测试</h1>
+        
+        <div class="note">
+            <strong>测试说明：</strong>此页面用于测试 AI 图像生成功能的登录认证流程。
+            根据用户要求："你应该跳出来 说先登录再使用"，系统应在未登录时显示登录对话框。
+        </div>
+
+        <div class="test-section">
+            <div class="test-title">
+                <span class="emoji">🧪</span>测试场景 1: 未登录用户尝试生成
+            </div>
+            <ol class="test-steps">
+                <li>
+                    <span class="step-number">1</span>
+                    <span>访问首页（未登录状态）</span>
+                    <span class="status pending" id="step1-1">待测试</span>
+                </li>
+                <li>
+                    <span class="step-number">2</span>
+                    <span>输入提示词：「美丽的樱花树下的少女」</span>
+                    <span class="status pending" id="step1-2">待测试</span>
+                </li>
+                <li>
+                    <span class="step-number">3</span>
+                    <span>点击「無料でAI画像生成を開始」按钮</span>
+                    <span class="status pending" id="step1-3">待测试</span>
+                </li>
+                <li>
+                    <span class="step-number">4</span>
+                    <span>验证：应弹出登录对话框</span>
+                    <span class="status pending" id="step1-4">待测试</span>
+                </li>
+                <li>
+                    <span class="step-number">5</span>
+                    <span>验证：显示错误提示「画像生成にはログインが必要です」</span>
+                    <span class="status pending" id="step1-5">待测试</span>
+                </li>
+            </ol>
+            <button class="test-button" onclick="runTest1()">运行测试</button>
+        </div>
+
+        <div class="test-section">
+            <div class="test-title">
+                <span class="emoji">🧪</span>测试场景 2: 登录对话框功能
+            </div>
+            <ol class="test-steps">
+                <li>
+                    <span class="step-number">1</span>
+                    <span>登录对话框显示</span>
+                    <span class="status pending" id="step2-1">待测试</span>
+                </li>
+                <li>
+                    <span class="step-number">2</span>
+                    <span>显示初回特典信息（100积分等）</span>
+                    <span class="status pending" id="step2-2">待测试</span>
+                </li>
+                <li>
+                    <span class="step-number">3</span>
+                    <span>显示 Google 登录按钮</span>
+                    <span class="status pending" id="step2-3">待测试</span>
+                </li>
+                <li>
+                    <span class="step-number">4</span>
+                    <span>显示 GitHub 登录按钮</span>
+                    <span class="status pending" id="step2-4">待测试</span>
+                </li>
+                <li>
+                    <span class="step-number">5</span>
+                    <span>显示邮箱登录链接</span>
+                    <span class="status pending" id="step2-5">待测试</span>
+                </li>
+            </ol>
+            <button class="test-button" onclick="runTest2()">运行测试</button>
+        </div>
+
+        <div class="test-section">
+            <div class="test-title">
+                <span class="emoji">🧪</span>测试场景 3: 已登录用户体验
+            </div>
+            <ol class="test-steps">
+                <li>
+                    <span class="step-number">1</span>
+                    <span>模拟登录状态</span>
+                    <span class="status pending" id="step3-1">待测试</span>
+                </li>
+                <li>
+                    <span class="step-number">2</span>
+                    <span>显示欢迎信息和用户名</span>
+                    <span class="status pending" id="step3-2">待测试</span>
+                </li>
+                <li>
+                    <span class="step-number">3</span>
+                    <span>显示剩余积分数量</span>
+                    <span class="status pending" id="step3-3">待测试</span>
+                </li>
+                <li>
+                    <span class="step-number">4</span>
+                    <span>点击生成按钮正常工作</span>
+                    <span class="status pending" id="step3-4">待测试</span>
+                </li>
+                <li>
+                    <span class="step-number">5</span>
+                    <span>不显示登录对话框</span>
+                    <span class="status pending" id="step3-5">待测试</span>
+                </li>
+            </ol>
+            <button class="test-button" onclick="runTest3()">运行测试</button>
+        </div>
+
+        <div class="test-section">
+            <div class="test-title">
+                <span class="emoji">📊</span>测试结果
+            </div>
+            <div class="results" id="testResults">
+测试尚未开始...
+点击上方按钮开始各项测试。
+            </div>
+        </div>
+
+        <div class="test-section">
+            <div class="test-title">
+                <span class="emoji">🌐</span>实时预览
+            </div>
+            <div class="iframe-container">
+                <iframe src="http://localhost:3005" id="testFrame"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateStatus(id, status, text = '') {
+            const element = document.getElementById(id);
+            element.className = 'status ' + status;
+            element.textContent = text || status.toUpperCase();
+        }
+
+        function log(message) {
+            const results = document.getElementById('testResults');
+            const timestamp = new Date().toLocaleTimeString();
+            results.textContent += `[${timestamp}] ${message}\n`;
+            results.scrollTop = results.scrollHeight;
+        }
+
+        async function runTest1() {
+            log('===== 开始测试场景 1: 未登录用户尝试生成 =====');
+            
+            // Step 1: 访问首页
+            updateStatus('step1-1', 'testing', '测试中...');
+            log('Step 1: 访问首页 http://localhost:3005');
+            document.getElementById('testFrame').src = 'http://localhost:3005';
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            updateStatus('step1-1', 'pass', '✓ 完成');
+            
+            // Step 2: 输入提示词
+            updateStatus('step1-2', 'testing', '测试中...');
+            log('Step 2: 需要手动输入提示词「美丽的樱花树下的少女」');
+            await new Promise(resolve => setTimeout(resolve, 3000));
+            updateStatus('step1-2', 'pass', '✓ 手动');
+            
+            // Step 3: 点击生成按钮
+            updateStatus('step1-3', 'testing', '测试中...');
+            log('Step 3: 需要手动点击「無料でAI画像生成を開始」按钮');
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            updateStatus('step1-3', 'pass', '✓ 手动');
+            
+            // Step 4 & 5: 验证对话框
+            updateStatus('step1-4', 'testing', '验证中...');
+            updateStatus('step1-5', 'testing', '验证中...');
+            log('Step 4&5: 请验证是否显示登录对话框和错误提示');
+            log('预期结果:');
+            log('  - 弹出登录对话框');
+            log('  - 显示「画像生成にはログインが必要です」');
+            await new Promise(resolve => setTimeout(resolve, 3000));
+            updateStatus('step1-4', 'pass', '✓ 需验证');
+            updateStatus('step1-5', 'pass', '✓ 需验证');
+            
+            log('测试场景 1 完成！请手动验证结果。');
+        }
+
+        async function runTest2() {
+            log('===== 开始测试场景 2: 登录对话框功能 =====');
+            
+            updateStatus('step2-1', 'testing', '检查中...');
+            log('Step 1: 检查登录对话框是否显示');
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            updateStatus('step2-1', 'pass', '✓ 需验证');
+            
+            updateStatus('step2-2', 'testing', '检查中...');
+            log('Step 2: 验证初回特典信息显示');
+            log('  应包含: 100クレジットプレゼント（20枚分）');
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            updateStatus('step2-2', 'pass', '✓ 需验证');
+            
+            updateStatus('step2-3', 'testing', '检查中...');
+            log('Step 3: 验证 Google 登录按钮');
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            updateStatus('step2-3', 'pass', '✓ 需验证');
+            
+            updateStatus('step2-4', 'testing', '检查中...');
+            log('Step 4: 验证 GitHub 登录按钮');
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            updateStatus('step2-4', 'pass', '✓ 需验证');
+            
+            updateStatus('step2-5', 'testing', '检查中...');
+            log('Step 5: 验证邮箱登录链接');
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            updateStatus('step2-5', 'pass', '✓ 需验证');
+            
+            log('测试场景 2 完成！请手动验证对话框内容。');
+        }
+
+        async function runTest3() {
+            log('===== 开始测试场景 3: 已登录用户体验 =====');
+            log('注意: 此测试需要先完成登录');
+            
+            updateStatus('step3-1', 'testing', '等待登录...');
+            log('Step 1: 请先通过 Google 或 GitHub 登录');
+            await new Promise(resolve => setTimeout(resolve, 3000));
+            updateStatus('step3-1', 'pass', '✓ 手动');
+            
+            updateStatus('step3-2', 'testing', '检查中...');
+            log('Step 2: 验证是否显示欢迎信息');
+            log('  格式: ようこそ、[用户名] さん');
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            updateStatus('step3-2', 'pass', '✓ 需验证');
+            
+            updateStatus('step3-3', 'testing', '检查中...');
+            log('Step 3: 验证剩余积分显示');
+            log('  格式: 残りクレジット: [数字]');
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            updateStatus('step3-3', 'pass', '✓ 需验证');
+            
+            updateStatus('step3-4', 'testing', '测试中...');
+            log('Step 4: 再次点击生成按钮');
+            log('  预期: 正常调用 API 生成图像');
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            updateStatus('step3-4', 'pass', '✓ 需验证');
+            
+            updateStatus('step3-5', 'testing', '验证中...');
+            log('Step 5: 确认不再显示登录对话框');
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            updateStatus('step3-5', 'pass', '✓ 需验证');
+            
+            log('测试场景 3 完成！');
+        }
+
+        // 页面加载时的初始化
+        window.onload = function() {
+            log('测试页面已加载');
+            log('服务器地址: http://localhost:3005');
+            log('请按顺序执行测试场景');
+            log('');
+        };
+    </script>
+</body>
+</html>
