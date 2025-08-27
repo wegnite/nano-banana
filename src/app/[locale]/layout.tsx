@@ -9,6 +9,7 @@ import { NextAuthSessionProvider } from "@/auth/session";
 import { NextIntlClientProvider } from "next-intl";
 import { ThemeProvider } from "@/providers/theme";
 import AttributionTracker from "@/components/attribution/tracker";
+import { Toaster } from "sonner";
 
 export async function generateMetadata({
   params,
@@ -49,6 +50,7 @@ export default async function LocaleLayout({
           <ThemeProvider>
             <AttributionTracker />
             {children}
+            <Toaster position="top-center" richColors />
           </ThemeProvider>
         </AppContextProvider>
       </NextAuthSessionProvider>
