@@ -9,7 +9,7 @@ import { getIsoTimestr } from "@/lib/time";
 import { getUserInfo } from "@/services/user";
 import { getUuid } from "@/lib/hash";
 
-export default async function () {
+async function AddPostPage() {
   const user = await getUserInfo();
   if (!user || !user.uuid) {
     return <Empty message="no auth" />;
@@ -167,3 +167,6 @@ export default async function () {
 
   return <FormSlot {...form} />;
 }
+
+AddPostPage.displayName = "AddPostPage";
+export default AddPostPage;

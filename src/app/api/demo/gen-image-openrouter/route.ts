@@ -33,6 +33,36 @@ export async function OPTIONS(req: Request) {
 }
 
 /**
+ * OpenRouter 图像生成模型配置的基础接口
+ */
+interface BaseModelConfig {
+  name: string;
+  type: "vision" | "image-gen";
+  maxPromptLength: number;
+}
+
+/**
+ * 图像生成模型配置接口，包含额外的尺寸配置
+ */
+interface ImageGenModelConfig extends BaseModelConfig {
+  type: "image-gen";
+  supportedSizes: string[];
+  defaultSize: string;
+}
+
+/**
+ * 视觉理解模型配置接口
+ */
+interface VisionModelConfig extends BaseModelConfig {
+  type: "vision";
+}
+
+/**
+ * 联合类型定义
+ */
+type ModelConfig = ImageGenModelConfig | VisionModelConfig;
+
+/**
  * OpenRouter 图像生成模型配置
  * 注意：OpenRouter 主要通过文本模型间接支持图像生成
  */
@@ -42,7 +72,7 @@ const OPENROUTER_IMAGE_MODELS = {
     name: "GPT-4 Vision (for image understanding)",
     type: "vision",
     maxPromptLength: 4000,
-  },
+  } as VisionModelConfig,
   // 使用 DALL-E 3 通过 OpenAI 直接调用
   "dall-e-3": {
     name: "DALL-E 3 via OpenRouter",
@@ -50,7 +80,7 @@ const OPENROUTER_IMAGE_MODELS = {
     maxPromptLength: 4000,
     supportedSizes: ["1024x1024", "1024x1792", "1792x1024"],
     defaultSize: "1024x1024",
-  },
+  } as ImageGenModelConfig,
   // Stable Diffusion 通过特殊端点
   "stable-diffusion-xl": {
     name: "Stable Diffusion XL",
@@ -58,8 +88,8 @@ const OPENROUTER_IMAGE_MODELS = {
     maxPromptLength: 1000,
     supportedSizes: ["1024x1024", "1344x768", "768x1344"],
     defaultSize: "1024x1024",
-  },
-};
+  } as ImageGenModelConfig,
+} as const;
 
 export async function POST(req: Request) {
   try {
@@ -110,6 +140,16 @@ export async function POST(req: Request) {
       return respErr(`Unsupported model: ${model}`);
     }
 
+    // 类型守卫函数：检查是否为图像生成模型
+    const isImageGenModel = (config: ModelConfig): config is ImageGenModelConfig => {
+      return config.type === "image-gen";
+    };
+
+    // 验证模型是否支持图像生成
+    if (!isImageGenModel(modelConfig)) {
+      return respErr(`Model ${model} does not support image generation`);
+    }
+
     // 构建 OpenRouter API 请求
     const apiUrl = "https://openrouter.ai/api/v1/chat/completions";
     
@@ -135,7 +175,7 @@ export async function POST(req: Request) {
       messages: messages,
       // 图像生成特定参数
       n: n,
-      size: size || modelConfig.defaultSize,
+      size: size || modelConfig.defaultSize, // 现在 TypeScript 知道 modelConfig 是 ImageGenModelConfig 类型
       quality: quality || "standard",
       style: style || "vivid",
       // OpenRouter 特定参数

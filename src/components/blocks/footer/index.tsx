@@ -1,5 +1,6 @@
 import { Footer as FooterType } from "@/types/blocks/footer";
 import Icon from "@/components/icon";
+import Image from "next/image";
 
 export default function Footer({ footer }: { footer: FooterType }) {
   if (footer.disabled) {
@@ -15,11 +16,14 @@ export default function Footer({ footer }: { footer: FooterType }) {
               {footer.brand && (
                 <div>
                   <div className="flex items-center justify-center gap-2 lg:justify-start">
-                    {footer.brand.logo && (
-                      <img
+                    {footer.brand.logo && footer.brand.logo.src && (
+                      <Image
                         src={footer.brand.logo.src}
-                        alt={footer.brand.logo.alt || footer.brand.title}
-                        className="h-11"
+                        alt={footer.brand.logo.alt || footer.brand.title || 'Brand logo'}
+                        width={44}
+                        height={44}
+                        className="h-11 w-auto"
+                        loading="lazy"
                       />
                     )}
                     {footer.brand.title && (

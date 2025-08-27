@@ -13,11 +13,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Section as SectionType } from "@/types/blocks/section";
 
-export default function Showcase1({ section }: { section: SectionType }) {
-  if (section.disabled) {
-    return null;
-  }
-
+function Showcase1({ section }: { section: SectionType }) {
+  // All Hooks must be called at the top level, before any conditional returns
   const [carouselApi, setCarouselApi] = useState<CarouselApi>();
   const [canScrollPrev, setCanScrollPrev] = useState(false);
   const [canScrollNext, setCanScrollNext] = useState(false);
@@ -36,6 +33,11 @@ export default function Showcase1({ section }: { section: SectionType }) {
       carouselApi.off("select", updateSelection);
     };
   }, [carouselApi]);
+
+  // Conditional return after all Hooks
+  if (section.disabled) {
+    return null;
+  }
 
   return (
     <section id={section.name} className="py-16">
@@ -125,3 +127,7 @@ export default function Showcase1({ section }: { section: SectionType }) {
     </section>
   );
 }
+
+Showcase1.displayName = 'Showcase1';
+
+export default Showcase1;

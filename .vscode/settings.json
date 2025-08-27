@@ -109,5 +109,37 @@
   "i18n-ally.keystyle": "nested",
   "i18n-ally.enabledFrameworks": ["react", "next-intl"],
   "i18n-ally.sourceLanguage": "en",
-  "i18n-ally.displayLanguage": "zh"
+  "i18n-ally.displayLanguage": "zh",
+  
+  // Markdown 预览配置
+  "markdown.preview.enabled": true,
+  "markdown.preview.breaks": true,
+  "markdown.preview.linkify": true,
+  "markdown.preview.fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif",
+  "markdown.preview.fontSize": 14,
+  "markdown.preview.lineHeight": 1.6,
+  "markdown.preview.scrollPreviewWithEditor": true,
+  "markdown.preview.markEditorSelection": true,
+  "markdown.preview.scrollEditorWithPreview": true,
+  "markdown.preview.doubleClickToSwitchToEditor": true,
+  "markdown.preview.openMarkdownLinks": "inPreview",
+  
+  // Markdown 编辑器配置
+  "markdown.editor.pasteUrlAsFormattedLink.enabled": "smart",
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.wordWrap": "on",
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": false
+    },
+    "editor.acceptSuggestionOnEnter": "off"
+  },
+  
+  // Markdown 扩展支持
+  "markdown.extension.preview.autoShowPreviewToSide": true,
+  "markdown.extension.print.theme": "light",
+  "markdown.extension.toc.updateOnSave": true
 }

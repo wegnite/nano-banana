@@ -14,17 +14,19 @@ import { Section as SectionType } from "@/types/blocks/section";
 import { Star } from "lucide-react";
 import { useRef } from "react";
 
-export default function Testimonial({ section }: { section: SectionType }) {
-  if (section.disabled) {
-    return null;
-  }
-
+function Testimonial({ section }: { section: SectionType }) {
+  // All Hooks must be called at the top level, before any conditional returns
   const plugin = useRef(
     AutoScroll({
       startDelay: 500,
       speed: 0.7,
     })
   );
+
+  // Conditional return after all Hooks
+  if (section.disabled) {
+    return null;
+  }
 
   return (
     <section id={section.name} className="py-20 relative overflow-hidden">
@@ -98,3 +100,7 @@ export default function Testimonial({ section }: { section: SectionType }) {
     </section>
   );
 }
+
+Testimonial.displayName = 'Testimonial';
+
+export default Testimonial;

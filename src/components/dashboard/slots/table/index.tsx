@@ -4,7 +4,7 @@ import { Table as TableSlotType } from "@/types/slots/table";
 import Toolbar from "@/components/blocks/toolbar";
 import { Card } from "@/components/ui/card";
 
-export default function ({ ...table }: TableSlotType) {
+const DashboardTableSlot = function ({ ...table }: TableSlotType) {
   return (
     <>
       <Header crumb={table.crumb} />
@@ -27,4 +27,8 @@ export default function ({ ...table }: TableSlotType) {
       </div>
     </>
   );
-}
+};
+
+DashboardTableSlot.displayName = "DashboardTableSlot";
+
+export default DashboardTableSlot;

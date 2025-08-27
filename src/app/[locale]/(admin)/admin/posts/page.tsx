@@ -6,7 +6,7 @@ import { Table as TableSlotType } from "@/types/slots/table";
 import { getAllPosts } from "@/models/post";
 import moment from "moment";
 
-export default async function () {
+async function AdminPostsPage() {
   const posts = await getAllPosts();
 
   const table: TableSlotType = {
@@ -74,3 +74,6 @@ export default async function () {
 
   return <TableSlot {...table} />;
 }
+
+AdminPostsPage.displayName = "AdminPostsPage";
+export default AdminPostsPage;

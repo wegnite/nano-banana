@@ -13,7 +13,7 @@ import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 
-export default function ({ crumb }: { crumb?: Crumb }) {
+const DashboardHeader = function ({ crumb }: { crumb?: Crumb }) {
   return (
     <header className="flex border-b border-border py-3 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
       <div className="flex items-center gap-2 px-4">
@@ -53,4 +53,8 @@ export default function ({ crumb }: { crumb?: Crumb }) {
       </div>
     </header>
   );
-}
+};
+
+DashboardHeader.displayName = "DashboardHeader";
+
+export default DashboardHeader;

@@ -7,7 +7,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 
-export default function ({
+const ConsoleSidebarNav = function ({
   className,
   items,
   ...props
@@ -44,4 +44,8 @@ export default function ({
       ))}
     </nav>
   );
-}
+};
+
+ConsoleSidebarNav.displayName = "ConsoleSidebarNav";
+
+export default ConsoleSidebarNav;

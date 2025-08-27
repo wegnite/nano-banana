@@ -7,7 +7,7 @@ import { getUserCredits } from "@/services/credit";
 import { getUserUuid } from "@/services/user";
 import moment from "moment";
 
-export default async function () {
+const MyCreditsPage = async function () {
   const t = await getTranslations();
 
   const user_uuid = await getUserUuid();
@@ -63,4 +63,8 @@ export default async function () {
   };
 
   return <TableSlot {...table} />;
-}
+};
+
+MyCreditsPage.displayName = "MyCreditsPage";
+
+export default MyCreditsPage;

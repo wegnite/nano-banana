@@ -7,7 +7,7 @@ import { getNonceStr } from "@/lib/hash";
 import { getTranslations } from "next-intl/server";
 import { getUserUuid } from "@/services/user";
 
-export default async function () {
+async function CreateApiKeyPage() {
   const t = await getTranslations();
 
   const user_uuid = await getUserUuid();
@@ -89,3 +89,6 @@ export default async function () {
 
   return <FormSlot {...form} />;
 }
+
+CreateApiKeyPage.displayName = "CreateApiKeyPage";
+export default CreateApiKeyPage;

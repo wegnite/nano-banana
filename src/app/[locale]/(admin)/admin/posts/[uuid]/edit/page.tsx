@@ -14,7 +14,7 @@ import { Post } from "@/types/post";
 import { getIsoTimestr } from "@/lib/time";
 import { getUserInfo } from "@/services/user";
 
-export default async function ({
+async function EditPostPage({
   params,
 }: {
   params: Promise<{ uuid: string }>;
@@ -191,3 +191,6 @@ export default async function ({
 
   return <FormSlot {...form} />;
 }
+
+EditPostPage.displayName = "EditPostPage";
+export default EditPostPage;

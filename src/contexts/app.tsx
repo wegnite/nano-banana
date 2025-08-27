@@ -22,6 +22,7 @@ import {
   useContext,
   useEffect,
   useState,
+  useCallback,
 } from "react";
 import { cacheGet, cacheRemove } from "@/lib/cache";
 
@@ -46,6 +47,20 @@ const AppContext = createContext({} as ContextValue);
 export const useAppContext = () => useContext(AppContext);
 
 /**
+ * Google One-Tap 登录组件
+ * 
+ * 解决方案说明：
+ * - 将 Hook 调用移到独立组件中，避免条件调用问题
+ * - 在父组件中通过条件渲染控制组件的挂载
+ * - 符合 React Hooks 只能在组件顶层调用的规则
+ */
+const OneTapLoginWrapper = () => {
+  // 在独立组件中调用 Hook，确保始终在顶层调用
+  useOneTapLogin();
+  return null; // 不需要渲染任何内容
+};
+
+/**
  * 应用上下文提供者组件
  * 
  * 主要职责：
@@ -54,17 +69,27 @@ export const useAppContext = () => useContext(AppContext);
  * 3. 处理邀请码关联逻辑
  * 4. 提供全局状态管理
  * 
+ * React Hooks 修复方案：
+ * - 所有 Hooks 都在组件顶层调用
+ * - 通过条件渲染而不是条件调用控制功能
+ * - 保持原有功能逻辑不变
+ * 
  * @param {Object} props - 组件属性
  * @param {ReactNode} props.children - 子组件
  */
 export const AppContextProvider = ({ children }: { children: ReactNode }) => {
-  // 条件性启用 Google One-Tap 登录
-  if (isAuthEnabled() && isGoogleOneTapEnabled()) {
-    useOneTapLogin();
-  }
+  // 检查认证功能是否启用（在顶层调用，避免条件调用）
+  const authEnabled = isAuthEnabled();
+  const googleOneTapEnabled = isGoogleOneTapEnabled();
 
-  // 获取用户会话（仅在认证启用时）
-  const { data: session } = isAuthEnabled() ? useSession() : { data: null };
+  // 始终调用 useSession Hook（React Hooks 规则要求在顶层调用）
+  // 即使认证未启用也调用，但只在启用时使用返回值
+  const { data: session } = useSession({
+    required: false, // 设置为 false，避免强制要求认证
+  });
+  
+  // 根据认证启用状态决定是否使用会话数据
+  const effectiveSession = authEnabled ? session : null;
 
   // 登录模态框显示状态
   const [showSignModal, setShowSignModal] = useState<boolean>(false);
@@ -84,8 +109,12 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
    * 错误处理：
    * - 网络错误或接口错误时静默失败
    * - 在控制台记录错误信息
+   * 
+   * 使用 useCallback 优化：
+   * - 避免在每次渲染时创建新函数
+   * - 确保在 useEffect 依赖中使用时不会导致无限循环
    */
-  const fetchUserInfo = async function () {
+  const fetchUserInfo = useCallback(async function () {
     try {
       const resp = await fetch("/api/get-user-info", {
         method: "POST",
@@ -106,7 +135,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
     } catch (e) {
       console.log("fetch user info failed");
     }
-  };
+  }, []);
 
   /**
    * 更新用户邀请关系
@@ -181,12 +210,15 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   /**
    * 监听会话变化
    * 当用户登录成功后，自动获取用户详细信息
+   * 
+   * 修复说明：使用 effectiveSession 代替原来的 session
+   * 确保只在认证启用时才处理会话数据
    */
   useEffect(() => {
-    if (session && session.user) {
+    if (effectiveSession && effectiveSession.user) {
       fetchUserInfo();
     }
-  }, [session]);
+  }, [effectiveSession, fetchUserInfo]);
 
   return (
     <AppContext.Provider
@@ -199,6 +231,8 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         setShowFeedback,
       }}
     >
+      {/* 条件渲染 Google One-Tap 登录组件 */}
+      {authEnabled && googleOneTapEnabled && <OneTapLoginWrapper />}
       {children}
     </AppContext.Provider>
   );

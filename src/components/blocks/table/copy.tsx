@@ -4,7 +4,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { ReactNode } from "react";
 import { toast } from "sonner";
 
-export default function ({
+const CopyToClipboardWrapper = function ({
   text,
   children,
 }: {
@@ -16,4 +16,8 @@ export default function ({
       <div className="cursor-pointer">{children}</div>
     </CopyToClipboard>
   );
-}
+};
+
+CopyToClipboardWrapper.displayName = "CopyToClipboardWrapper";
+
+export default CopyToClipboardWrapper;

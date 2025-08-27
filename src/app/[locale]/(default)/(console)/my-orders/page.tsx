@@ -8,7 +8,7 @@ import { getTranslations } from "next-intl/server";
 import moment from "moment";
 import { redirect } from "next/navigation";
 
-export default async function () {
+const MyOrdersPage = async function () {
   const t = await getTranslations();
 
   const user_uuid = await getUserUuid();
@@ -63,4 +63,8 @@ export default async function () {
   };
 
   return <TableSlot {...table} />;
-}
+};
+
+MyOrdersPage.displayName = "MyOrdersPage";
+
+export default MyOrdersPage;

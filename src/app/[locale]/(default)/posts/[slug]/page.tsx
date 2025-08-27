@@ -28,7 +28,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function ({
+const PostDetailPage = async function ({
   params,
 }: {
   params: Promise<{ locale: string; slug: string }>;
@@ -41,4 +41,8 @@ export default async function ({
   }
 
   return <BlogDetail post={post as unknown as Post} />;
-}
+};
+
+PostDetailPage.displayName = "PostDetailPage";
+
+export default PostDetailPage;

@@ -8,7 +8,7 @@ import { Social as SocialType } from "@/types/blocks/base";
 import ThemeToggle from "@/components/theme/toggle";
 import { Separator } from "@/components/ui/separator";
 
-export default function ({ social }: { social: SocialType }) {
+const DashboardSidebarFooter = function ({ social }: { social: SocialType }) {
   const { open } = useSidebar();
 
   const handleTabChange = (value: string) => {
@@ -36,4 +36,8 @@ export default function ({ social }: { social: SocialType }) {
       ) : null}
     </>
   );
-}
+};
+
+DashboardSidebarFooter.displayName = "DashboardSidebarFooter";
+
+export default DashboardSidebarFooter;

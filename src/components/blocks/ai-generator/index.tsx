@@ -27,6 +27,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Loader2, Sparkles, Zap, Image, FileText, Video, Copy } from "lucide-react";
+import NextImage from "next/image";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
@@ -604,14 +605,14 @@ export default function AIGenerator({ hero }: AIGeneratorProps) {
                     <div className="space-y-4">
                       {result.image_url ? (
                         <>
-                          <img
+                          <NextImage
                             src={result.image_url}
                             alt="Generated image"
+                            width={1024}
+                            height={1024}
                             className="w-full rounded-lg shadow-lg"
-                            onError={(e) => {
-                              // Fallback to placeholder if image fails to load
-                              e.currentTarget.src = `/api/placeholder/512/512`;
-                            }}
+                            placeholder="blur"
+                            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyBZWVZbAnoCR1xzFTlTEqabgDbvhLnbVA/wGFyVccRRdTCqQjwTKLOZ+KZOjLb8Y2IVHWcNgF0eF8pX4pzwRLfvTOdCe7N5YYUNAhhJKyT6JYgKdREGODdxHvGqVxOdAl3JjYkOvHKe4VlQ1bwPOmDEwGbLt5+5LnKWoqyZbD0nMXpvKGvHpV78Q7f6Jb6nHZuLe/HcJoB2b5SgZDRbgkaSJAYVhWTMILI/wBA6ZNGBs4qOTKW8e8Q6SLzWRgHbK2AqHHlELCW/bH2pLXdEZ/+k9zPP/v//Z"
                           />
                           {result.filename && (
                             <p className="text-sm text-muted-foreground">
@@ -661,10 +662,13 @@ export default function AIGenerator({ hero }: AIGeneratorProps) {
                             <div className="grid grid-cols-6 gap-2">
                               {result.frames.slice(0, 6).map((frame: any, idx: number) => (
                                 <div key={idx} className="relative">
-                                  <img
+                                  <NextImage
                                     src={frame.url}
-                                    alt={`Frame ${idx + 1}`}
-                                    className="w-full h-auto rounded"
+                                    alt={`Video frame ${idx + 1}`}
+                                    width={120}
+                                    height={80}
+                                    className="w-full h-auto rounded object-cover"
+                                    loading="lazy"
                                   />
                                   <span className="absolute bottom-0 right-0 text-xs bg-black/50 text-white px-1">
                                     {idx + 1}
@@ -681,10 +685,13 @@ export default function AIGenerator({ hero }: AIGeneratorProps) {
                             {result.message || "Video generation demo"}
                           </p>
                           {result.preview_url && (
-                            <img
+                            <NextImage
                               src={result.preview_url}
                               alt="Video preview"
+                              width={256}
+                              height={256}
                               className="w-64 mx-auto rounded-lg mt-4"
+                              loading="lazy"
                             />
                           )}
                           {result.credits_required && (

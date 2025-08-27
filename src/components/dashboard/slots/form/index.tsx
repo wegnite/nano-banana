@@ -3,7 +3,7 @@ import { Form as FormSlotType } from "@/types/slots/form";
 import Header from "@/components/dashboard/header";
 import { Card } from "@/components/ui/card";
 
-export default function ({ ...form }: FormSlotType) {
+const DashboardFormSlot = function ({ ...form }: FormSlotType) {
   return (
     <>
       <Header crumb={form.crumb} />
@@ -21,4 +21,8 @@ export default function ({ ...form }: FormSlotType) {
       </div>
     </>
   );
-}
+};
+
+DashboardFormSlot.displayName = "DashboardFormSlot";
+
+export default DashboardFormSlot;

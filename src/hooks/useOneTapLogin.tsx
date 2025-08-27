@@ -5,7 +5,7 @@ import { signIn } from "next-auth/react";
 import { useEffect } from "react";
 import { useSession } from "next-auth/react";
 
-export default function () {
+const useOneTapLogin = function () {
   const { data: session, status } = useSession();
 
   const oneTapLogin = async function () {
@@ -49,4 +49,8 @@ export default function () {
   }, [status]);
 
   return <></>;
-}
+};
+
+useOneTapLogin.displayName = "useOneTapLogin";
+
+export default useOneTapLogin;

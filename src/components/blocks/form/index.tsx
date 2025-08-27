@@ -78,7 +78,7 @@ const generateFormSchema = (fields: FormFieldType[]) => {
   return z.object(schemaFields);
 };
 
-export default function ({
+const FormBlock = function ({
   fields,
   data,
   passby,
@@ -238,4 +238,8 @@ export default function ({
       </form>
     </Form>
   );
-}
+};
+
+FormBlock.displayName = "FormBlock";
+
+export default FormBlock;

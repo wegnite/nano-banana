@@ -3,8 +3,9 @@ import TableSlot from "@/components/dashboard/slots/table";
 import { Table as TableSlotType } from "@/types/slots/table";
 import { getFeedbacks } from "@/models/feedback";
 import moment from "moment";
+import Image from "next/image";
 
-export default async function () {
+async function AdminFeedbacksPage() {
   const feedbacks = await getFeedbacks(1, 50);
 
   const columns: TableColumn[] = [
@@ -18,9 +19,15 @@ export default async function () {
 
         return (
           <div className="flex items-center gap-2">
-            <img
+            <Image
               src={row.user?.avatar_url || ""}
-              className="w-8 h-8 rounded-full"
+              alt={`${row.user?.nickname || 'User'} avatar`}
+              width={32}
+              height={32}
+              className="w-8 h-8 rounded-full object-cover"
+              loading="lazy"
+              placeholder="blur"
+              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyBZWVZbAnoCR1xzFTlTEqabgDbvhLnbVA/wGFyVccRRdTCqQjwTKLOZ+KZOjLb8Y2IVHWcNgF0eF8pX4pzwRLfvTOdCe7N5YYUNAhhJKyT6JYgKdREGODdxHvGqVxOdAl3JjYkOvHKe4VlQ1bwPOmDEwGbLt5+5LnKWoqyZbD0nMXpvKGvHpV78Q7f6Jb6nHZuLe/HcJoB2b5SgZDRbgkaSJAYVhWTMILI/wBA6ZNGBs4qOTKW8e8Q6SLzWRgHbK2AqHHlELCW/bH2pLXdEZ/+k9zPP/v//Z"
             />
             <span>{row.user?.nickname}</span>
           </div>
@@ -61,3 +68,7 @@ export default async function () {
 
   return <TableSlot {...table} />;
 }
+
+AdminFeedbacksPage.displayName = 'AdminFeedbacksPage';
+
+export default AdminFeedbacksPage;

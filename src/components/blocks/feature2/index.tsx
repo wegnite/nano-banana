@@ -21,11 +21,8 @@ import { Section as SectionType } from "@/types/blocks/section";
 
 const DURATION = 5000;
 
-export default function Feature2({ section }: { section: SectionType }) {
-  if (section.disabled) {
-    return null;
-  }
-
+function Feature2({ section }: { section: SectionType }) {
+  // All Hooks must be called at the top level, before any conditional returns
   const [api, setApi] = useState<CarouselApi>();
   const [currentAccordion, setCurrentAccordion] = useState("1");
 
@@ -40,6 +37,11 @@ export default function Feature2({ section }: { section: SectionType }) {
 
     return () => clearInterval(interval);
   }, [api, currentAccordion]);
+
+  // Conditional return after all Hooks
+  if (section.disabled) {
+    return null;
+  }
 
   return (
     <section id={section.name} className="py-32">
@@ -130,3 +132,7 @@ export default function Feature2({ section }: { section: SectionType }) {
     </section>
   );
 }
+
+Feature2.displayName = 'Feature2';
+
+export default Feature2;

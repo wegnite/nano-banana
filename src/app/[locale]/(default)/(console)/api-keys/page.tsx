@@ -7,7 +7,7 @@ import { getUserUuid } from "@/services/user";
 import moment from "moment";
 import { Badge } from "@/components/ui/badge";
 
-export default async function () {
+async function ApiKeysPage() {
   const t = await getTranslations();
 
   const user_uuid = await getUserUuid();
@@ -58,3 +58,6 @@ export default async function () {
 
   return <TableSlot {...table} />;
 }
+
+ApiKeysPage.displayName = "ApiKeysPage";
+export default ApiKeysPage;

@@ -11,7 +11,7 @@ import { useParams, usePathname, useRouter } from "next/navigation";
 import { MdLanguage } from "react-icons/md";
 import { localeNames } from "@/i18n/locale";
 
-export default function ({ isIcon = false }: { isIcon?: boolean }) {
+const LocaleToggle = function ({ isIcon = false }: { isIcon?: boolean }) {
   const params = useParams();
   const locale = params.locale as string;
   const router = useRouter();
@@ -47,4 +47,8 @@ export default function ({ isIcon = false }: { isIcon?: boolean }) {
       </SelectContent>
     </Select>
   );
-}
+};
+
+LocaleToggle.displayName = "LocaleToggle";
+
+export default LocaleToggle;

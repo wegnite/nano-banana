@@ -4,7 +4,7 @@ import { Table as TableSlotType } from "@/types/slots/table";
 import { getPaiedOrders } from "@/models/order";
 import moment from "moment";
 
-export default async function () {
+async function AdminOrdersPage() {
   const orders = await getPaiedOrders(1, 50);
 
   const columns: TableColumn[] = [
@@ -27,3 +27,6 @@ export default async function () {
 
   return <TableSlot {...table} />;
 }
+
+AdminOrdersPage.displayName = "AdminOrdersPage";
+export default AdminOrdersPage;

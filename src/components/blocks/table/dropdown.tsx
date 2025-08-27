@@ -20,7 +20,7 @@ import Link from "next/link";
 import { MoreHorizontal } from "lucide-react";
 import { NavItem } from "@/types/blocks/base";
 
-export default function ({ items }: { items: NavItem[] }) {
+const TableDropdown = function ({ items }: { items: NavItem[] }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -50,4 +50,8 @@ export default function ({ items }: { items: NavItem[] }) {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
+};
+
+TableDropdown.displayName = "TableDropdown";
+
+export default TableDropdown;
