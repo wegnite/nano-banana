@@ -7,7 +7,9 @@ import { createElement } from "react";
 
 export const i18n: I18nConfig = {
   defaultLanguage: "en",
-  languages: ["en", "zh"],
+  // Temporarily removing "zh" due to Orama search engine not supporting Chinese
+  // TODO: Consider alternative search solutions for Chinese language support
+  languages: ["en"],
 };
 
 export const source = loader({

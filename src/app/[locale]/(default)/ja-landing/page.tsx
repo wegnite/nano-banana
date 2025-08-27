@@ -185,45 +185,75 @@ export default function JapaneseLandingPage() {
             <p className="text-xl text-center text-gray-600 dark:text-gray-400 mb-12">
               無料から始められる<strong>画像生成AI</strong>サービス
             </p>
-            {/* Pricingコンポーネントは既存のものを使用 */}
-            {/* @ts-ignore - 型定義の不一致を一時的に無視 */}
+            {/* Pricingコンポーネント - 日本語版の料金プラン */}
             <Pricing pricing={{
               name: "料金プラン",
               title: "AI画像生成の料金",
-              subtitle: "生成AIを今すぐ無料で",
-              items: {
-                "1": {
-                  name: "無料プラン",
+              description: "生成AIを今すぐ無料で",
+              items: [
+                {
+                  title: "無料プラン",
                   description: "AI画像生成を試す",
-                  currency: "¥",
+                  currency: "JPY",
                   price: "0",
-                  frequency: "/月",
-                  features: "毎日10枚のAI画像生成,基本的な画像生成AI機能,512×512解像度",
-                  cta_text: "無料で始める",
-                  cta_link: "/ja/auth/signin"
+                  unit: "/月",
+                  features: ["毎日10枚のAI画像生成", "基本的な画像生成AI機能", "512×512解像度"],
+                  interval: "month" as const,
+                  product_id: "free_plan_jp",
+                  product_name: "無料プラン",
+                  amount: 0,
+                  credits: 10,
+                  group: "basic",
+                  button: {
+                    text: "無料で始める",
+                    link: "/ja/auth/signin",
+                    variant: "outline" as const,
+                    size: "lg" as const
+                  }
                 },
-                "2": {
-                  name: "プロプラン",
+                {
+                  title: "プロプラン",
                   description: "本格的なAI画像生成",
-                  currency: "¥",
+                  currency: "JPY",
                   price: "2,980",
-                  frequency: "/月",
-                  badge: "人気",
-                  features: "月500枚のAI画像生成,全画像生成AIスタイル,4K高解像度,商用利用OK",
-                  cta_text: "プロプランへ",
-                  cta_link: "/ja/pricing"
+                  unit: "/月",
+                  features: ["月500枚のAI画像生成", "全画像生成AIスタイル", "4K高解像度", "商用利用OK"],
+                  interval: "month" as const,
+                  product_id: "pro_plan_jp",
+                  product_name: "プロプラン",
+                  amount: 2980,
+                  credits: 500,
+                  group: "pro",
+                  is_featured: true,
+                  label: "人気",
+                  button: {
+                    text: "プロプランへ",
+                    link: "/ja/pricing",
+                    variant: "default" as const,
+                    size: "lg" as const
+                  }
                 },
-                "3": {
-                  name: "企業プラン",
+                {
+                  title: "企業プラン",
                   description: "無制限のAI画像生成",
-                  currency: "",
+                  currency: "JPY",
                   price: "お問い合わせ",
-                  frequency: "",
-                  features: "無制限のAI画像生成,専用画像生成AIモデル,APIアクセス,優先サポート",
-                  cta_text: "お問い合わせ",
-                  cta_link: "/ja/contact"
+                  unit: "",
+                  features: ["無制限のAI画像生成", "専用画像生成AIモデル", "APIアクセス", "優先サポート"],
+                  interval: "month" as const,
+                  product_id: "enterprise_plan_jp",
+                  product_name: "企業プラン",
+                  amount: 0,
+                  credits: -1, // -1 indicates unlimited
+                  group: "enterprise",
+                  button: {
+                    text: "お問い合わせ",
+                    link: "/ja/contact",
+                    variant: "outline" as const,
+                    size: "lg" as const
+                  }
                 }
-              }
+              ]
             }} />
           </div>
         </section>

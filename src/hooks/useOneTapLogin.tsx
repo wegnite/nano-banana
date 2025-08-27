@@ -2,13 +2,21 @@
 
 import googleOneTap from "google-one-tap";
 import { signIn } from "next-auth/react";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { useSession } from "next-auth/react";
 
 const useOneTapLogin = function () {
   const { data: session, status } = useSession();
 
-  const oneTapLogin = async function () {
+  const handleLogin = useCallback(async function (credentials: string) {
+    const res = await signIn("google-one-tap", {
+      credential: credentials,
+      redirect: false,
+    });
+    console.log("signIn ok", res);
+  }, []);
+
+  const oneTapLogin = useCallback(async function () {
     const options = {
       client_id: process.env.NEXT_PUBLIC_AUTH_GOOGLE_ID,
       auto_select: false,
@@ -22,15 +30,7 @@ const useOneTapLogin = function () {
       console.log("onetap login ok", response);
       handleLogin(response.credential);
     });
-  };
-
-  const handleLogin = async function (credentials: string) {
-    const res = await signIn("google-one-tap", {
-      credential: credentials,
-      redirect: false,
-    });
-    console.log("signIn ok", res);
-  };
+  }, [handleLogin]);
 
   useEffect(() => {
     // console.log("one tap login status", status, session);
@@ -46,7 +46,7 @@ const useOneTapLogin = function () {
         clearInterval(intervalId);
       };
     }
-  }, [status]);
+  }, [status, oneTapLogin]);
 
   return <></>;
 };
