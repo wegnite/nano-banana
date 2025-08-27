@@ -141,5 +141,9 @@
   // Markdown 扩展支持
   "markdown.extension.preview.autoShowPreviewToSide": true,
   "markdown.extension.print.theme": "light",
-  "markdown.extension.toc.updateOnSave": true
+  "markdown.extension.toc.updateOnSave": true,
+  
+  // 终端配置 - 默认显示在右侧
+  "terminal.integrated.defaultLocation": "editor",
+  "workbench.panel.defaultLocation": "right"
 }
