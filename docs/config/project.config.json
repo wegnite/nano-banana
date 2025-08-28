@@ -1,0 +1,71 @@
+{
+  "project": {
+    "name": "ai-universal-generator",
+    "displayName": "AI通用生成器",
+    "version": "2.6.0",
+    "description": "基于Next.js的AI内容生成平台，支持多模态内容生成"
+  },
+  "organization": {
+    "name": "您的组织名称",
+    "team": "开发团队",
+    "website": "https://your-website.com",
+    "github": "https://github.com/your-org/your-repo"
+  },
+  "deployment": {
+    "production": {
+      "domain": "https://your-production-domain.com",
+      "apiUrl": "https://api.your-production-domain.com"
+    },
+    "staging": {
+      "domain": "https://staging.your-domain.com",
+      "apiUrl": "https://api-staging.your-domain.com"
+    },
+    "local": {
+      "port": 3000,
+      "url": "http://localhost:3000"
+    }
+  },
+  "payment": {
+    "providers": {
+      "primary": "stripe",
+      "secondary": "custom"
+    },
+    "webhooks": {
+      "success": "/pay-success",
+      "cancel": "/pricing?cancelled=true",
+      "notify": "/api/pay/notify"
+    }
+  },
+  "documentation": {
+    "baseUrl": "https://docs.your-domain.com",
+    "apiDocs": "https://api-docs.your-domain.com",
+    "lastUpdated": "2025-01-27",
+    "maintainer": "开发团队"
+  },
+  "aiProviders": {
+    "openai": {
+      "name": "OpenAI",
+      "enabled": true
+    },
+    "deepseek": {
+      "name": "DeepSeek",
+      "enabled": true
+    },
+    "siliconflow": {
+      "name": "SiliconFlow",
+      "enabled": true
+    },
+    "openrouter": {
+      "name": "OpenRouter",
+      "enabled": true
+    },
+    "replicate": {
+      "name": "Replicate",
+      "enabled": true
+    },
+    "kling": {
+      "name": "Kling",
+      "enabled": true
+    }
+  }
+}

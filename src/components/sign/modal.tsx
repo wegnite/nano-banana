@@ -20,7 +20,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { SiGithub, SiGmail, SiGoogle } from "react-icons/si";
+import { GitHubIcon, GmailIcon, GoogleIcon } from "@/components/ui/brand-icons";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -86,7 +86,7 @@ function ProfileForm({ className }: React.ComponentProps<"form">) {
         <Input id="password" type="password" />
       </div>
       <Button type="submit" className="w-full flex items-center gap-2">
-        <SiGmail className="w-4 h-4" />
+        <GmailIcon className="w-4 h-4" />
         {t("sign_modal.email_sign_in")}
       </Button> */}
 
@@ -98,7 +98,7 @@ function ProfileForm({ className }: React.ComponentProps<"form">) {
             signIn("google");
           }}
         >
-          <SiGoogle className="w-4 h-4" />
+          <GoogleIcon className="w-4 h-4" />
           {t("sign_modal.google_sign_in")}
         </Button>
       )}
@@ -111,7 +111,7 @@ function ProfileForm({ className }: React.ComponentProps<"form">) {
             signIn("github");
           }}
         >
-          <SiGithub className="w-4 h-4" />
+          <GitHubIcon className="w-4 h-4" />
           {t("sign_modal.github_sign_in")}
         </Button>
       )}

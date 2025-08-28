@@ -158,6 +158,9 @@ importers:
       creem:
         specifier: ^0.3.37
         version: 0.3.37(@modelcontextprotocol/sdk@1.17.3)(zod@3.24.1)
+      dayjs:
+        specifier: ^1.11.14
+        version: 1.11.14
       dotenv:
         specifier: ^16.5.0
         version: 16.5.0
@@ -200,9 +203,6 @@ importers:
       markdown-it:
         specifier: ^14.1.0
         version: 14.1.0
-      moment:
-        specifier: ^2.30.1
-        version: 2.30.1
       next:
         specifier: 15.2.3
         version: 15.2.3(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -236,9 +236,6 @@ importers:
       react-icon-cloud:
         specifier: ^4.1.4
         version: 4.1.4(react@19.0.0)
-      react-icons:
-        specifier: ^5.4.0
-        version: 5.4.0(react@19.0.0)
       react-markdown:
         specifier: ^10.1.0
         version: 10.1.0(@types/react@18.3.18)(react@19.0.0)
@@ -3189,6 +3186,9 @@ packages:
     resolution: {integrity: sha512-BS8PfmtDGnrgYdOonGZQdLZslWIeCGFP9tpan0hi1Co2Zr2NKADsvGYA8XxuG/4UWgJ6Cjtv+YJnB6MM69QGlQ==}
     engines: {node: '>= 0.4'}
 
+  dayjs@1.11.14:
+    resolution: {integrity: sha512-E8fIdSxUlyqSA8XYGnNa3IkIzxtEmFjI+JU/6ic0P1zmSqyL6HyG5jHnpPjRguDNiaHLpfvHKWFiohNsJLqcJQ==}
+
   debounce@1.2.1:
     resolution: {integrity: sha512-XRRe6Glud4rd/ZGQfiV1ruXSfbvfJedlV9Y6zOlP+2K04vBYiJEte6stfFkCP03aMnY5tsipamumUjL14fofug==}
 
@@ -4857,9 +4857,6 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
-  moment@2.30.1:
-    resolution: {integrity: sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how==}
-
   motion-dom@11.14.3:
     resolution: {integrity: sha512-lW+D2wBy5vxLJi6aCP0xyxTxlTfiu+b+zcpVbGVFUxotwThqhdpPRSmX8xztAgtZMPMeU0WGVn/k1w4I+TbPqA==}
 
@@ -5280,11 +5277,6 @@ packages:
     engines: {node: '>=10'}
     peerDependencies:
       react: '>=16'
-
-  react-icons@5.4.0:
-    resolution: {integrity: sha512-7eltJxgVt7X64oHh6wSWNwwbKTCtMfK35hcjvJS0yxEAhPM8oUKdS3+kqaW1vicIltw+kR2unHaa12S9pPALoQ==}
-    peerDependencies:
-      react: '*'
 
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
@@ -8938,6 +8930,8 @@ snapshots:
       es-errors: 1.3.0
       is-data-view: 1.0.2
 
+  dayjs@1.11.14: {}
+
   debounce@1.2.1: {}
 
   debug@3.2.7:
@@ -11146,8 +11140,6 @@ snapshots:
 
   mkdirp@1.0.4: {}
 
-  moment@2.30.1: {}
-
   motion-dom@11.14.3: {}
 
   motion-utils@11.14.3: {}
@@ -11531,10 +11523,6 @@ snapshots:
   react-icon-cloud@4.1.4(react@19.0.0):
     dependencies:
       '@csstools/convert-colors': 2.0.0
-      react: 19.0.0
-
-  react-icons@5.4.0(react@19.0.0):
-    dependencies:
       react: 19.0.0
 
   react-is@16.13.1: {}

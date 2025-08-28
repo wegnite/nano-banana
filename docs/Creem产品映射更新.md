@@ -209,7 +209,7 @@ const pricingItems = [
 确保在 Creem Dashboard 中配置以下 Webhook：
 
 ```
-Webhook URL: https://your-domain.com/api/pay/notify/creem
+Webhook URL: https://{{PRODUCTION_DOMAIN}}/api/pay/notify/creem
 事件类型:
 - payment.succeeded
 - subscription.created

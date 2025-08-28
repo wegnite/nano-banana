@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { SiGithub, SiGoogle } from "react-icons/si";
+import { GitHubIcon, GoogleIcon } from "@/components/ui/brand-icons";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -42,7 +42,7 @@ export default function SignForm({
                   className="w-full"
                   onClick={() => signIn("google")}
                 >
-                  <SiGoogle className="w-4 h-4" />
+                  <GoogleIcon className="w-4 h-4" />
                   {t("sign_modal.google_sign_in")}
                 </Button>
               )}
@@ -52,7 +52,7 @@ export default function SignForm({
                   className="w-full"
                   onClick={() => signIn("github")}
                 >
-                  <SiGithub className="w-4 h-4" />
+                  <GitHubIcon className="w-4 h-4" />
                   {t("sign_modal.github_sign_in")}
                 </Button>
               )}

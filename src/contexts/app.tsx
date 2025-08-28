@@ -29,7 +29,7 @@ import { cacheGet, cacheRemove } from "@/lib/cache";
 import { CacheKey } from "@/services/constant";
 import { ContextValue } from "@/types/context";
 import { User } from "@/types/user";
-import moment from "moment";
+import dayjs from "@/lib/dayjs";
 import useOneTapLogin from "@/hooks/useOneTapLogin";
 import { useSession } from "next-auth/react";
 import { isAuthEnabled, isGoogleOneTapEnabled } from "@/lib/auth";
@@ -168,8 +168,8 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
       }
 
       // 计算用户注册时长
-      const userCreatedAt = moment(user.created_at).unix();
-      const currentTime = moment().unix();
+      const userCreatedAt = dayjs(user.created_at).unix();
+      const currentTime = dayjs().unix();
       const timeDiff = Number(currentTime - userCreatedAt);
 
       if (timeDiff <= 0 || timeDiff > 7200) {

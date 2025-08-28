@@ -106,7 +106,7 @@ GET /api/demo/gen-video-siliconflow?request_id={request_id}
 
 ```env
 # SiliconFlow API 配置
-SILICONFLOW_API_KEY = "sk-bsuqloskthhvohoxexhfjgjwaayltdmnyyhhkewejckjkisq"
+SILICONFLOW_API_KEY = "sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"  # 替换为您的实际API密钥
 SILICONFLOW_BASE_URL = "https://api.siliconflow.cn/v1"
 ```
 

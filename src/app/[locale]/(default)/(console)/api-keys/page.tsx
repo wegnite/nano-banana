@@ -4,7 +4,7 @@ import { Table as TableSlotType } from "@/types/slots/table";
 import { getTranslations } from "next-intl/server";
 import { getUserApikeys, ApikeyStatus } from "@/models/apikey";
 import { getUserUuid } from "@/services/user";
-import moment from "moment";
+import dayjs from "@/lib/dayjs";
 import { Badge } from "@/components/ui/badge";
 
 async function ApiKeysPage() {
@@ -48,7 +48,7 @@ async function ApiKeysPage() {
         title: t("api_keys.table.created_at"),
         name: "created_at",
         callback: (item: any) => {
-          return moment(item.created_at).fromNow();
+          return dayjs(item.created_at).fromNow();
         },
       },
     ],

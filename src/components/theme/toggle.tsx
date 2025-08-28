@@ -1,6 +1,6 @@
 "use client";
 
-import { BsMoonStars, BsSun } from "react-icons/bs";
+import { Moon, Sun } from "lucide-react";
 
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
@@ -15,18 +15,14 @@ export default function ThemeToggle() {
   return (
     <div className="flex items-center gap-x-2 px-2">
       {resolvedTheme === "dark" ? (
-        <BsSun
+        <Sun
           className="cursor-pointer text-lg text-muted-foreground"
           onClick={() => setTheme("light")}
-          width={80}
-          height={20}
         />
       ) : (
-        <BsMoonStars
+        <Moon
           className="cursor-pointer text-lg text-muted-foreground"
           onClick={() => setTheme("dark")}
-          width={80}
-          height={20}
         />
       )}
     </div>

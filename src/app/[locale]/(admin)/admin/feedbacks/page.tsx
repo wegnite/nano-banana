@@ -2,7 +2,7 @@ import { TableColumn } from "@/types/blocks/table";
 import TableSlot from "@/components/dashboard/slots/table";
 import { Table as TableSlotType } from "@/types/slots/table";
 import { getFeedbacks } from "@/models/feedback";
-import moment from "moment";
+import dayjs from "@/lib/dayjs";
 import Image from "next/image";
 
 async function AdminFeedbacksPage() {
@@ -47,7 +47,7 @@ async function AdminFeedbacksPage() {
     {
       name: "created_at",
       title: "Created At",
-      callback: (row) => moment(row.created_at).format("YYYY-MM-DD HH:mm:ss"),
+      callback: (row) => dayjs(row.created_at).format("YYYY-MM-DD HH:mm:ss"),
     },
     {
       name: "actions",

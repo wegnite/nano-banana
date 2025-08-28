@@ -5,7 +5,7 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import Crumb from "./crumb";
 import Markdown from "@/components/markdown";
 import { Post } from "@/types/post";
-import moment from "moment";
+import dayjs from "@/lib/dayjs";
 import { Card } from "@/components/ui/card";
 
 export default function BlogDetail({ post }: { post: Post }) {
@@ -31,7 +31,7 @@ export default function BlogDetail({ post }: { post: Post }) {
             )}
 
             <span className="ml-2 text-muted-foreground">
-              on {post.created_at && moment(post.created_at).fromNow()}
+              on {post.created_at && dayjs(post.created_at).fromNow()}
             </span>
           </div>
         </div>

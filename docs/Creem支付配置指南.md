@@ -138,11 +138,11 @@
 
 ```bash
 # 生产环境
-Webhook URL: https://your-domain.com/api/pay/notify/creem
+Webhook URL: https://{{PRODUCTION_DOMAIN}}/api/pay/notify/creem
 Webhook Secret: [在 Creem 后台生成]
 
 # 测试环境
-Test Webhook URL: https://your-test-domain.com/api/pay/notify/creem
+Test Webhook URL: https://{{STAGING_DOMAIN}}/api/pay/notify/creem
 Test Mode: Enabled
 ```
 
@@ -162,17 +162,17 @@ Test Mode: Enabled
 
 ### 3.1 支付成功页面
 ```
-Success URL: https://your-domain.com/pay-success?session_id={CHECKOUT_SESSION_ID}
+Success URL: https://{{PRODUCTION_DOMAIN}}/pay-success?session_id={CHECKOUT_SESSION_ID}
 ```
 
 ### 3.2 支付取消页面
 ```
-Cancel URL: https://your-domain.com/pricing?cancelled=true
+Cancel URL: https://{{PRODUCTION_DOMAIN}}/pricing?cancelled=true
 ```
 
 ### 3.3 支付失败页面
 ```
-Failure URL: https://your-domain.com/pay-error?error={ERROR_CODE}
+Failure URL: https://{{PRODUCTION_DOMAIN}}/pay-error?error={ERROR_CODE}
 ```
 
 ## 四、环境变量配置

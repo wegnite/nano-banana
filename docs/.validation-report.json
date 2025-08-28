@@ -1,0 +1,608 @@
+{
+  "timestamp": "2025-08-27T10:25:38.703Z",
+  "filesChecked": 34,
+  "issueCount": 75,
+  "fixed": 10,
+  "issues": [
+    {
+      "file": "CLAUDE.md",
+      "line": 1,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://www.dzombak",
+      "content": "The orignal prompt is from: https://www.dzombak.com/blog/2025/08/getting-good-results-from-claude-code/"
+    },
+    {
+      "file": "Context7集成完成报告.md",
+      "line": 42,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://console.upstash",
+      "content": "1. 访问 [Upstash Console](https://console.upstash.com)"
+    },
+    {
+      "file": "Creem产品映射更新.md",
+      "line": "multiple",
+      "type": "placeholder_needed",
+      "severity": "warning",
+      "match": "your-domain.com",
+      "suggestion": "{{PRODUCTION_DOMAIN}}"
+    },
+    {
+      "file": "Creem支付配置指南.md",
+      "line": 380,
+      "type": "team_name",
+      "severity": "warning",
+      "match": "AI Universal Generator Team",
+      "content": "**维护团队**: AI Universal Generator Team"
+    },
+    {
+      "file": "Creem支付配置指南.md",
+      "line": "multiple",
+      "type": "placeholder_needed",
+      "severity": "warning",
+      "match": "your-domain.com",
+      "suggestion": "{{PRODUCTION_DOMAIN}}"
+    },
+    {
+      "file": "Creem支付配置指南.md",
+      "line": "multiple",
+      "type": "placeholder_needed",
+      "severity": "warning",
+      "match": "your-domain.com",
+      "suggestion": "{{PRODUCTION_DOMAIN}}"
+    },
+    {
+      "file": "Creem支付配置指南.md",
+      "line": "multiple",
+      "type": "placeholder_needed",
+      "severity": "warning",
+      "match": "your-domain.com",
+      "suggestion": "{{PRODUCTION_DOMAIN}}"
+    },
+    {
+      "file": "Creem支付配置指南.md",
+      "line": "multiple",
+      "type": "placeholder_needed",
+      "severity": "warning",
+      "match": "your-domain.com",
+      "suggestion": "{{PRODUCTION_DOMAIN}}"
+    },
+    {
+      "file": "Creem支付配置指南.md",
+      "line": "multiple",
+      "type": "placeholder_needed",
+      "severity": "warning",
+      "match": "your-test-domain.com",
+      "suggestion": "{{STAGING_DOMAIN}}"
+    },
+    {
+      "file": "MCP_Context7配置指南.md",
+      "line": 21,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://console.upstash",
+      "content": "1. 访问 [Upstash Console](https://console.upstash.com)"
+    },
+    {
+      "file": "MCP_Context7配置指南.md",
+      "line": 362,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://modelcontextprotocol.io",
+      "content": "- [MCP 官方文档](https://modelcontextprotocol.io)"
+    },
+    {
+      "file": "OpenRouter集成说明.md",
+      "line": 99,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://openrouter.ai",
+      "content": "- 可从 [OpenRouter](https://openrouter.ai) 获取"
+    },
+    {
+      "file": "OpenRouter集成说明.md",
+      "line": 157,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://openrouter.ai",
+      "content": "1. 查看 [OpenRouter 文档](https://openrouter.ai/docs)"
+    },
+    {
+      "file": "SEO完整实施指南.md",
+      "line": 453,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://schema.org",
+      "content": "\"@context\": \"https://schema.org\","
+    },
+    {
+      "file": "SEO完整实施指南.md",
+      "line": 485,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://schema.org",
+      "content": "\"@context\": \"https://schema.org\","
+    },
+    {
+      "file": "SEO完整实施指南.md",
+      "line": 500,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://schema.org",
+      "content": "\"availability\": `https://schema.org/${data.inStock ? 'InStock' : 'OutOfStock'}`,"
+    },
+    {
+      "file": "SEO完整实施指南.md",
+      "line": 519,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://schema.org",
+      "content": "\"@context\": \"https://schema.org\","
+    },
+    {
+      "file": "SEO完整实施指南.md",
+      "line": 537,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://schema.org",
+      "content": "\"@context\": \"https://schema.org\","
+    },
+    {
+      "file": "SEO完整实施指南.md",
+      "line": 1139,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://developers.google",
+      "content": "- [Google搜索中心文档](https://developers.google.com/search)"
+    },
+    {
+      "file": "SEO完整实施指南.md",
+      "line": 1140,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://web.dev",
+      "content": "- [Web.dev性能优化](https://web.dev/performance/)"
+    },
+    {
+      "file": "SEO完整实施指南.md",
+      "line": 1141,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://schema.org",
+      "content": "- [Schema.org结构化数据](https://schema.org/)"
+    },
+    {
+      "file": "SEO完整实施指南.md",
+      "line": 1142,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://web.dev",
+      "content": "- [Core Web Vitals指南](https://web.dev/vitals/)"
+    },
+    {
+      "file": "SEO完整实施指南.md",
+      "line": 1143,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://pagespeed.web",
+      "content": "- [PageSpeed Insights](https://pagespeed.web.dev/)"
+    },
+    {
+      "file": "SEO完整实施指南.md",
+      "line": 1144,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://search.google",
+      "content": "- [Mobile-Friendly Test](https://search.google.com/test/mobile-friendly)"
+    },
+    {
+      "file": "SEO完整实施指南.md",
+      "line": 1145,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://search.google",
+      "content": "- [Rich Results Test](https://search.google.com/test/rich-results)"
+    },
+    {
+      "file": "SiliconFlow集成说明.md",
+      "line": 33,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://sc-maas.oss",
+      "content": "Generated Image URL: https://sc-maas.oss-cn-shanghai.aliyuncs.com/outputs/..."
+    },
+    {
+      "file": "SiliconFlow集成说明.md",
+      "line": 109,
+      "type": "api_key",
+      "severity": "critical",
+      "match": "API_KEY = \"sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\"",
+      "content": "SILICONFLOW_API_KEY = \"sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\"  # 替换为您的实际API密钥"
+    },
+    {
+      "file": "代码规范文档.md",
+      "line": 538,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://www.typescriptlang",
+      "content": "- [TypeScript官方文档](https://www.typescriptlang.org/docs/)"
+    },
+    {
+      "file": "代码规范文档.md",
+      "line": 539,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://react.dev",
+      "content": "- [React最佳实践](https://react.dev/learn)"
+    },
+    {
+      "file": "代码规范文档.md",
+      "line": 540,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://nextjs.org",
+      "content": "- [Next.js文档](https://nextjs.org/docs)"
+    },
+    {
+      "file": "代码规范文档.md",
+      "line": 541,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://tailwindcss.com",
+      "content": "- [Tailwind CSS文档](https://tailwindcss.com/docs)"
+    },
+    {
+      "file": "代码规范文档.md",
+      "line": 412,
+      "type": "api_key",
+      "severity": "critical",
+      "match": "API_KEY = \"sk-xxxxxxxxxxxx\"",
+      "content": "const API_KEY = \"sk-xxxxxxxxxxxx\";  // 示例，切勿使用真实密钥"
+    },
+    {
+      "file": "完整项目指南.md",
+      "line": 528,
+      "type": "team_name",
+      "severity": "warning",
+      "match": "AI Universal Generator Team",
+      "content": "**Maintained By**: AI Universal Generator Team"
+    },
+    {
+      "file": "完整项目指南.md",
+      "line": 499,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://nextjs.org",
+      "content": "- [Next.js Documentation](https://nextjs.org/docs)"
+    },
+    {
+      "file": "完整项目指南.md",
+      "line": 500,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://orm.drizzle",
+      "content": "- [Drizzle ORM Guide](https://orm.drizzle.team)"
+    },
+    {
+      "file": "完整项目指南.md",
+      "line": 501,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://authjs.dev",
+      "content": "- [NextAuth.js Guide](https://authjs.dev)"
+    },
+    {
+      "file": "完整项目指南.md",
+      "line": 502,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://tailwindcss.com",
+      "content": "- [Tailwind CSS Reference](https://tailwindcss.com)"
+    },
+    {
+      "file": "数据库迁移与安全配置指南.md",
+      "line": 174,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://xxx.supabase",
+      "content": "SUPABASE_URL=\"https://xxx.supabase.co\""
+    },
+    {
+      "file": "数据库迁移与安全配置指南.md",
+      "line": 259,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://supabase.com",
+      "content": "- [Supabase RLS 文档](https://supabase.com/docs/guides/auth/row-level-security)"
+    },
+    {
+      "file": "数据库迁移与安全配置指南.md",
+      "line": 260,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://orm.drizzle",
+      "content": "- [Drizzle ORM 迁移指南](https://orm.drizzle.team/docs/migrations)"
+    },
+    {
+      "file": "文档通用化改造方案.md",
+      "line": 10,
+      "type": "project_name",
+      "severity": "error",
+      "match": "Mahavatar Narsimha",
+      "content": "| `nextjs15-migration-guide.md` | 6 | Mahavatar Narsimha (MovieIndia) | 项目标识 |"
+    },
+    {
+      "file": "文档通用化改造方案.md",
+      "line": 156,
+      "type": "project_name",
+      "severity": "error",
+      "match": "Mahavatar Narsimha",
+      "content": "- **项目**: Mahavatar Narsimha (MovieIndia)"
+    },
+    {
+      "file": "文档通用化改造方案.md",
+      "line": 10,
+      "type": "project_name",
+      "severity": "error",
+      "match": "MovieIndia",
+      "content": "| `nextjs15-migration-guide.md` | 6 | Mahavatar Narsimha (MovieIndia) | 项目标识 |"
+    },
+    {
+      "file": "文档通用化改造方案.md",
+      "line": 156,
+      "type": "project_name",
+      "severity": "error",
+      "match": "MovieIndia",
+      "content": "- **项目**: Mahavatar Narsimha (MovieIndia)"
+    },
+    {
+      "file": "文档通用化改造方案.md",
+      "line": 11,
+      "type": "domain",
+      "severity": "error",
+      "match": "mahavatar-narsimha.com",
+      "content": "| `nextjs15-migration-guide.md` | 96 | https://mahavatar-narsimha.com | 域名硬编码 |"
+    },
+    {
+      "file": "文档通用化改造方案.md",
+      "line": 157,
+      "type": "domain",
+      "severity": "error",
+      "match": "mahavatar-narsimha.com",
+      "content": "const baseUrl = 'https://mahavatar-narsimha.com'"
+    },
+    {
+      "file": "文档通用化改造方案.md",
+      "line": 13,
+      "type": "team_name",
+      "severity": "warning",
+      "match": "AI ShipAny Team",
+      "content": "| `项目架构文档.md` | 385 | AI ShipAny Team | 团队名称 |"
+    },
+    {
+      "file": "文档通用化改造方案.md",
+      "line": 178,
+      "type": "team_name",
+      "severity": "warning",
+      "match": "AI ShipAny Team",
+      "content": "*维护者：AI ShipAny Team*"
+    },
+    {
+      "file": "文档通用化改造方案.md",
+      "line": 12,
+      "type": "team_name",
+      "severity": "warning",
+      "match": "AI Universal Generator Team",
+      "content": "| `文档索引.md` | 107 | AI Universal Generator Team | 团队名称 |"
+    },
+    {
+      "file": "文档通用化改造方案.md",
+      "line": 179,
+      "type": "team_name",
+      "severity": "warning",
+      "match": "AI Universal Generator Team",
+      "content": "*维护者：AI Universal Generator Team*"
+    },
+    {
+      "file": "文档通用化改造方案.md",
+      "line": 11,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://mahavatar-narsimha.com",
+      "content": "| `nextjs15-migration-guide.md` | 96 | https://mahavatar-narsimha.com | 域名硬编码 |"
+    },
+    {
+      "file": "文档通用化改造方案.md",
+      "line": 157,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://mahavatar-narsimha.com",
+      "content": "const baseUrl = 'https://mahavatar-narsimha.com'"
+    },
+    {
+      "file": "文档通用化改造方案.md",
+      "line": 334,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://api-docs.your",
+      "content": "API_DOCS_URL=\"https://api-docs.your-domain.com\""
+    },
+    {
+      "file": "文档通用化改造方案.md",
+      "line": "multiple",
+      "type": "placeholder_needed",
+      "severity": "warning",
+      "match": "your-domain.com",
+      "suggestion": "{{PRODUCTION_DOMAIN}}"
+    },
+    {
+      "file": "文档通用化改造方案.md",
+      "line": "multiple",
+      "type": "placeholder_needed",
+      "severity": "warning",
+      "match": "your-domain.com",
+      "suggestion": "{{PRODUCTION_DOMAIN}}"
+    },
+    {
+      "file": "文档通用化改造方案.md",
+      "line": "multiple",
+      "type": "placeholder_needed",
+      "severity": "warning",
+      "match": "your-domain.com",
+      "suggestion": "{{PRODUCTION_DOMAIN}}"
+    },
+    {
+      "file": "文档通用化改造方案.md",
+      "line": "multiple",
+      "type": "placeholder_needed",
+      "severity": "warning",
+      "match": "your-domain.com",
+      "suggestion": "{{PRODUCTION_DOMAIN}}"
+    },
+    {
+      "file": "文档通用化改造方案.md",
+      "line": "multiple",
+      "type": "placeholder_needed",
+      "severity": "warning",
+      "match": "your-domain.com",
+      "suggestion": "{{PRODUCTION_DOMAIN}}"
+    },
+    {
+      "file": "文档通用化改造方案.md",
+      "line": "multiple",
+      "type": "placeholder_needed",
+      "severity": "warning",
+      "match": "your-domain.com",
+      "suggestion": "{{PRODUCTION_DOMAIN}}"
+    },
+    {
+      "file": "文档通用化改造方案.md",
+      "line": "multiple",
+      "type": "placeholder_needed",
+      "severity": "warning",
+      "match": "your-domain.com",
+      "suggestion": "{{PRODUCTION_DOMAIN}}"
+    },
+    {
+      "file": "文档通用化改造方案.md",
+      "line": "multiple",
+      "type": "placeholder_needed",
+      "severity": "warning",
+      "match": "yourdomain.com",
+      "suggestion": "{{PRODUCTION_DOMAIN}}"
+    },
+    {
+      "file": "文档通用化改造方案.md",
+      "line": "multiple",
+      "type": "placeholder_needed",
+      "severity": "warning",
+      "match": "your-org",
+      "suggestion": "{{ORG_NAME}}"
+    },
+    {
+      "file": "文档通用化改造方案.md",
+      "line": "multiple",
+      "type": "placeholder_needed",
+      "severity": "warning",
+      "match": "your-repo",
+      "suggestion": "{{REPO_NAME}}"
+    },
+    {
+      "file": "用户归因系统实施总结.md",
+      "line": 111,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://yourdomain.com",
+      "content": "https://yourdomain.com?utm_source=google&utm_medium=cpc&utm_campaign=summer2025"
+    },
+    {
+      "file": "用户归因系统实施总结.md",
+      "line": "multiple",
+      "type": "placeholder_needed",
+      "severity": "warning",
+      "match": "yourdomain.com",
+      "suggestion": "{{PRODUCTION_DOMAIN}}"
+    },
+    {
+      "file": "用户归因系统部署指南.md",
+      "line": 25,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://yourdomain.com",
+      "content": "NEXT_PUBLIC_WEB_URL=https://yourdomain.com"
+    },
+    {
+      "file": "用户归因系统部署指南.md",
+      "line": 51,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://yourdomain.com",
+      "content": "访问: https://yourdomain.com?utm_source=google&utm_medium=cpc&utm_campaign=test"
+    },
+    {
+      "file": "用户归因系统部署指南.md",
+      "line": 233,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://support.google",
+      "content": "- [UTM参数最佳实践](https://support.google.com/analytics/answer/1033863)"
+    },
+    {
+      "file": "用户归因系统部署指南.md",
+      "line": 234,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://support.google",
+      "content": "- [归因模型对比](https://support.google.com/analytics/answer/1662518)"
+    },
+    {
+      "file": "用户归因系统部署指南.md",
+      "line": 235,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://gdpr.eu",
+      "content": "- [Cookie政策指南](https://gdpr.eu/cookies/)"
+    },
+    {
+      "file": "用户归因系统部署指南.md",
+      "line": "multiple",
+      "type": "placeholder_needed",
+      "severity": "warning",
+      "match": "yourdomain.com",
+      "suggestion": "{{PRODUCTION_DOMAIN}}"
+    },
+    {
+      "file": "用户归因系统部署指南.md",
+      "line": "multiple",
+      "type": "placeholder_needed",
+      "severity": "warning",
+      "match": "yourdomain.com",
+      "suggestion": "{{PRODUCTION_DOMAIN}}"
+    },
+    {
+      "file": "项目代码规范.md",
+      "line": 857,
+      "type": "team_name",
+      "severity": "warning",
+      "match": "AI Universal Generator Team",
+      "content": "**维护者**: AI Universal Generator Team"
+    },
+    {
+      "file": "项目代码规范.md",
+      "line": 491,
+      "type": "hardcoded_url",
+      "severity": "warning",
+      "match": "https://yourdomain.com",
+      "content": "'https://yourdomain.com',"
+    },
+    {
+      "file": "项目代码规范.md",
+      "line": "multiple",
+      "type": "placeholder_needed",
+      "severity": "warning",
+      "match": "yourdomain.com",
+      "suggestion": "{{PRODUCTION_DOMAIN}}"
+    }
+  ]
+}

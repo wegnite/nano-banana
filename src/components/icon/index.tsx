@@ -1,76 +1,88 @@
 "use client";
 
-// import * as Ai from "react-icons/ai"; // Ant Design icons
-// import * as Bi from "react-icons/bi"; // Boxicons
-// import * as Bs from "react-icons/bs"; // Bootstrap icons
+/**
+ * Icon Component
+ * 
+ * Problem: Migrating from react-icons to lucide-react for better performance
+ * Solution: Create a mapping system to convert icon names to lucide-react components
+ * 
+ * This component provides backward compatibility while using lightweight lucide-react icons
+ */
 
-// import * as Md from "react-icons/md"; // Material Design icons
-// import * as Pi from "react-icons/pi"; // Phosphor Icons
-import * as Ri from "react-icons/ri"; // Remix icons
+import {
+  // Common UI icons
+  Home, Settings, User, Users, Mail, Phone, Search, Plus, Edit, 
+  Trash2, Copy, Check, X, ChevronDown, ChevronRight, ChevronLeft, 
+  ChevronUp, ExternalLink, Download, Upload, Eye, EyeOff,
+  
+  // Navigation icons  
+  Menu, ArrowLeft, ArrowRight, ArrowUp, ArrowDown, 
+  
+  // Business icons
+  DollarSign, CreditCard, ShoppingCart, Package, Building2,
+  
+  // Media & Content icons
+  Image, Video, FileText, File, Folder, BookOpen, 
+  
+  // Social & Communication icons
+  MessageCircle, Share, Heart, Star, Flag,
+  
+  // Tech icons
+  Code, Monitor, Smartphone, Tablet, Globe, Wifi, Database,
+  
+  // Status icons
+  CheckCircle, XCircle, AlertCircle, Info, HelpCircle,
+  
+  // Weather & Time
+  Clock, Calendar, Sun, Moon, Cloud, CloudRain,
+  
+  // Tools & Actions
+  Play, Pause, Square, SkipForward, SkipBack, Volume2, VolumeX,
+  Maximize, Minimize, Filter, ArrowUpNarrowWide as SortAsc, ArrowDownWideNarrow as SortDesc, RotateCw,
+  
+  // Specialty icons
+  Zap, Activity, BarChart3, PieChart, TrendingUp, Target,
+} from "lucide-react";
 
 import { ReactNode } from "react";
+import { GitHubIcon, DiscordIcon } from "@/components/ui/brand-icons";
 
-// import * as Cg from "react-icons/cg"; // Circum icons
-// import * as Ci from "react-icons/ci"; // css.gg
-// import * as Di from "react-icons/di"; // Devicons
-// import * as Fa from "react-icons/fa"; // Font Awesome icons
-// import * as Fa6 from "react-icons/fa6"; // Font Awesome 6 icons
-// import * as Fc from "react-icons/fc"; // Flat Color icons
-// import * as Fi from "react-icons/fi"; // Feather icons
-// import * as Gi from "react-icons/gi"; // Game Icons
-// import * as Go from "react-icons/go"; // Github Octicons icons
-// import * as Gr from "react-icons/gr"; // Grommet-Icons
-// import * as Hi from "react-icons/hi"; // Heroicons
-// import * as Hi2 from "react-icons/hi2"; // Heroicons 2
-// import * as Im from "react-icons/im"; // IcoMoon Free
-// import * as Io from "react-icons/io"; // Ionicons 4
-// import * as Io5 from "react-icons/io5"; // Ionicons 5
-// import * as Lia from "react-icons/lia"; // Icons8 Line Awesome
-// import * as Lu from "react-icons/lu"; // Lucide Icons
-
-// import * as Rx from "react-icons/rx"; // Radix Icons
-// import * as Si from "react-icons/si"; // Simple Icons
-// import * as Sl from "react-icons/sl"; // Simple Line Icons
-// import * as Tb from "react-icons/tb"; // Tabler Icons
-// import * as Tfi from "react-icons/tfi"; // Themify Icons
-// import * as Ti from "react-icons/ti"; // Typicons
-// import * as Vsc from "react-icons/vsc"; // VS Code icons
-// import * as Wi from "react-icons/wi"; // Weather icons
-
-// Map of prefixes to icon packages
-const iconPackages: { [key: string]: any } = {
-  // Ai,
-  // Bs,
-  // Bi,
-  // Ci,
-  // Cg,
-  // Di,
-  // Fi,
-  // Fc,
-  // Fa,
-  // Fa6,
-  // Go,
-  // Gi,
-  // Gr,
-  // Hi,
-  // Hi2,
-  // Im,
-  // Io,
-  // Io5,
-  // Lia,
-  // Lu,
-  // Md,
-  // Pi,
-  Ri,
-  // Rx,
-  // Si,
-  // Sl,
-  // Tb,
-  // Tfi,
-  // Ti,
-  // Vsc,
-  // Wi,
+// Mapping from react-icons names to lucide-react components
+const iconMap: { [key: string]: React.ElementType } = {
+  // Remix Icons (Ri) to Lucide mapping
+  "RiHomeLine": Home,
+  "RiDashboardLine": BarChart3,
+  "RiUserLine": User,
+  "RiOrderPlayLine": Play,
+  "RiArticleLine": FileText,
+  "RiFileTextLine": FileText,
+  "RiAppsLine": Menu,
+  "RiGithubLine": GitHubIcon,
+  "RiGithubFill": GitHubIcon,
+  "RiDiscordLine": DiscordIcon,
+  "RiDiscordFill": DiscordIcon,
+  "RiTwitterLine": MessageCircle, // Using MessageCircle as Twitter alternative
+  "RiTwitterXFill": MessageCircle,
+  "RiMoneyDollarBoxLine": DollarSign,
+  "RiMoneyDollarCircleLine": DollarSign,
+  "RiMoneyCnyCircleFill": DollarSign,
+  "RiAddLine": Plus,
+  "RiEditLine": Edit,
+  "RiEyeLine": Eye,
+  "RiBookLine": BookOpen,
+  "RiBankCardLine": CreditCard,
+  "RiCheckLine": Check,
+  "RiCopy2Line": Copy,
+  "RiFlashlightFill": Zap,
+  "RiBookOpenLine": BookOpen,
+  "RiNextjsFill": Code, // Using Code for technical icons
+  "RiCloudyFill": Cloud,
+  "RiClapperboardAiLine": Video,
+  "RiCodeFill": Code,
+  "RiMailLine": Mail,
 };
+
+// Additional icon packages can be added here if needed
 
 export default function Icon({
   name,
@@ -81,29 +93,19 @@ export default function Icon({
   className?: string;
   onClick?: () => void;
 }) {
-  function getIcon(name: string): ReactNode {
-    // Extract prefix (first two characters)
-    const prefix = name.slice(0, 2);
+  // Get the corresponding lucide-react icon from the mapping
+  const IconComponent = iconMap[name];
 
-    // Get the corresponding icon package
-    const iconPackage = iconPackages[prefix];
-    if (iconPackage) {
-      const iconName = name as keyof typeof iconPackage;
-      return iconPackage[iconName] || null;
-    }
-
+  // Return null if no icon is found
+  if (!IconComponent) {
+    console.warn(`Icon "${name}" not found in iconMap. Please add it to the mapping.`);
     return null;
   }
 
-  const IconComponent = getIcon(name) as React.ElementType;
-
-  // Return null if no icon is found
-  if (!IconComponent) return null;
-
-  // Render the icon component instead of returning it directly
+  // Render the lucide-react icon component
   return (
     <IconComponent
-      className={`${className} cursor-pointer`}
+      className={`${className} ${onClick ? 'cursor-pointer' : ''}`}
       onClick={onClick}
       style={{ cursor: onClick ? "pointer" : "default" }}
     />

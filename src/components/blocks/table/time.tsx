@@ -1,4 +1,4 @@
-import moment from "moment";
+import dayjs from "@/lib/dayjs";
 
 export default function TableItemTime({
   value,
@@ -12,8 +12,8 @@ export default function TableItemTime({
   return (
     <div className={className}>
       {options?.format
-        ? moment(value).format(options?.format)
-        : moment(value).fromNow()}
+        ? dayjs(value).format(options?.format)
+        : dayjs(value).fromNow()}
     </div>
   );
 }

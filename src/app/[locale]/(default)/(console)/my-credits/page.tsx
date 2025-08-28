@@ -5,7 +5,7 @@ import { getCreditsByUserUuid } from "@/models/credit";
 import { getTranslations } from "next-intl/server";
 import { getUserCredits } from "@/services/credit";
 import { getUserUuid } from "@/services/user";
-import moment from "moment";
+import dayjs from "@/lib/dayjs";
 
 const MyCreditsPage = async function () {
   const t = await getTranslations();
@@ -54,7 +54,7 @@ const MyCreditsPage = async function () {
         title: t("my_credits.table.updated_at"),
         name: "created_at",
         callback: (v: any) => {
-          return moment(v.created_at).format("YYYY-MM-DD HH:mm:ss");
+          return dayjs(v.created_at).format("YYYY-MM-DD HH:mm:ss");
         },
       },
     ],
