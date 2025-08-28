@@ -28,12 +28,5 @@ const nextConfig = {
   },
 };
 
-// Make sure experimental mdx flag is enabled
-const configWithMDX = {
-  ...nextConfig,
-  experimental: {
-    mdxRs: true,
-  },
-};
-
-export default withBundleAnalyzer(withNextIntl(withMDX(configWithMDX)));
+// Next.js 15 已经稳定支持 MDX，不再需要 experimental 标志
+export default withBundleAnalyzer(withNextIntl(withMDX(nextConfig)));

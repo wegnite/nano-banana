@@ -239,6 +239,54 @@ export async function increaseCredits({
 }
 
 /**
+ * 扣除用户积分（用于消费场景）
+ * 
+ * @param {string} user_uuid - 用户唯一标识
+ * @param {number} amount - 要扣除的积分数量
+ * @param {string} type - 消费类型（如 'IMAGE_GENERATION'）
+ * @param {string} [description] - 消费描述（可选）
+ * @returns {Promise<boolean>} 扣除是否成功
+ * 
+ * 业务逻辑：
+ * 1. 检查用户是否有足够的积分
+ * 2. 如果积分充足，执行扣除操作
+ * 3. 记录消费交易
+ * 
+ * 注意事项：
+ * - 积分不足时返回 false，不会执行扣除
+ * - 成功扣除后返回 true
+ * - 使用现有的 decreaseCredits 函数
+ */
+export async function deductCredits(
+  user_uuid: string,
+  amount: number,
+  type: string,
+  description?: string
+): Promise<boolean> {
+  try {
+    // 检查用户积分是否充足
+    const userCredits = await getUserCredits(user_uuid);
+    if (userCredits.left_credits < amount) {
+      console.log(`User ${user_uuid} has insufficient credits: ${userCredits.left_credits} < ${amount}`);
+      return false;
+    }
+
+    // 执行扣除操作
+    await decreaseCredits({
+      user_uuid,
+      trans_type: CreditsTransType.Ping, // 使用 Ping 类型表示 API 消费
+      credits: amount,
+    });
+
+    console.log(`Successfully deducted ${amount} credits from user ${user_uuid} for ${type}`);
+    return true;
+  } catch (e) {
+    console.log("deduct credits failed: ", e);
+    return false;
+  }
+}
+
+/**
  * 为订单更新积分
  * 
  * @param {Order} order - 订单对象
