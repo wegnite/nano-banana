@@ -1,0 +1,23 @@
+
+> shipany-template-one@2.6.0 test:nano-banana-credits /Users/shengdongyang/githubWrokspace/nano-banana
+> node test/integration/nano-banana-credits.test.js
+
+node:internal/modules/esm/resolve:274
+    throw new ERR_MODULE_NOT_FOUND(
+          ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/Users/shengdongyang/githubWrokspace/nano-banana/src/services/credit.js' imported from /Users/shengdongyang/githubWrokspace/nano-banana/test/integration/nano-banana-credits.test.js
+    at finalizeResolution (node:internal/modules/esm/resolve:274:11)
+    at moduleResolve (node:internal/modules/esm/resolve:859:10)
+    at defaultResolve (node:internal/modules/esm/resolve:983:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:801:12)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:725:25)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:708:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:309:38)
+    at #link (node:internal/modules/esm/module_job:208:49) {
+  code: 'ERR_MODULE_NOT_FOUND',
+  url: 'file:///Users/shengdongyang/githubWrokspace/nano-banana/src/services/credit.js'
+}
+
+Node.js v24.4.1
+ ELIFECYCLE  Command failed with exit code 1.

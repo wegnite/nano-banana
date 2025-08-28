@@ -18,6 +18,10 @@
     "db:push": "npx drizzle-kit push --config=src/db/config.ts",
     "test": "node test/integration/ai-generation.test.js",
     "test:integration": "node test/integration/ai-generation.test.js",
+    "test:nano-banana": "node test/nano-banana-api.test.js",
+    "test:nano-banana-credits": "node test/integration/nano-banana-credits.test.js",
+    "test:nano-banana-demo": "node test/demo-test.js",
+    "test:all-nano-banana": "npm run test:nano-banana && npm run test:nano-banana-credits",
     "postinstall": "fumadocs-mdx"
   },
   "dependencies": {
