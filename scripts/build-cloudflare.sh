@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Cloudflare Pages 构建脚本
-# 解决 vercel.json 重定向配置冲突问题
+# 解决 vercel.json 冲突和文件大小限制问题
 
 echo "🚀 开始 Cloudflare Pages 构建..."
 
@@ -63,11 +63,26 @@ fi
 echo "🏗️ 构建 Next.js 项目..."
 next build
 
-# 5. 运行 Cloudflare adapter
+# 5. 清理大文件和缓存（重要！避免超过 25MB 限制）
+echo "🧹 清理缓存和大文件..."
+# 删除 webpack 缓存（这是导致错误的主要原因）
+rm -rf .next/cache
+# 删除源码映射文件以减小体积
+find .next -name "*.js.map" -type f -delete 2>/dev/null || true
+# 删除构建追踪文件
+rm -rf .next/trace
+# 删除其他不必要的大文件
+find .next -type f -size +20M -delete 2>/dev/null || true
+
+# 显示清理后的目录大小
+echo "📊 构建目录大小："
+du -sh .next 2>/dev/null || true
+
+# 6. 运行 Cloudflare adapter
 echo "☁️ 运行 @cloudflare/next-on-pages..."
 npx @cloudflare/next-on-pages@1
 
-# 6. 恢复原始文件
+# 7. 恢复原始文件
 echo "♻️ 恢复原始配置..."
 if [ -f "vercel.json.backup" ]; then
     mv vercel.json.backup vercel.json

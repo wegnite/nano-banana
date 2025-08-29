@@ -1,207 +1,169 @@
-import bundleAnalyzer from "@next/bundle-analyzer";
-import createNextIntlPlugin from "next-intl/plugin";
-import { createMDX } from "fumadocs-mdx/next";
-import { createRequire } from "module";
+import createMDX from 'fumadocs-mdx/config';
+import { rehypeCodeDefaultOptions } from 'fumadocs-core/mdx-plugins';
+import { remarkInstall } from 'fumadocs-docgen';
+import createBundleAnalyzer from '@next/bundle-analyzer';
 
-const require = createRequire(import.meta.url);
-
-const withMDX = createMDX();
-
-const withBundleAnalyzer = bundleAnalyzer({
-  enabled: process.env.ANALYZE === "true",
+const withMDX = createMDX({
+  mdxOptions: {
+    remarkPlugins: [[remarkInstall, { persist: { id: 'package-manager' } }]],
+    rehypeCodeOptions: {
+      inline: 'tailing-curly-colon',
+      themes: {
+        light: 'catppuccin-latte',
+        dark: 'catppuccin-mocha',
+      },
+    },
+  },
 });
 
-const withNextIntl = createNextIntlPlugin();
+const withBundleAnalyzer = createBundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+});
+
+const buildMode = process.env.BUILD_MODE ?? 'default';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Output configuration for Cloudflare Pages
-  output: "standalone",
+  output: 'standalone',
   
-  // Disable barrel optimization for recharts to fix lodash import issues
-  transpilePackages: ['recharts', 'lodash'],
+  // Cloudflare 优化配置
+  compress: true,
+  poweredByHeader: false,
+  generateEtags: false,
   
-  // React configuration
-  reactStrictMode: false,
-  pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
+  // 禁用不必要的功能
+  productionBrowserSourceMaps: false,
   
-  // Webpack optimization for Edge Runtime
-  webpack: (config, { isServer, dev }) => {
-    // Production optimizations
-    if (!dev) {
-      config.optimization.splitChunks.chunks = 'all';
-      config.optimization.splitChunks.maxSize = 244000; // ~244KB
-    }
-    
-    // Edge runtime compatibility - critical for Cloudflare
-    if (isServer) {
-      config.externals = [...(config.externals || []), 'canvas', 'jsdom', 'sharp', 'onnxruntime-node'];
+  // 优化构建
+  swcMinify: true,
+  
+  // 减小构建体积
+  experimental: {
+    optimizeCss: true,
+    optimizePackageImports: [
+      '@radix-ui/react-icons',
+      'lucide-react',
+      'recharts',
+      '@tabler/icons-react',
+    ],
+  },
+  
+  reactStrictMode: true,
+  
+  // 跳过类型检查和 linting（在 CI 中单独运行）
+  typescript: {
+    ignoreBuildErrors: buildMode === 'production',
+  },
+  eslint: {
+    ignoreDuringBuilds: buildMode === 'production',
+  },
+  
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+      },
+    ],
+    // Cloudflare 不支持 Next.js 图片优化
+    unoptimized: true,
+  },
+  
+  // Webpack 配置
+  webpack: (config, { isServer }) => {
+    // 优化打包体积
+    if (!isServer) {
+      config.optimization = {
+        ...config.optimization,
+        splitChunks: {
+          chunks: 'all',
+          cacheGroups: {
+            default: false,
+            vendors: false,
+            framework: {
+              name: 'framework',
+              chunks: 'all',
+              test: /(?<!node_modules.*)[\\/]node_modules[\\/](react|react-dom|scheduler|prop-types|use-subscription)[\\/]/,
+              priority: 40,
+              enforce: true,
+            },
+            lib: {
+              test(module) {
+                return module.size() > 160000 &&
+                  /node_modules[/\\]/.test(module.identifier());
+              },
+              name(module) {
+                const hash = require('crypto').createHash('sha256');
+                hash.update(module.identifier());
+                return hash.digest('hex').substring(0, 8);
+              },
+              priority: 30,
+              minChunks: 1,
+              reuseExistingChunk: true,
+            },
+            commons: {
+              name: 'commons',
+              minChunks: 2,
+              priority: 20,
+            },
+            shared: {
+              name(module, chunks) {
+                return `shared-${require('crypto')
+                  .createHash('sha256')
+                  .update(chunks.reduce((acc, chunk) => acc + chunk.name, ''))
+                  .digest('hex')
+                  .substring(0, 8)}`;
+              },
+              priority: 10,
+              minChunks: 2,
+              reuseExistingChunk: true,
+            },
+          },
+          maxAsyncRequests: 30,
+          maxInitialRequests: 30,
+        },
+      };
       
-      // Replace Node.js modules with Edge-compatible alternatives
-      config.resolve.alias = {
-        ...config.resolve.alias,
-        'fs': false,
-        'path': false,
-        'os': false,
-        'crypto': false,
-        'stream': false,
-        'buffer': false,
+      // 忽略大文件警告
+      config.performance = {
+        ...config.performance,
+        maxAssetSize: 5000000, // 5MB
+        maxEntrypointSize: 5000000,
       };
     }
     
     return config;
   },
   
-  // Image optimization for Cloudflare
-  images: {
-    // Use Cloudflare Images or external providers
-    loader: 'custom',
-    loaderFile: './src/lib/cloudflare-image-loader.js',
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "*.kie.ai",
-        port: "",
-        pathname: "**",
-      },
-      {
-        protocol: "https",
-        hostname: "*.cloudflare.com",
-        port: "",
-        pathname: "**",
-      },
-      {
-        protocol: "https",
-        hostname: "*.r2.cloudflarestorage.com",
-        port: "",
-        pathname: "**",
-      },
-      {
-        protocol: "https",
-        hostname: "replicate.delivery",
-        port: "",
-        pathname: "**",
-      },
-      {
-        protocol: "https",
-        hostname: "*.openai.com",
-        port: "",
-        pathname: "**",
-      },
-      {
-        protocol: "https",
-        hostname: "*",
-      },
-    ],
-    formats: ['image/webp'],
-    dangerouslyAllowSVG: true,
-    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-    minimumCacheTTL: 60,
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-  },
-  
-  // Experimental features for Cloudflare
-  experimental: {
-    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
-  },
-  
-  // External packages for Edge Runtime
-  serverExternalPackages: [],
-  
-  // Compression handled by Cloudflare
-  compress: false,
-  poweredByHeader: false,
-  generateEtags: false,
-  
-  // Headers for Cloudflare Pages
-  async headers() {
+  // 重写规则
+  async rewrites() {
     return [
       {
-        source: "/_next/static/(.*)",
-        headers: [
-          {
-            key: "Cache-Control",
-            value: "public, max-age=31536000, immutable",
-          },
-        ],
-      },
-      {
-        source: "/imgs/(.*)",
-        headers: [
-          {
-            key: "Cache-Control",
-            value: "public, max-age=3600, stale-while-revalidate=86400",
-          },
-        ],
-      },
-      {
-        source: "/api/character-figure/(.*)",
-        headers: [
-          {
-            key: "X-Content-Type-Options",
-            value: "nosniff",
-          },
-          {
-            key: "X-Frame-Options",
-            value: "DENY",
-          },
-          {
-            key: "X-XSS-Protection",
-            value: "1; mode=block",
-          },
-        ],
+        source: '/docs',
+        destination: '/docs/get-started',
       },
     ];
   },
   
-  // Redirects for Cloudflare Pages
+  // 重定向规则
   async redirects() {
     return [
       {
-        source: "/character",
-        destination: "/en/character-figure",
-        permanent: true,
-      },
-      {
-        source: "/ai-character",
-        destination: "/en/character-figure", 
-        permanent: true,
-      },
-      {
-        source: "/api/generate-character",
-        destination: "/api/character-figure/generate",
+        source: '/discord',
+        destination: 'https://discord.gg/your-discord',
         permanent: false,
       },
       {
-        source: "/character-figure/:path*",
-        destination: "/en/character-figure/:path*",
-        permanent: false,
-      },
-      {
-        source: "/docs",
-        destination: "/en/docs",
+        source: '/github',
+        destination: 'https://github.com/wegnite/nano-banana',
         permanent: false,
       },
     ];
   },
-  
-  // Rewrites for API compatibility
-  async rewrites() {
-    return {
-      beforeFiles: [
-        {
-          source: "/api/v1/character/:path*",
-          destination: "/api/character-figure/:path*",
-        },
-      ],
-    };
-  },
-  
-  // Environment configuration
-  env: {
-    CUSTOM_KEY: process.env.NODE_ENV === 'production' ? 'prod-value' : 'dev-value',
-  },
 };
 
-export default withBundleAnalyzer(withNextIntl(withMDX(nextConfig)));
+export default withBundleAnalyzer(withMDX(nextConfig));
