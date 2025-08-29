@@ -14,6 +14,9 @@ import { respData, respErr } from '@/lib/resp';
 import { getUserCredits, deductCredits } from '@/services/credit';
 import type { ImageGenerationRequest } from '@/types/nano-banana';
 
+// 配置 Edge Runtime (注释掉以保持 Node.js 兼容性)
+// export const runtime = 'edge';
+
 // Constants for credit calculation
 const CREDITS_PER_IMAGE = 10; // Adjust based on your pricing model
 const MAX_IMAGES_PER_REQUEST = 4;
