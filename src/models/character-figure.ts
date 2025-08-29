@@ -153,7 +153,7 @@ export async function getUserGenerationHistory(
     .select()
     .from(character_generations)
     .where(and(...whereConditions))
-    .orderBy(orderBy)
+    .orderBy(...(Array.isArray(orderBy) ? orderBy : [orderBy]))
     .limit(limit)
     .offset(offset);
 
@@ -364,13 +364,15 @@ export async function getGalleryItems(
 
   // 添加搜索查询
   if (search_query) {
-    whereConditions.push(
-      or(
-        like(character_gallery.title, `%${search_query}%`),
-        like(character_gallery.description, `%${search_query}%`),
-        like(character_gallery.enhanced_prompt, `%${search_query}%`)
-      )
-    );
+    const searchConditions = [
+      like(character_gallery.title, `%${search_query}%`),
+      like(character_gallery.description, `%${search_query}%`),
+      like(character_gallery.enhanced_prompt, `%${search_query}%`)
+    ];
+    const searchCondition = or(...searchConditions);
+    if (searchCondition) {
+      whereConditions.push(searchCondition);
+    }
   }
 
   // 添加标签筛选（JSON 数组查询）
@@ -380,7 +382,10 @@ export async function getGalleryItems(
     const tagConditions = tags.map(tag => 
       sql`${character_gallery.tags}::text LIKE ${'%"' + tag + '"%'}`
     );
-    whereConditions.push(or(...tagConditions));
+    const tagCondition = or(...tagConditions);
+    if (tagCondition) {
+      whereConditions.push(tagCondition);
+    }
   }
 
   // 确定排序方式
@@ -403,7 +408,7 @@ export async function getGalleryItems(
     .select()
     .from(character_gallery)
     .where(and(...whereConditions))
-    .orderBy(orderBy)
+    .orderBy(...(Array.isArray(orderBy) ? orderBy : [orderBy]))
     .limit(limit)
     .offset(offset);
 

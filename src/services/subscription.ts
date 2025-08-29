@@ -484,7 +484,7 @@ async function getDailyUsageCount(userUuid: string, today: Date): Promise<number
           eq(character_generations.user_uuid, userUuid),
           and(
             lte(character_generations.created_at, tomorrow),
-            lte(today, character_generations.created_at)
+            gte(character_generations.created_at, today)
           )
         )
       );

@@ -13,8 +13,8 @@
 
 import { NanoBananaService } from './nano-banana';
 import { createKling } from '@/aisdk/kling';
-import { uploadToR2 } from '@/lib/storage';
-import { db } from '@/models/db';
+import { newStorage } from '@/lib/storage';
+import { db } from '@/db';
 
 export interface VideoGenerationRequest {
   // Basic parameters
@@ -132,7 +132,7 @@ export class VideoGenerationService {
         estimatedTime: this.estimateTime(request),
       };
     } catch (error) {
-      throw new Error(`Video generation failed: ${error.message}`);
+      throw new Error(`Video generation failed: ${error instanceof Error ? error.message : String(error)}`);
     }
   }
   

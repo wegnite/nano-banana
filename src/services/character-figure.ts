@@ -51,7 +51,7 @@ import {
   type CharacterFigureImage,
   type GalleryItem,
   type GalleryFilters,
-  type GalleryAction,
+  GalleryAction,
   type GalleryActionResponse,
   type UserGenerationHistory,
   type HistoryQuery,

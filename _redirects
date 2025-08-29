@@ -1,0 +1,8 @@
+# Cloudflare Pages 重定向规则
+# 语言重定向
+/character-figure/* /en/character-figure/:splat 302
+/docs /en/docs 302
+
+# 旧路径重定向
+/character /en/character-figure 301
+/ai-character /en/character-figure 301

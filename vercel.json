@@ -102,12 +102,12 @@
     {
       "source": "/character-figure/:path*",
       "destination": "/en/character-figure/:path*",
-      "permanent": false
+      "statusCode": 302
     },
     {
       "source": "/docs",
       "destination": "/en/docs",
-      "permanent": false
+      "statusCode": 302
     }
   ],
   "rewrites": [

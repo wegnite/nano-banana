@@ -15,7 +15,7 @@ import { describe, it, expect, beforeAll } from '@jest/globals';
 import { auth } from '@/auth';
 import { getUserCredits } from '@/services/credit';
 import { getUserInfo } from '@/services/user';
-import { db } from '@/models/db';
+import { db } from '@/db';
 import { sql } from 'drizzle-orm';
 
 describe('Authentication Flow Tests', () => {

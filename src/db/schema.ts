@@ -454,6 +454,7 @@ export const character_generations = pgTable("character_generations", {
   // 技术信息
   client_info: text(),                                                  // JSON格式的客户端信息
   generation_params: text(),                                            // JSON格式的完整生成参数
+  updated_at: timestamp({ withTimezone: true }).defaultNow(),           // 更新时间
 });
 
 /**
