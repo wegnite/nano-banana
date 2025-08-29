@@ -13,7 +13,7 @@
  */
 
 import { z } from 'zod';
-import { db } from '@/models/db';
+import { db } from '@/db/config';
 import { sql } from 'drizzle-orm';
 
 /**

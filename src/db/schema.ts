@@ -636,9 +636,6 @@ export const user_preferences = pgTable("user_preferences", {
   
   // 显示排序
   display_order: integer().notNull().default(0),                       // 显示顺序
-  
-  created_at: timestamp({ withTimezone: true }).defaultNow(),           // 创建时间
-  updated_at: timestamp({ withTimezone: true }).defaultNow(),           // 更新时间
 });
 
 /**

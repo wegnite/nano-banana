@@ -28,6 +28,8 @@ type ToasterToast = {
   action?: ToastActionElement
   variant?: "default" | "destructive"
   duration?: number
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
 }
 
 // Toast 动作元素类型
