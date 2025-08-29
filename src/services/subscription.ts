@@ -7,7 +7,7 @@
 
 import { db } from "@/db";
 import { subscriptions, subscription_usage } from "@/db/schema";
-import { eq, and, lte, sql } from "drizzle-orm";
+import { eq, and, lte, gte, sql } from "drizzle-orm";
 
 /**
  * Character Figure 订阅计划类型

@@ -163,7 +163,7 @@ export class VideoGenerationService {
         num_images: '1',
       });
       
-      const firstFrameUrl = await this.uploadFrame(firstFrameResult.images[0], `${videoId}_first`);
+      const firstFrameUrl = await this.uploadFrame(firstFrameResult.data?.images?.[0]?.url || '', `${videoId}_first`);
       await this.updateVideoStatus(videoId, 'processing_frames', 30, undefined, { firstFrameUrl });
       
       // Generate last frame
@@ -181,7 +181,7 @@ export class VideoGenerationService {
         num_images: '1',
       });
       
-      const lastFrameUrl = await this.uploadFrame(lastFrameResult.images[0], `${videoId}_last`);
+      const lastFrameUrl = await this.uploadFrame(lastFrameResult.data?.images?.[0]?.url || '', `${videoId}_last`);
       await this.updateVideoStatus(videoId, 'processing_frames', 50, undefined, { lastFrameUrl });
       
       // Phase 2: Generate video with Kling
@@ -189,36 +189,36 @@ export class VideoGenerationService {
       
       const videoPrompt = this.buildVideoPrompt(request, firstFrameUrl, lastFrameUrl);
       
-      // Use Kling's video generation with frame interpolation
+      // Use Kling's video generation
       const videoResult = await this.kling.video('kling-v1').doGenerate({
         prompt: videoPrompt,
-        image: firstFrameUrl, // Use first frame as reference
-        cfg_scale: request.quality === 'professional' ? 0.8 : 0.5,
-        mode: 'std', // Standard mode for frame interpolation
-        duration: parseInt(request.duration),
-        aspect_ratio: request.aspectRatio,
-        camera_movement: this.mapCameraMovement(request.cameraMovement),
+        n: 1, // Generate 1 video
+        providerOptions: {
+          kling: {
+            cfg_scale: request.quality === 'professional' ? 0.8 : 0.5,
+            mode: 'std', // Standard mode for frame interpolation
+            duration: parseInt(request.duration),
+            aspect_ratio: request.aspectRatio,
+            camera_movement: this.mapCameraMovement(request.cameraMovement),
+          }
+        }
       });
       
-      // Monitor Kling generation progress
-      let klingProgress = 60;
-      while (videoResult.status === 'processing') {
-        await new Promise(resolve => setTimeout(resolve, 5000)); // Check every 5 seconds
-        klingProgress = Math.min(90, klingProgress + 5);
-        await this.updateVideoStatus(videoId, 'processing_video', klingProgress);
-        
-        // Check video status from Kling
-        const status = await this.checkKlingStatus(videoResult.taskId);
-        if (status.status === 'completed') {
-          break;
-        } else if (status.status === 'failed') {
-          throw new Error('Kling video generation failed');
+      // Check for errors in the video generation result
+      if (videoResult.warnings && videoResult.warnings.length > 0) {
+        const errorWarning = videoResult.warnings.find(w => w.type === 'other');
+        if (errorWarning) {
+          throw new Error(`Video generation failed: ${errorWarning.message}`);
         }
+      }
+      
+      if (!videoResult.videos || videoResult.videos.length === 0) {
+        throw new Error('No videos were generated');
       }
       
       // Phase 3: Post-processing and upload
       const videoUrl = await this.processAndUploadVideo(
-        videoResult.videoUrl,
+        videoResult.videos[0] as Uint8Array, // Use first (and only) video - Kling returns Uint8Array
         videoId,
         request
       );
@@ -239,9 +239,10 @@ export class VideoGenerationService {
       // Deduct credits
       await this.deductCredits(userId, this.calculateCredits(request));
       
-    } catch (error) {
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
       console.error(`Video generation error for ${videoId}:`, error);
-      await this.updateVideoStatus(videoId, 'failed', 0, error.message);
+      await this.updateVideoStatus(videoId, 'failed', 0, errorMessage);
       throw error;
     }
   }
@@ -385,7 +386,7 @@ export class VideoGenerationService {
       }
     };
     
-    return resolutions[quality][aspectRatio] || '1920x1080';
+    return resolutions[quality as keyof typeof resolutions]?.[aspectRatio as keyof typeof resolutions['standard']] || '1920x1080';
   }
   
   /**
@@ -435,17 +436,20 @@ export class VideoGenerationService {
     // Implementation for credit deduction
   }
   
-  private async uploadFrame(imageData: string, key: string): Promise<string> {
+  private async uploadFrame(imageUrl: string, key: string): Promise<string> {
     // Implementation for frame upload to R2
+    // In a real implementation, you would download the image from imageUrl
+    // and upload it to your storage service
     return `https://storage.example.com/${key}.jpg`;
   }
   
   private async processAndUploadVideo(
-    klingVideoUrl: string,
+    videoData: Uint8Array,
     videoId: string,
     request: VideoGenerationRequest
   ): Promise<string> {
     // Implementation for video processing and upload
+    // In a real implementation, you would upload the videoData to your storage service
     return `https://storage.example.com/${videoId}.mp4`;
   }
   

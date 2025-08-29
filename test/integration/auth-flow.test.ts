@@ -71,9 +71,9 @@ describe('Authentication Flow Tests', () => {
   describe('Database Integration', () => {
     it('should connect to database successfully', async () => {
       try {
-        const result = await db.execute(sql`SELECT 1 as test`);
+        const result = await db().$client`SELECT 1 as test`;
         expect(result).toBeDefined();
-        expect(result.rows).toBeDefined();
+        expect(result.length).toBeGreaterThan(0);
       } catch (error) {
         // 如果数据库连接失败，测试应该失败
         throw new Error(`Database connection failed: ${error}`);
