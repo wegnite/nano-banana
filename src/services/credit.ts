@@ -329,3 +329,56 @@ export async function updateCreditForOrder(order: Order) {
     throw e;
   }
 }
+
+/**
+ * 检查用户是否有足够的积分（用于视频生成等高消耗场景）
+ * 
+ * @param {string} userId - 用户ID
+ * @param {number} requiredAmount - 需要的积分数量
+ * @returns {Promise<boolean>} 是否有足够积分
+ */
+export async function checkUserCredits(userId: string, requiredAmount: number): Promise<boolean> {
+  const userCredits = await getUserCredits(userId);
+  return userCredits.left_credits >= requiredAmount;
+}
+
+/**
+ * 扣除用户积分（视频生成专用）
+ * 
+ * @param {string} userId - 用户ID
+ * @param {number} amount - 扣除数量
+ * @param {string} reason - 扣除原因
+ */
+export async function deductUserCredits(
+  userId: string,
+  amount: number,
+  reason: string = 'video_generation'
+): Promise<void> {
+  await decreaseCredits({
+    user_uuid: userId,
+    trans_type: CreditsTransType.Ping, // 使用API消费类型
+    credits: amount,
+  });
+}
+
+/**
+ * 扣除用户积分（通用接口，兼容旧代码）
+ * 
+ * @param {string} userId - 用户ID
+ * @param {number} amount - 扣除数量
+ * @param {CreditType} creditType - 积分类型
+ */
+export async function deductUserCredit(
+  userId: string,
+  amount: number,
+  creditType: CreditType
+): Promise<void> {
+  await decreaseCredits({
+    user_uuid: userId,
+    trans_type: CreditsTransType.Ping,
+    credits: amount,
+  });
+}
+
+// 定义CreditType以兼容其他模块
+export type CreditType = 'video_generation' | 'image_generation' | 'api_call';

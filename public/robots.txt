@@ -1,4 +1,63 @@
+# Robots.txt for characterfigure.com
+# Allow all crawlers to access the site
+
 User-agent: *
-Disallow: /*?*q=
-Disallow: /privacy-policy
-Disallow: /terms-of-service
+Allow: /
+Allow: /generate/
+Allow: /gallery/
+Allow: /blog/
+Allow: /pricing/
+Allow: /privacy-policy/
+Allow: /terms-of-service/
+
+# Disallow admin and API routes
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /dashboard/
+
+# Allow static assets
+Allow: /_next/static/
+Allow: /_next/image/
+Allow: /images/
+Allow: /assets/
+
+# Special directives for Google
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Special directives for Google AdSense
+User-agent: Mediapartners-Google
+Allow: /
+
+# Sitemap location
+Sitemap: https://characterfigure.com/sitemap.xml
+Sitemap: https://characterfigure.com/sitemap-images.xml
+Sitemap: https://characterfigure.com/sitemap-blog.xml
+
+# Crawl delay for other bots
+User-agent: bingbot
+Crawl-delay: 1
+
+User-agent: Slurp
+Crawl-delay: 1
+
+User-agent: DuckDuckBot
+Crawl-delay: 1
+
+# Block bad bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+# Host directive (optional, helps with canonical domain)
+Host: characterfigure.com

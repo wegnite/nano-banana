@@ -397,6 +397,242 @@ export const subscription_plans = pgTable("subscription_plans", {
   // 状态管理
   is_active: boolean().notNull().default(true),                        // 是否激活
   is_featured: boolean().notNull().default(false),                     // 是否推荐
+
+  // 时间戳
+  created_at: timestamp({ withTimezone: true }).defaultNow(),           // 创建时间
+  updated_at: timestamp({ withTimezone: true }).defaultNow(),           // 更新时间
+});
+
+/**
+ * 角色图像生成历史表 - 存储所有角色图像生成记录
+ * 
+ * 用途：
+ * - 追踪用户的角色生成历史
+ * - 支持再次生成相同参数的图像
+ * - 分析用户偏好和使用模式
+ * - 提供生成数据用于优化算法
+ */
+export const character_generations = pgTable("character_generations", {
+  // 基础字段
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  uuid: varchar({ length: 255 }).notNull().unique(),                   // 生成记录唯一标识
+  user_uuid: varchar({ length: 255 }).notNull(),                       // 用户UUID
+  created_at: timestamp({ withTimezone: true }).defaultNow(),           // 生成时间
+
+  // 生成参数
+  original_prompt: text().notNull(),                                    // 原始用户输入
+  enhanced_prompt: text(),                                              // 优化后的提示词
+  style: varchar({ length: 50 }).notNull(),                            // 角色风格
+  pose: varchar({ length: 50 }).notNull(),                             // 角色姿势
+  gender: varchar({ length: 20 }).notNull(),                           // 角色性别
+  age: varchar({ length: 20 }).notNull(),                              // 角色年龄组
+
+  // 可选参数
+  style_keywords: text(),                                               // JSON数组格式的风格关键词
+  clothing: text(),                                                     // 服装描述
+  background: text(),                                                   // 背景描述
+  color_palette: varchar({ length: 100 }),                             // 色彩方案
+  aspect_ratio: varchar({ length: 10 }).notNull().default("1:1"),      // 宽高比
+  quality: varchar({ length: 20 }).notNull().default("standard"),      // 质量设置
+  num_images: integer().notNull().default(1),                          // 生成图片数量
+  seed: integer(),                                                      // 随机种子
+
+  // 生成结果
+  generated_images: text(),                                             // JSON格式的图片信息
+  generation_time: integer().notNull(),                                // 生成耗时（毫秒）
+  credits_used: integer().notNull(),                                   // 消耗积分数
+  
+  // nano-banana API 响应信息
+  nano_banana_request_id: varchar({ length: 255 }),                    // nano-banana请求ID
+  nano_banana_response: text(),                                        // 完整API响应（JSON）
+
+  // 用户操作
+  is_favorited: boolean().notNull().default(false),                    // 是否收藏
+  is_deleted: boolean().notNull().default(false),                      // 是否删除
+  gallery_item_id: varchar({ length: 255 }),                           // 关联的画廊项目ID（如果分享）
+
+  // 技术信息
+  client_info: text(),                                                  // JSON格式的客户端信息
+  generation_params: text(),                                            // JSON格式的完整生成参数
+});
+
+/**
+ * 角色画廊表 - 公开展示的角色图像
+ * 
+ * 用途：
+ * - 用户分享优秀作品到公共画廊
+ * - 社区展示和交流
+ * - 为其他用户提供灵感
+ * - 支持点赞、评论、收藏功能
+ */
+export const character_gallery = pgTable("character_gallery", {
+  // 基础字段
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  uuid: varchar({ length: 255 }).notNull().unique(),                   // 画廊项目唯一标识
+  generation_id: varchar({ length: 255 }).notNull(),                   // 关联的生成记录ID
+  user_uuid: varchar({ length: 255 }).notNull(),                       // 创作者UUID
+  created_at: timestamp({ withTimezone: true }).defaultNow(),           // 发布时间
+
+  // 展示信息
+  title: varchar({ length: 255 }).notNull(),                           // 作品标题
+  description: text(),                                                  // 作品描述
+  tags: text(),                                                         // JSON数组格式的标签
+
+  // 图像信息
+  image_url: varchar({ length: 500 }).notNull(),                       // 主图片URL
+  thumbnail_url: varchar({ length: 500 }),                             // 缩略图URL
+  image_width: integer(),                                               // 图片宽度
+  image_height: integer(),                                              // 图片高度
+
+  // 角色信息（冗余存储便于查询）
+  style: varchar({ length: 50 }).notNull(),                            // 角色风格
+  pose: varchar({ length: 50 }).notNull(),                             // 角色姿势
+  enhanced_prompt: text(),                                              // 优化后提示词
+
+  // 社交统计
+  likes_count: integer().notNull().default(0),                         // 点赞数
+  views_count: integer().notNull().default(0),                         // 浏览数
+  bookmarks_count: integer().notNull().default(0),                     // 收藏数
+  comments_count: integer().notNull().default(0),                      // 评论数
+
+  // 状态管理
+  is_public: boolean().notNull().default(true),                        // 是否公开
+  is_featured: boolean().notNull().default(false),                     // 是否推荐
+  is_reported: boolean().notNull().default(false),                     // 是否被举报
+  is_approved: boolean().notNull().default(true),                      // 是否审核通过
+
+  // 创作者信息（冗余存储）
+  creator_username: varchar({ length: 255 }),                          // 创作者用户名
+  creator_avatar: varchar({ length: 255 }),                            // 创作者头像
+
+  updated_at: timestamp({ withTimezone: true }).defaultNow(),           // 更新时间
+});
+
+/**
+ * 画廊互动表 - 记录用户对画廊作品的互动
+ * 
+ * 用途：
+ * - 记录点赞、收藏、举报等操作
+ * - 防止重复操作
+ * - 支持用户个人收藏列表
+ * - 提供个性化推荐数据
+ */
+export const gallery_interactions = pgTable("gallery_interactions", {
+  // 基础字段
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  user_uuid: varchar({ length: 255 }).notNull(),                       // 操作用户UUID
+  gallery_item_id: varchar({ length: 255 }).notNull(),                 // 画廊项目ID
+  created_at: timestamp({ withTimezone: true }).defaultNow(),           // 操作时间
+
+  // 互动类型
+  interaction_type: varchar({ length: 20 }).notNull(),                  // 互动类型（like, bookmark, view, report）
+  is_active: boolean().notNull().default(true),                        // 是否仍然有效（取消点赞时设为false）
+
+  // 附加信息
+  metadata: text(),                                                     // JSON格式的额外信息（如举报原因）
+
+  updated_at: timestamp({ withTimezone: true }).defaultNow(),           // 更新时间
+}, (table) => [
+  // 复合唯一索引：同一用户对同一作品的同类型互动只能有一条活跃记录
+  uniqueIndex("user_gallery_interaction_unique").on(
+    table.user_uuid,
+    table.gallery_item_id,
+    table.interaction_type,
+    table.is_active
+  ),
+]);
+
+/**
+ * 角色生成模板表 - 预设的角色生成模板
+ * 
+ * 用途：
+ * - 提供快速生成选项
+ * - 新手用户指导
+ * - 展示平台能力
+ * - 热门风格推广
+ */
+export const character_templates = pgTable("character_templates", {
+  // 基础字段
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  uuid: varchar({ length: 255 }).notNull().unique(),                   // 模板唯一标识
+  created_at: timestamp({ withTimezone: true }).defaultNow(),           // 创建时间
+
+  // 模板信息
+  name: varchar({ length: 255 }).notNull(),                            // 模板名称
+  description: text(),                                                  // 模板描述
+  category: varchar({ length: 100 }).notNull(),                        // 模板分类
+  preview_image_url: varchar({ length: 500 }),                         // 预览图URL
+
+  // 生成参数（JSON格式存储完整的CharacterFigureRequest）
+  template_params: text().notNull(),                                    // 模板参数JSON
+
+  // 使用统计
+  usage_count: integer().notNull().default(0),                         // 使用次数
+  success_rate: integer().notNull().default(100),                      // 成功率（百分比）
+
+  // 状态管理
+  is_active: boolean().notNull().default(true),                        // 是否启用
+  is_featured: boolean().notNull().default(false),                     // 是否推荐
+  is_free: boolean().notNull().default(true),                          // 是否免费（付费用户专享）
+
+  // 排序权重
+  sort_order: integer().notNull().default(0),                          // 排序权重
+
+  updated_at: timestamp({ withTimezone: true }).defaultNow(),           // 更新时间
+});
+
+/**
+ * 系统配置表 - 角色生成相关的系统配置
+ * 
+ * 用途：
+ * - 动态调整生成参数
+ * - A/B测试配置
+ * - 限流和配额管理
+ * - 特性开关
+ */
+export const system_configs = pgTable("system_configs", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  config_key: varchar({ length: 100 }).notNull().unique(),             // 配置键
+  config_value: text(),                                                 // 配置值（JSON格式）
+  description: varchar({ length: 500 }),                               // 配置描述
+  is_active: boolean().notNull().default(true),                        // 是否启用
+  created_at: timestamp({ withTimezone: true }).defaultNow(),           // 创建时间
+  updated_at: timestamp({ withTimezone: true }).defaultNow(),           // 更新时间
+});
+
+/**
+ * 用户偏好表 - 记录用户的角色生成偏好
+ * 
+ * 用途：
+ * - 个性化推荐
+ * - 快捷设置
+ * - 用户行为分析
+ * - 默认参数设置
+ */
+export const user_preferences = pgTable("user_preferences", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  user_uuid: varchar({ length: 255 }).notNull().unique(),              // 用户UUID
+  
+  // 默认生成偏好
+  default_style: varchar({ length: 50 }),                              // 默认风格
+  default_pose: varchar({ length: 50 }),                               // 默认姿势
+  default_quality: varchar({ length: 20 }),                            // 默认质量
+  default_aspect_ratio: varchar({ length: 10 }),                       // 默认宽高比
+  
+  // 偏好统计
+  favorite_styles: text(),                                              // JSON数组：最常用风格
+  favorite_poses: text(),                                               // JSON数组：最常用姿势
+  
+  // 个性化设置
+  auto_save_to_gallery: boolean().notNull().default(false),            // 自动保存到画廊
+  auto_make_public: boolean().notNull().default(false),                // 自动公开分享
+  
+  // 通知设置
+  notify_on_generation_complete: boolean().notNull().default(true),    // 生成完成通知
+  notify_on_gallery_interaction: boolean().notNull().default(true),    // 画廊互动通知
+  
+  created_at: timestamp({ withTimezone: true }).defaultNow(),           // 创建时间
+  updated_at: timestamp({ withTimezone: true }).defaultNow(),           // 更新时间
   
   // 显示排序
   display_order: integer().notNull().default(0),                       // 显示顺序

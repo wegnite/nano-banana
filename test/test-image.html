@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Image Generator</title>
+</head>
+<body>
+    <h1>Test Image for Character Figure</h1>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <br>
+    <button onclick="downloadImage()">Download Test Image</button>
+    <script>
+        // 创建一个简单的测试图片
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // 背景渐变
+        const gradient = ctx.createLinearGradient(0, 0, 400, 400);
+        gradient.addColorStop(0, '#ff9a00');
+        gradient.addColorStop(1, '#ffd700');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 400, 400);
+        
+        // 画一个简单的角色
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(200, 150, 50, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // 身体
+        ctx.fillStyle = '#4a90e2';
+        ctx.fillRect(150, 200, 100, 120);
+        
+        // 文字
+        ctx.fillStyle = '#000000';
+        ctx.font = '20px Arial';
+        ctx.fillText('Test Character', 120, 360);
+        
+        function downloadImage() {
+            const link = document.createElement('a');
+            link.download = 'test-character.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+    </script>
+</body>
+</html>

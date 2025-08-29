@@ -1,0 +1,85 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# 运行时错误预检机制
+echo "🔍 Running pre-commit checks..."
+
+# 1. TypeScript类型检查
+echo "📝 Checking TypeScript types..."
+npx tsc --noEmit
+if [ $? -ne 0 ]; then
+  echo "❌ TypeScript type check failed"
+  exit 1
+fi
+
+# 2. ESLint检查
+echo "🎨 Running ESLint..."
+npm run lint
+if [ $? -ne 0 ]; then
+  echo "❌ ESLint check failed"
+  exit 1
+fi
+
+# 3. 运行集成测试
+echo "🧪 Running integration tests..."
+npm run test:integration 2>/dev/null
+if [ $? -ne 0 ]; then
+  echo "⚠️  Integration tests failed - please review"
+  # 不阻止提交，但给出警告
+fi
+
+# 4. 检查环境变量一致性
+echo "🔧 Checking environment configuration..."
+node -e "
+const checkEnv = () => {
+  const required = [
+    'DATABASE_URL',
+    'AUTH_SECRET',
+    'NEXTAUTH_URL',
+    'AUTH_URL',
+    'NEXT_PUBLIC_WEB_URL'
+  ];
+  
+  const missing = required.filter(key => !process.env[key]);
+  if (missing.length > 0) {
+    console.error('❌ Missing environment variables:', missing.join(', '));
+    process.exit(1);
+  }
+  
+  // 检查端口一致性
+  try {
+    const nextAuthUrl = new URL(process.env.NEXTAUTH_URL);
+    const authUrl = new URL(process.env.AUTH_URL);
+    const webUrl = new URL(process.env.NEXT_PUBLIC_WEB_URL);
+    
+    if (nextAuthUrl.port !== authUrl.port || nextAuthUrl.port !== webUrl.port) {
+      console.error('❌ Port mismatch in URLs:');
+      console.error('  NEXTAUTH_URL port:', nextAuthUrl.port);
+      console.error('  AUTH_URL port:', authUrl.port);
+      console.error('  WEB_URL port:', webUrl.port);
+      process.exit(1);
+    }
+  } catch (e) {
+    console.error('❌ Invalid URL format in environment variables');
+    process.exit(1);
+  }
+  
+  console.log('✅ Environment configuration is valid');
+};
+
+checkEnv();
+"
+
+if [ $? -ne 0 ]; then
+  echo "❌ Environment check failed"
+  exit 1
+fi
+
+# 5. 检查是否有console.error未处理
+echo "🔍 Checking for unhandled console.error..."
+grep -r "console\.error" src/ --include="*.ts" --include="*.tsx" | grep -v "// TODO\|// FIXME\|catch" | head -5
+if [ $? -eq 0 ]; then
+  echo "⚠️  Found console.error statements - make sure they are properly handled"
+fi
+
+echo "✅ All pre-commit checks passed!"

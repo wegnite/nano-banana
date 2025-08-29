@@ -48,7 +48,13 @@ export async function POST(request: NextRequest) {
 
     // 3. Check user credits
     const requiredCredits = numImages * CREDITS_PER_IMAGE;
-    const userCreditsInfo = await getUserCredits(session.user.id!);
+    // 从session中获取用户uuid（不是id）
+    const userId = (session.user as any).uuid || session.user.id;
+    if (!userId) {
+      console.error('User ID not found in session:', session.user);
+      return respErr('User identification failed - Please sign in again');
+    }
+    const userCreditsInfo = await getUserCredits(userId);
     
     if (userCreditsInfo.left_credits < requiredCredits) {
       return respErr(
@@ -82,7 +88,7 @@ export async function POST(request: NextRequest) {
 
     // 7. Deduct credits from user account
     const deducted = await deductCredits(
-      session.user.id!,
+      userId, // 使用之前获取的userId
       requiredCredits,
       'IMAGE_GENERATION',
       `Generated ${numImages} images with nano-banana`
@@ -141,7 +147,11 @@ export async function GET(request: NextRequest) {
     }
 
     // Get user's remaining credits
-    const userCreditsInfo = await getUserCredits(session.user.id!);
+    const userId = (session.user as any).uuid || session.user.id;
+    if (!userId) {
+      return respErr('User identification failed');
+    }
+    const userCreditsInfo = await getUserCredits(userId);
     
     // Get nano-banana service stats
     const service = getNanoBananaService();
