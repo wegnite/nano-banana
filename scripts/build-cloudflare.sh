@@ -23,7 +23,6 @@ cat > vercel.json << 'EOF'
   "installCommand": "pnpm install",
   "functions": {
     "src/app/api/**/*": {
-      "runtime": "nodejs20.x",
       "maxDuration": 60,
       "memory": 1024
     }
