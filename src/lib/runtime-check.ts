@@ -130,10 +130,12 @@ export async function checkEnvironmentVariables(): Promise<CheckResult> {
  */
 export async function checkDatabaseConnection(): Promise<CheckResult> {
   try {
-    // 执行简单的数据库查询
-    const result = await db.execute(sql`SELECT 1 as test`);
+    // 获取数据库实例并执行简单查询
+    const database = db();
+    const result = await database.execute(sql`SELECT 1 as test`);
     
-    if (result && result.rows) {
+    // Drizzle execute 返回一个数组
+    if (result && result.length > 0) {
       return {
         passed: true,
         message: 'Database connection successful',
